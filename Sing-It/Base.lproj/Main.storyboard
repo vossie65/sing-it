@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="iPad13_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Sing_It" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="1376"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ZGa-6L-fE5">
+                                <rect key="frame" x="406" y="563" width="220" height="250"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sing-It" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4e-b3-tJv">
+                                        <rect key="frame" x="59" y="0.0" width="102.5" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZu-JJ-WeS">
+                                        <rect key="frame" x="0.0" y="60" width="220" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="8TI-rM-rId"/>
+                                            <constraint firstAttribute="height" constant="50" id="aA3-IO-6pU"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Songs"/>
+                                        <connections>
+                                            <action selector="createSongTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="hcE-ry-frw"/>
+                                            <segue destination="PfJ-k4-ptT" kind="presentation" modalPresentationStyle="fullScreen" id="aLQ-e7-tRu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F74-eL-BTC">
+                                        <rect key="frame" x="0.0" y="130" width="220" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="eNE-Oi-RKB"/>
+                                            <constraint firstAttribute="width" constant="220" id="h81-ii-acw"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create Set"/>
+                                        <connections>
+                                            <action selector="createSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="K9T-05-enj"/>
+                                            <segue destination="e7G-JL-uFu" kind="presentation" modalPresentationStyle="fullScreen" id="gpa-Q3-utb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDr-jC-JiG">
+                                        <rect key="frame" x="0.0" y="200" width="220" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="eGx-rH-Kpm"/>
+                                            <constraint firstAttribute="width" constant="220" id="thL-y6-Lw4"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Play Set"/>
+                                        <connections>
+                                            <action selector="playSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="aDB-Sg-mWO"/>
+                                            <segue destination="TxV-sU-xzV" kind="presentation" modalPresentationStyle="fullScreen" id="1Qq-69-juW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="4zo-GC-rLm"/>
+                                    <constraint firstAttribute="height" constant="250" id="e9X-SS-XlT"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Gz5-G7-OkF"/>
+                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cWf-hi-YOE"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="createSetButton" destination="F74-eL-BTC" id="KRI-EB-XqG"/>
+                        <outlet property="createSongButton" destination="dZu-JJ-WeS" id="faW-nx-LXj"/>
+                        <outlet property="playSetButton" destination="gDr-jC-JiG" id="1Eh-W1-5TU"/>
+                        <outlet property="stackView" destination="ZGa-6L-fE5" id="6y0-iy-9na"/>
+                        <outlet property="titleLabel" destination="x4e-b3-tJv" id="feJ-DC-r1W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VXq-AD-xpB">
+            <objects>
+                <navigationController id="PfJ-k4-ptT" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kwb-VB-qm9">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="mCh-ih-hry" kind="relationship" relationship="rootViewController" id="L3t-vE-HX1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8fk-WE-u8m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="797" y="-27"/>
+        </scene>
+        <!--Songs-->
+        <scene sceneID="8ye-yT-AfI">
+            <objects>
+                <viewController id="mCh-ih-hry" customClass="SongsViewController" customModule="Sing_It" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AgM-qO-Ysk">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="1376"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hBp-bI-CtC">
+                                <rect key="frame" x="20" y="70" width="992" height="1206"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qvS-2V-JS0">
+                                <rect key="frame" x="416" y="1296" width="200" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="RFB-dJ-vSb"/>
+                                    <constraint firstAttribute="width" constant="200" id="tPr-ZJ-F1Y"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Create New Song">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="createNewSongTapped:" destination="mCh-ih-hry" eventType="touchUpInside" id="TR6-FU-Oig"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MyM-aK-ffd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hBp-bI-CtC" firstAttribute="top" secondItem="MyM-aK-ffd" secondAttribute="top" constant="20" id="47l-W2-4QF"/>
+                            <constraint firstItem="qvS-2V-JS0" firstAttribute="top" secondItem="hBp-bI-CtC" secondAttribute="bottom" constant="20" id="7A6-Bn-Bag"/>
+                            <constraint firstItem="hBp-bI-CtC" firstAttribute="leading" secondItem="MyM-aK-ffd" secondAttribute="leading" constant="20" id="K0P-sp-Sny"/>
+                            <constraint firstItem="MyM-aK-ffd" firstAttribute="trailing" secondItem="hBp-bI-CtC" secondAttribute="trailing" constant="20" id="MgO-U2-Lj1"/>
+                            <constraint firstItem="MyM-aK-ffd" firstAttribute="bottom" secondItem="qvS-2V-JS0" secondAttribute="bottom" constant="30" id="krb-aw-bcq"/>
+                            <constraint firstItem="qvS-2V-JS0" firstAttribute="centerX" secondItem="AgM-qO-Ysk" secondAttribute="centerX" id="q1w-IA-NAO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Songs" id="X4G-G2-Xgk">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="ToD-WB-0EV">
+                            <connections>
+                                <action selector="backButtonTapped:" destination="mCh-ih-hry" id="gkf-Xr-d2j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="createNewSongButton" destination="qvS-2V-JS0" id="hET-5n-ZDt"/>
+                        <outlet property="tableView" destination="hBp-bI-CtC" id="5Pt-0o-YZK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aU1-if-qNn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1470" y="-27"/>
+        </scene>
+        <!--Song Part Editor View Controller-->
+        <scene sceneID="uFn-qf-1Ly">
+            <objects>
+                <viewController storyboardIdentifier="SongPartEditorViewController" id="WcB-uf-EfI" customClass="SongPartEditorViewController" customModule="Sing_It" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iNo-ap-cG1">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="1376"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Title by Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVw-Tf-RdF">
+                                <rect key="frame" x="20" y="54" width="992" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IrN-Md-WJr">
+                                <rect key="frame" x="20" y="113" width="992" height="1053"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6DP-jF-9oW">
+                                <rect key="frame" x="446" y="1186" width="140" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ltp-kI-exY">
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="140" id="c3s-vk-svB"/>
+                                            <constraint firstAttribute="height" constant="50" id="q69-6A-ZcY"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add Part">
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="addPartButtonTapped:" destination="WcB-uf-EfI" eventType="touchUpInside" id="RUr-oe-P24"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WzJ-Qs-xgx">
+                                <rect key="frame" x="456" y="1256" width="120" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="4sg-qy-6la"/>
+                                    <constraint firstAttribute="height" constant="50" id="XgW-wm-kjc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="WcB-uf-EfI" eventType="touchUpInside" id="wcV-QK-lsJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="au4-2j-U0u"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="au4-2j-U0u" firstAttribute="trailing" secondItem="lVw-Tf-RdF" secondAttribute="trailing" constant="20" id="2fa-D5-FDx"/>
+                            <constraint firstItem="6DP-jF-9oW" firstAttribute="centerX" secondItem="iNo-ap-cG1" secondAttribute="centerX" id="CbC-Ps-BAD"/>
+                            <constraint firstItem="lVw-Tf-RdF" firstAttribute="leading" secondItem="au4-2j-U0u" secondAttribute="leading" constant="20" id="NeH-3A-AON"/>
+                            <constraint firstItem="IrN-Md-WJr" firstAttribute="top" secondItem="lVw-Tf-RdF" secondAttribute="bottom" constant="30" id="Sda-Jk-W28"/>
+                            <constraint firstItem="lVw-Tf-RdF" firstAttribute="top" secondItem="au4-2j-U0u" secondAttribute="top" constant="30" id="Sik-xj-eia"/>
+                            <constraint firstItem="WzJ-Qs-xgx" firstAttribute="top" secondItem="6DP-jF-9oW" secondAttribute="bottom" constant="20" id="e2F-VD-8Kh"/>
+                            <constraint firstItem="WzJ-Qs-xgx" firstAttribute="centerX" secondItem="iNo-ap-cG1" secondAttribute="centerX" id="hpf-am-eS8"/>
+                            <constraint firstItem="au4-2j-U0u" firstAttribute="trailing" secondItem="IrN-Md-WJr" secondAttribute="trailing" constant="20" id="m0m-vT-S7O"/>
+                            <constraint firstItem="6DP-jF-9oW" firstAttribute="top" secondItem="IrN-Md-WJr" secondAttribute="bottom" constant="20" id="uBF-4e-XWH"/>
+                            <constraint firstItem="IrN-Md-WJr" firstAttribute="leading" secondItem="au4-2j-U0u" secondAttribute="leading" constant="20" id="wzS-uY-sIp"/>
+                            <constraint firstItem="au4-2j-U0u" firstAttribute="bottom" secondItem="WzJ-Qs-xgx" secondAttribute="bottom" constant="50" id="xeL-Hj-HKf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Bni-Hc-udE"/>
+                    <connections>
+                        <outlet property="addPartButton" destination="Ltp-kI-exY" id="vVG-pG-5PN"/>
+                        <outlet property="partsTableView" destination="IrN-Md-WJr" id="Q2m-OZ-Ab1"/>
+                        <outlet property="saveButton" destination="WzJ-Qs-xgx" id="4gQ-lh-nKf"/>
+                        <outlet property="songTitleLabel" destination="lVw-Tf-RdF" id="gLZ-Gk-LZS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BFn-Cq-wUm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2152" y="-27"/>
+        </scene>
+        <!--Create Set View Controller-->
+        <scene sceneID="GtJ-G1-XKE">
+            <objects>
+                <viewController id="e7G-JL-uFu" customClass="CreateSetViewController" customModule="Sing_It" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rkc-Ur-PrY">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="1376"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Set" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sj5-5W-Eta">
+                                <rect key="frame" x="452.5" y="100" width="127" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zv-Xb-Lrw">
+                                <rect key="frame" x="416" y="1276" width="200" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="5Su-zC-Bij"/>
+                                    <constraint firstAttribute="height" constant="50" id="xFb-JG-HD4"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Back to Menu"/>
+                                <connections>
+                                    <segue destination="KCw-ys-llg" kind="unwind" unwindAction="unwindToMainMenu:" id="mha-xS-NpP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MDs-Eb-Gja"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MDs-Eb-Gja" firstAttribute="bottom" secondItem="4zv-Xb-Lrw" secondAttribute="bottom" constant="50" id="722-ac-ynj"/>
+                            <constraint firstItem="Sj5-5W-Eta" firstAttribute="top" secondItem="MDs-Eb-Gja" secondAttribute="top" constant="100" id="8pP-wP-BE0"/>
+                            <constraint firstItem="Sj5-5W-Eta" firstAttribute="centerX" secondItem="rkc-Ur-PrY" secondAttribute="centerX" id="Chz-PI-szg"/>
+                            <constraint firstItem="4zv-Xb-Lrw" firstAttribute="centerX" secondItem="rkc-Ur-PrY" secondAttribute="centerX" id="mlI-lR-rDF"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1eX-7l-HBX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="KCw-ys-llg" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="130" y="737"/>
+        </scene>
+        <!--Play Set View Controller-->
+        <scene sceneID="2xn-dL-i3H">
+            <objects>
+                <viewController id="TxV-sU-xzV" customClass="PlaySetViewController" customModule="Sing_It" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2p8-qK-mf8">
+                        <rect key="frame" x="0.0" y="0.0" width="1032" height="1376"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play Set" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNJ-1i-ZNV">
+                                <rect key="frame" x="467" y="100" width="98" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7g-fc-UBD">
+                                <rect key="frame" x="416" y="1276" width="200" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="8tN-44-wAO"/>
+                                    <constraint firstAttribute="height" constant="50" id="mOQ-KV-ATO"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Back to Menu"/>
+                                <connections>
+                                    <segue destination="A15-vm-iMr" kind="unwind" unwindAction="unwindToMainMenu:" id="vSU-N8-38T"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7BI-kg-naE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bNJ-1i-ZNV" firstAttribute="centerX" secondItem="2p8-qK-mf8" secondAttribute="centerX" id="Fre-A5-wGU"/>
+                            <constraint firstItem="l7g-fc-UBD" firstAttribute="centerX" secondItem="2p8-qK-mf8" secondAttribute="centerX" id="Lb0-GW-wL3"/>
+                            <constraint firstItem="7BI-kg-naE" firstAttribute="bottom" secondItem="l7g-fc-UBD" secondAttribute="bottom" constant="50" id="WW3-VM-sWh"/>
+                            <constraint firstItem="bNJ-1i-ZNV" firstAttribute="top" secondItem="7BI-kg-naE" secondAttribute="top" constant="100" id="sDF-89-h61"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Bt-oB-5ja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="A15-vm-iMr" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="797" y="737"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

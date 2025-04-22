@@ -1,0 +1,32 @@
+@startuml
+
+enum PartType {
+  Verse
+  Chorus
+  Bridge
+}
+
+class Part {
+    PartType partType
+    String lyrics
+    String chords
+}
+
+class Song {
+    string Title
+    string Artist
+    List<SongPart> Parts
+}
+
+class Setlist {
+    String name
+    List<Song> songs
+}
+
+
+
+Song "1" o-- "*" Part : lyrics
+PartType -r-- Part
+Setlist "1" o-- "*" Song : songs
+
+@enduml

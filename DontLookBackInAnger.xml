@@ -1,0 +1,72 @@
+<song>
+  <title>Don't look back in anger</title>
+  <artist>Oasis</artist>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Slip inside the eye of your mind, don't you know you might find, a better place to play?</line>
+        <line>You said that you'd never been, but all the things that you've seen, will slowly fade away.</line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>So I start a revolution from my bed, 'Cause you said the brains I had went to my head, Step outside, summertime's in bloom</line>
+        <line>Stand up beside the fireplace, Take that look from off your face, You ain't ever gonna burn my heart out</line>
+      </lyrics>
+      <chords>
+        <line>F. Fm6. C... F. Fm6. C... F. Fm6. C...</line>
+        <line>G... E7/G#. .. Am. G. F... G... ....</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And so Sally can wait, She knows it's too late, As we're walking on by</line>
+        <line>Her soul slides away, But don't look back in anger, I heard you say.</line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Take me to the place where you go, Where nobody knows, If it's night or day.</line>
+        <line>But please don't put your life in the hands, Of a rock and roll band, Who'll throw it all away.</line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>So I start a revolution from my bed, 'Cause you said the brains I had went to my head, Step outside, summertime's in bloom</line>
+        <line>Stand up beside the fireplace, Take that look from off your face, You ain't ever gonna burn my heart out.</line>
+      </lyrics>
+      <chords>
+        <line>F. Fm6. C. .. F. Fm6. C. .. F. Fm6. C. ..</line>
+        <line>G. .. E7/G#. .. Am. G. F. .. G. .. .. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And so Sally can wait, She knows it's too late, As we're walking on by</line>
+        <line>Her soul slides away, But don't look back in anger, I heard you say.</line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+        <line>C. G. Am. E7. F. G. C. Am G</line>
+      </chords>
+    </part>
+  </parts>
+</song>
