@@ -166,7 +166,7 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     @IBAction func createNewSongTapped(_ sender: UIButton) {
-        // Show an action sheet with two options
+        // Show an action sheet with three options
         let actionSheet = UIAlertController(title: "Create New Song", message: "Choose a method to create a new song", preferredStyle: .actionSheet)
         
         // Option 1: Create from scratch
@@ -179,11 +179,17 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
             self?.importSongFromXML()
         }
         
+        // Option 3: Download (new option)
+        let downloadAction = UIAlertAction(title: "Download", style: .default) { [weak self] _ in
+            self?.openDownloadPage()
+        }
+        
         // Cancel option
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheet.addAction(createFromScratchAction)
         actionSheet.addAction(importFromXMLAction)
+        actionSheet.addAction(downloadAction)
         actionSheet.addAction(cancelAction)
         
         // For iPad, we need to set the source view for the popover
@@ -256,6 +262,17 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
         present(xmlInputVC, animated: true)
     }
     
+    // New method to open the download page
+    private func openDownloadPage() {
+        // Create a navigation controller with the web view controller
+        let webViewController = WebViewController()
+        let navigationController = UINavigationController(rootViewController: webViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        
+        // Present the navigation controller
+        present(navigationController, animated: true)
+    }
+    
     // Helper method to show error messages
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
@@ -270,8 +287,8 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
         return parser.parseSongFromXML(xmlString)
     }
     
-    // Helper method to open the song editor
-    private func openSongEditor(for song: Song, isNew: Bool) {
+    // Helper method to open the song editor - made public so WebViewController can access it
+    func openSongEditor(for song: Song, isNew: Bool) {
         guard let songEditorVC = storyboard?.instantiateViewController(withIdentifier: "SongPartEditorViewController") as? SongPartEditorViewController else {
             return
         }
