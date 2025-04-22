@@ -6,11 +6,11 @@ class SongPartEditorViewController: UIViewController {
     @IBOutlet weak var partsTableView: UITableView!
     @IBOutlet weak var addPartButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var repeatPartButton: UIButton!
+    @IBOutlet weak var showXMLButton: UIButton!
     
-    // New button for repeating parts
-    private var repeatPartButton: UIButton!
-    // New button for showing XML representation
-    private var showXMLButton: UIButton!
+    // Add a new label for artist
+    private let artistLabel = UILabel()
     
     var song: Song!
     var isNewSong: Bool = false
@@ -22,21 +22,32 @@ class SongPartEditorViewController: UIViewController {
         setupUI()
         setupTableView()
         
-        // Add a back button item to the navigation bar
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Back", 
-            style: .plain, 
-            target: self, 
-            action: #selector(backButtonTapped)
-        )
-        
         // Change save button to done
         saveButton.setTitle("Done", for: .normal)
     }
     
     private func setupUI() {
         view.backgroundColor = .white
-        songTitleLabel.text = "\(song.title) by \(song.artist)"
+        
+        // Configure the title label to only show the title with larger font
+        songTitleLabel.text = song.title
+        songTitleLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        songTitleLabel.textAlignment = .center
+        
+        // Configure the artist label
+        artistLabel.text = song.artist
+        artistLabel.font = UIFont.systemFont(ofSize: 18)
+        artistLabel.textColor = .secondaryLabel
+        artistLabel.textAlignment = .center
+        artistLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add artist label to view and position it below the title label
+        view.addSubview(artistLabel)
+        NSLayoutConstraint.activate([
+            artistLabel.topAnchor.constraint(equalTo: songTitleLabel.bottomAnchor, constant: 8),
+            artistLabel.leadingAnchor.constraint(equalTo: songTitleLabel.leadingAnchor),
+            artistLabel.trailingAnchor.constraint(equalTo: songTitleLabel.trailingAnchor)
+        ])
         
         // Configure the Add Part button
         addPartButton.backgroundColor = .systemBlue
@@ -47,92 +58,16 @@ class SongPartEditorViewController: UIViewController {
         saveButton.backgroundColor = .systemGreen
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.layer.cornerRadius = 8
-        saveButton.setTitle("Done", for: .normal)
         
-        // Create the Repeat Part button
-        repeatPartButton = UIButton(type: .system)
-        repeatPartButton.setTitle("Repeat Part", for: .normal)
+        // Configure Repeat Part button
         repeatPartButton.backgroundColor = .systemPurple
         repeatPartButton.setTitleColor(.white, for: .normal)
         repeatPartButton.layer.cornerRadius = 8
-        repeatPartButton.addTarget(self, action: #selector(repeatPartButtonTapped), for: .touchUpInside)
-        repeatPartButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Create the Show XML button
-        showXMLButton = UIButton(type: .system)
-        showXMLButton.setTitle("Show XML", for: .normal)
+        // Configure Show XML button
         showXMLButton.backgroundColor = .systemOrange
         showXMLButton.setTitleColor(.white, for: .normal)
         showXMLButton.layer.cornerRadius = 8
-        showXMLButton.addTarget(self, action: #selector(showXMLButtonTapped), for: .touchUpInside)
-        showXMLButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Add the buttons to the view
-        view.addSubview(repeatPartButton)
-        view.addSubview(showXMLButton)
-        
-        // Reposition the existing buttons
-        if let addPartSuperview = addPartButton.superview {
-            addPartButton.removeFromSuperview()
-            view.addSubview(addPartButton)
-            addPartButton.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        if let saveSuperview = saveButton.superview {
-            saveButton.removeFromSuperview()
-            view.addSubview(saveButton)
-            saveButton.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        // Make sure the table is anchored to the top section
-        if let tableView = partsTableView {
-            NSLayoutConstraint.activate([
-                tableView.topAnchor.constraint(equalTo: songTitleLabel.bottomAnchor, constant: 20),
-                tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-            ])
-        }
-        
-        // Calculate button width based on screen width
-        let screenWidth = UIScreen.main.bounds.width
-        let buttonSpacing: CGFloat = 10
-        let sideMargin: CGFloat = 20
-        let totalButtonWidth = (screenWidth - (2 * sideMargin) - (3 * buttonSpacing)) / 4
-        
-        // Position all four buttons in a horizontal row at the bottom
-        NSLayoutConstraint.activate([
-            // Add Part button (leftmost)
-            addPartButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideMargin),
-            addPartButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            addPartButton.widthAnchor.constraint(equalToConstant: totalButtonWidth),
-            addPartButton.heightAnchor.constraint(equalToConstant: 50),
-            
-            // Repeat Part button (second from left)
-            repeatPartButton.leadingAnchor.constraint(equalTo: addPartButton.trailingAnchor, constant: buttonSpacing),
-            repeatPartButton.bottomAnchor.constraint(equalTo: addPartButton.bottomAnchor),
-            repeatPartButton.widthAnchor.constraint(equalTo: addPartButton.widthAnchor),
-            repeatPartButton.heightAnchor.constraint(equalTo: addPartButton.heightAnchor),
-            
-            // Show XML button (third from left)
-            showXMLButton.leadingAnchor.constraint(equalTo: repeatPartButton.trailingAnchor, constant: buttonSpacing),
-            showXMLButton.bottomAnchor.constraint(equalTo: addPartButton.bottomAnchor),
-            showXMLButton.widthAnchor.constraint(equalTo: addPartButton.widthAnchor),
-            showXMLButton.heightAnchor.constraint(equalTo: addPartButton.heightAnchor),
-            
-            // Done button (rightmost)
-            saveButton.leadingAnchor.constraint(equalTo: showXMLButton.trailingAnchor, constant: buttonSpacing),
-            saveButton.bottomAnchor.constraint(equalTo: addPartButton.bottomAnchor),
-            saveButton.widthAnchor.constraint(equalTo: addPartButton.widthAnchor),
-            saveButton.heightAnchor.constraint(equalTo: addPartButton.heightAnchor),
-            saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideMargin)
-        ])
-        
-        // Make the table view end above the buttons
-        if let tableView = partsTableView {
-            NSLayoutConstraint.activate([
-                tableView.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -20)
-            ])
-        }
     }
     
     private func setupTableView() {
@@ -173,10 +108,10 @@ class SongPartEditorViewController: UIViewController {
     }
     
     @IBAction func addPartButtonTapped(_ sender: UIButton) {
-        // Create a new custom view controller for adding parts
-        let addVC = EditPartViewController()
+        // Create a new view controller loaded from XIB file
+        let addVC = EditPartViewController(nibName: "EditPartViewController", bundle: nil)
         addVC.modalPresentationStyle = .formSheet
-        addVC.preferredContentSize = CGSize(width: 400, height: 550) // Increased from 450 to 550
+        addVC.preferredContentSize = CGSize(width: 780, height: 820) // Updated to match XIB dimensions
         
         // Configure with default part type
         let newPart = Part(partType: .verse, lyrics: "", chords: "")
@@ -203,43 +138,12 @@ class SongPartEditorViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func backButtonTapped() {
-        // Show alert to confirm going back without saving
-        let alert = UIAlertController(title: "Unsaved Changes", message: "Do you want to save changes before going back?", preferredStyle: .alert)
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            
-            // Handle saving differently based on whether this is a new song or existing song
-            if self.isNewSong {
-                self.dataManager.addSong(self.song)
-                self.isNewSong = false
-            } else {
-                self.dataManager.updateSong(self.song)
-            }
-            
-            self.navigationController?.popViewController(animated: true)
-        }
-        
-        let discardAction = UIAlertAction(title: "Discard", style: .destructive) { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(saveAction)
-        alert.addAction(discardAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
-    }
-    
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        // Remove this action or repurpose it
-        backButtonTapped()
+        // Simply pop view controller without confirmation
+        navigationController?.popViewController(animated: true)
     }
     
-    @objc private func repeatPartButtonTapped() {
+    @IBAction func repeatPartButtonTapped(_ sender: UIButton) {
         // Check if there are parts to repeat
         guard !song.parts.isEmpty else {
             // Show alert if there are no parts to repeat
@@ -292,7 +196,7 @@ class SongPartEditorViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    @objc private func showXMLButtonTapped() {
+    @IBAction func showXMLButtonTapped(_ sender: UIButton) {
         // Generate XML representation of the song
         let xmlString = generateXML(for: song)
         
@@ -352,10 +256,10 @@ class SongPartEditorViewController: UIViewController {
     }
     
     private func showEditPartAlert(for part: Part, at indexPath: IndexPath) {
-        // Create and configure the custom edit view controller
-        let editVC = EditPartViewController()
+        // Create and configure the custom edit view controller loaded from XIB
+        let editVC = EditPartViewController(nibName: "EditPartViewController", bundle: nil)
         editVC.modalPresentationStyle = .formSheet
-        editVC.preferredContentSize = CGSize(width: 400, height: 550) // Increased from 450 to 550
+        editVC.preferredContentSize = CGSize(width: 780, height: 820) // Updated to match XIB dimensions
         
         // Configure with part data
         editVC.configure(with: part)
@@ -381,16 +285,16 @@ class SongPartEditorViewController: UIViewController {
 // MARK: - Custom Edit Part View Controller
 class EditPartViewController: UIViewController {
     
-    // UI Elements
-    private let containerView = UIView()
-    private let titleLabel = UILabel()
-    private let typeSegmentControl = UISegmentedControl()
-    private let lyricsTextView = UITextView()
-    private let chordsTextView = UITextView()
-    private let lyricsLabel = UILabel()
-    private let chordsLabel = UILabel()
-    private let saveButton = UIButton(type: .system)
-    private let cancelButton = UIButton(type: .system)
+    // UI Elements - keeping these as properties but will initialize them programmatically
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var typeSegmentControl: UISegmentedControl!
+    @IBOutlet weak var lyricsTextView: UITextView!
+    @IBOutlet weak var chordsTextView: UITextView!
+    @IBOutlet weak var lyricsLabel: UILabel!
+    @IBOutlet weak var chordsLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
     // Data
     private var part: Part?
@@ -405,160 +309,44 @@ class EditPartViewController: UIViewController {
         // Configure main view
         view.backgroundColor = UIColor.systemGray6
         
-        // Add container view
-        view.addSubview(containerView)
-        containerView.backgroundColor = .white
-        containerView.layer.cornerRadius = 16
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowRadius = 10
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Title label
-        titleLabel.text = "Edit Song Part"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        titleLabel.textAlignment = .center
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Type segment control
-        for (index, type) in PartType.allCases.enumerated() {
-            typeSegmentControl.insertSegment(withTitle: type.rawValue, at: index, animated: false)
-        }
-        typeSegmentControl.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Labels
-        lyricsLabel.text = "Lyrics"
-        lyricsLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        lyricsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        chordsLabel.text = "Chords"
-        chordsLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        chordsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Text views
-        lyricsTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular) // Changed back to match chords font size
-        lyricsTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        lyricsTextView.layer.borderWidth = 1
-        lyricsTextView.layer.cornerRadius = 8
-        lyricsTextView.translatesAutoresizingMaskIntoConstraints = false
-        
-        chordsTextView.font = UIFont.monospacedSystemFont(ofSize: 16, weight: .regular)
-        chordsTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        chordsTextView.layer.borderWidth = 1
-        chordsTextView.layer.cornerRadius = 8
-        chordsTextView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Buttons
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.backgroundColor = .systemBlue
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.layer.cornerRadius = 8
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.backgroundColor = .systemGray5
-        cancelButton.setTitleColor(.darkGray, for: .normal)
-        cancelButton.layer.cornerRadius = 8
-        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Add subviews
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(typeSegmentControl)
-        containerView.addSubview(lyricsLabel)
-        containerView.addSubview(lyricsTextView)
-        containerView.addSubview(chordsLabel)
-        containerView.addSubview(chordsTextView)
-        containerView.addSubview(saveButton)
-        containerView.addSubview(cancelButton)
-        
-        // Layout constraints
-        NSLayoutConstraint.activate([
-            // Container View
-            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            
-            // Title
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            
-            // Type segment
-            typeSegmentControl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            typeSegmentControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            typeSegmentControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            
-            // Lyrics label
-            lyricsLabel.topAnchor.constraint(equalTo: typeSegmentControl.bottomAnchor, constant: 20),
-            lyricsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            
-            // Lyrics text view
-            lyricsTextView.topAnchor.constraint(equalTo: lyricsLabel.bottomAnchor, constant: 8),
-            lyricsTextView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            lyricsTextView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            lyricsTextView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.25),
-            
-            // Chords label
-            chordsLabel.topAnchor.constraint(equalTo: lyricsTextView.bottomAnchor, constant: 16),
-            chordsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            chordsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            
-            // Chords text view
-            chordsTextView.topAnchor.constraint(equalTo: chordsLabel.bottomAnchor, constant: 8),
-            chordsTextView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            chordsTextView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            chordsTextView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.25),
-            
-            // Button container
-            saveButton.leadingAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 4),
-            saveButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            saveButton.topAnchor.constraint(equalTo: chordsTextView.bottomAnchor, constant: 20),
-            saveButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            cancelButton.trailingAnchor.constraint(equalTo: containerView.centerXAnchor, constant: -4),
-            cancelButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            cancelButton.topAnchor.constraint(equalTo: chordsTextView.bottomAnchor, constant: 20),
-            cancelButton.heightAnchor.constraint(equalToConstant: 44)
-        ])
+        // When using IBOutlets from a XIB file, we don't need to create UI elements programmatically
+        // Just customize appearance or behavior as needed
     }
     
     func configure(with part: Part, isNewPart: Bool = false) {
         self.part = part
         
-        // Store the initial values to be used when view is loaded
-        let initialTitle = isNewPart ? "Add \(part.partType.rawValue)" : "Edit \(part.partType.rawValue)"
-        let initialLyrics = part.lyrics
-        let initialChords = part.chords
-        let initialType = part.partType
-        
-        // If view is already loaded, update UI immediately
+        // When view loads (or is already loaded), update the UI elements
         if isViewLoaded {
-            updateUI(title: initialTitle, lyrics: initialLyrics, chords: initialChords, type: initialType)
+            updateUI(with: part, isNewPart: isNewPart)
         } else {
-            // Otherwise, update UI when view loads
-            loadViewIfNeeded() // Force view to load if needed
+            // When view loads later, update UI
             DispatchQueue.main.async { [weak self] in
-                self?.updateUI(title: initialTitle, lyrics: initialLyrics, chords: initialChords, type: initialType)
+                self?.updateUI(with: part, isNewPart: isNewPart)
             }
         }
     }
     
-    private func updateUI(title: String, lyrics: String, chords: String, type: PartType) {
-        titleLabel.text = title
-        lyricsTextView.text = lyrics
-        chordsTextView.text = chords
+    private func updateUI(with part: Part, isNewPart: Bool) {
+        // Only update the title if it's a new part or editing
+        if isNewPart {
+            titleLabel.text = "Add Song Part"
+        } else {
+            // Keep the original title from XIB for editing
+            titleLabel.text = "Edit Song Part"
+        }
         
-        if let index = PartType.allCases.firstIndex(of: type) {
+        // Set content
+        lyricsTextView.text = part.lyrics
+        chordsTextView.text = part.chords
+        
+        // Set selected part type
+        if let index = PartType.allCases.firstIndex(of: part.partType) {
             typeSegmentControl.selectedSegmentIndex = index
         }
     }
     
-    @objc private func saveButtonTapped() {
+    @objc func saveButtonTapped(_ sender: Any) {
         guard let part = part else { return }
         
         // Update part with new values
@@ -576,7 +364,7 @@ class EditPartViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func cancelButtonTapped() {
+    @objc func cancelButtonTapped(_ sender: Any) {
         dismiss(animated: true)
     }
 }

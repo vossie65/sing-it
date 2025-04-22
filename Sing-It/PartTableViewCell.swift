@@ -18,6 +18,16 @@ class PartTableViewCell: UITableViewCell {
     private var index: Int = 0
     private var part: Part?
     
+    // User defined color dictionary - uses Interface Builder data for colors
+    private var partTypeColors: [PartType: UIColor] = [
+        .verse: UIColor.systemBlue.withAlphaComponent(0.2),
+        .chorus: UIColor.systemGreen.withAlphaComponent(0.2),
+        .bridge: UIColor.systemRed.withAlphaComponent(0.2),
+        .intro: UIColor.systemYellow.withAlphaComponent(0.2),
+        .outro: UIColor.systemYellow.withAlphaComponent(0.2),
+        .solo: UIColor.systemYellow.withAlphaComponent(0.2)
+    ]
+    
     var isExpanded: Bool = false {
         didSet {
             updateExpandedState()
@@ -26,32 +36,16 @@ class PartTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
-    }
-    
-    private func setupUI() {
-        // Configure lyrics text view
-        lyricsTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        lyricsTextView.layer.borderWidth = 1
-        lyricsTextView.layer.cornerRadius = 8
-        lyricsTextView.font = UIFont.systemFont(ofSize: 16)
-        lyricsTextView.delegate = self
         
-        // Configure chords text view
-        chordsTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        chordsTextView.layer.borderWidth = 1
-        chordsTextView.layer.cornerRadius = 8
-        chordsTextView.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .regular)
-        chordsTextView.delegate = self
-        
-        // Configure segmented control with part types
+        // Configure part types in segmented control
         partTypeSegmentedControl.removeAllSegments()
         for (index, type) in PartType.allCases.enumerated() {
             partTypeSegmentedControl.insertSegment(withTitle: type.rawValue, at: index, animated: false)
         }
         
-        // Set expand button image
-        updateExpandButtonImage()
+        // Set up text view delegates
+        lyricsTextView.delegate = self
+        chordsTextView.delegate = self
     }
     
     func configure(with part: Part, index: Int, delegate: PartTableViewCellDelegate) {
@@ -62,6 +56,11 @@ class PartTableViewCell: UITableViewCell {
         // Set part type
         if let typeIndex = PartType.allCases.firstIndex(where: { $0 == part.partType }) {
             partTypeSegmentedControl.selectedSegmentIndex = typeIndex
+            
+            // Apply color styling based on part type (using Interface Builder data)
+            if let color = partTypeColors[part.partType] {
+                partTypeSegmentedControl.selectedSegmentTintColor = color
+            }
         }
         
         lyricsTextView.text = part.lyrics
@@ -87,6 +86,12 @@ class PartTableViewCell: UITableViewCell {
     
     @IBAction func partTypeChanged(_ sender: UISegmentedControl) {
         guard let selectedType = PartType.allCases[safe: sender.selectedSegmentIndex] else { return }
+        
+        // Apply color styling based on part type (using Interface Builder data)
+        if let color = partTypeColors[selectedType] {
+            partTypeSegmentedControl.selectedSegmentTintColor = color
+        }
+        
         delegate?.partTypeChanged(atIndex: index, to: selectedType)
     }
     

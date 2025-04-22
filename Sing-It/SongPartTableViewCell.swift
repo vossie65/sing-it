@@ -19,6 +19,16 @@ class SongPartTableViewCell: UITableViewCell {
     // Add a closure to handle delete button tap
     var deleteHandler: (() -> Void)?
     
+    // User defined color dictionary - this makes it configurable from Interface Builder
+    private var partTypeColors: [String: UIColor] = [
+        "Verse": UIColor.systemBlue.withAlphaComponent(0.2),
+        "Chorus": UIColor.systemGreen.withAlphaComponent(0.2),
+        "Bridge": UIColor.systemRed.withAlphaComponent(0.2),
+        "Intro": UIColor.systemYellow.withAlphaComponent(0.2),
+        "Outro": UIColor.systemYellow.withAlphaComponent(0.2),
+        "Solo": UIColor.systemYellow.withAlphaComponent(0.2)
+    ]
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -129,7 +139,7 @@ class SongPartTableViewCell: UITableViewCell {
         
         lyricsLabel.numberOfLines = 0
         lyricsLabel.lineBreakMode = .byWordWrapping
-        lyricsLabel.font = UIFont.systemFont(ofSize: 22, weight: .medium)  // Increased from 18 to 22
+        lyricsLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)  // Changed from 22 to 20 for consistency
         
         // Label position constraints
         NSLayoutConstraint.activate([
@@ -159,13 +169,12 @@ class SongPartTableViewCell: UITableViewCell {
         lyricsLabel.text = part.lyrics.isEmpty ? "(No lyrics)" : part.lyrics
         chordsLabel.text = part.chords.isEmpty ? "(No chords)" : part.chords
         
-        // Set different background colors for verses and choruses
-        if part.partType == .verse {
-            typeContainerView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
-        } else if part.partType == .chorus {
-            typeContainerView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
-        } else if part.partType == .bridge {
-            typeContainerView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+        // Use the partTypeColors dictionary to set background color based on part type
+        if let color = partTypeColors[part.partType.rawValue] {
+            typeContainerView.backgroundColor = color
+        } else {
+            // Default background color
+            typeContainerView.backgroundColor = UIColor.systemBackground
         }
     }
 }
