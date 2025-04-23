@@ -50,10 +50,8 @@ class AudioEngine {
         audioEngine.connect(sampler, to: mixer, format: nil)
         audioEngine.connect(mixer, to: audioEngine.mainMixerNode, format: nil)
         
-        // Set default instrument to Acoustic Grand Piano (program 0)
-        try? sampler.loadSoundBankInstrument(at: URL(fileURLWithPath: 
-            "/System/Library/Components/CoreAudio.component/Contents/Resources/gs_instruments.dls"),
-            program: 0, bankMSB: 0x79, bankLSB: 0x00)
+        // Set SoundFont FluidR3_GM instrument 0 (piano) statt macOS-DLS
+        setInstrument(0, waitForLoad: true)
     }
     
     // MARK: - Public Methods
@@ -204,15 +202,27 @@ class AudioEngine {
         // Save the current instrument to restore it after count-in
         let savedInstrument = currentInstrument
         
+        // Pre-load the piano instrument up front if we're using count-in
+        // This will help avoid the delay when switching back
+        if withCountIn {
+            // First, pre-load the piano instrument that we'll need later
+            setInstrument(savedInstrument, waitForLoad: true)
+        }
+        
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             
             // Play count-in beats if requested
             if withCountIn {
+                // Switch to woodblock for count-in
+                self.setInstrument(115, waitForLoad: true)
                 self.playCountInBeats(count: 4)
-            } else {
-                // Make sure the current instrument is properly loaded even without count-in
+                
+                // Switch back to the saved instrument with additional delay for loading
                 self.setInstrument(savedInstrument, waitForLoad: true)
+                
+                // Add a small additional delay after instrument change to ensure it's fully loaded
+                Thread.sleep(forTimeInterval: 0.02)
             }
             
             // Play the actual chord progression
@@ -245,13 +255,38 @@ class AudioEngine {
     func playCountInBeats(count: Int = 4) {
         print("Playing \(count) count-in beats at \(tempo) BPM")
         
-        // Remember current instrument to restore later
-        let originalInstrument = currentInstrument
-        
         // Use percussion instrument for the click sound with delay to ensure loading
         setInstrument(115, waitForLoad: true) // Woodblock or similar percussion sound
         
         let beatDuration = beatsToSeconds(1.0)
+        
+        // Determine platform-specific timing parameters
+        let lastTickDurationFactor: Double
+        let platformDescription: String
+        
+        #if targetEnvironment(simulator)
+            #if os(iOS)
+                // iOS Simulator (iPad or iPhone simulator on macOS)
+                lastTickDurationFactor = 0.10 // 10% of beat duration for iOS simulator
+                platformDescription = "iOS Simulator"
+            #else
+                // Other simulator (should not happen, but fallback just in case)
+                lastTickDurationFactor = 0.10
+                platformDescription = "Unknown Simulator"
+            #endif
+        #else
+            #if os(iOS)
+                // Physical iOS device (iPad or iPhone)
+                lastTickDurationFactor = 0.80 // 80% of beat duration for real iOS devices
+                platformDescription = "iOS Device (iPhone/iPad)"
+            #else
+                // macOS native app
+                lastTickDurationFactor = 0.10 // 10% of beat duration for macOS native
+                platformDescription = "macOS Native"
+            #endif
+        #endif
+        
+        print("Running on \(platformDescription) - using \(lastTickDurationFactor * 100)% beat duration for last count-in tick")
         
         for i in 1...count {
             // Check if playback should stop
@@ -276,12 +311,16 @@ class AudioEngine {
             // Stop the note
             sampler.stopNote(UInt8(noteToMidi(note: tickNote, octaveOffset: octave - 4)), onChannel: 9)
             
-            // Wait for the remainder of the beat
-            Thread.sleep(forTimeInterval: beatDuration - 0.05)
+            if i == count {
+                // Last tick - play shorter duration based on platform
+                Thread.sleep(forTimeInterval: beatDuration * lastTickDurationFactor)
+                print("Last count-in beat shortened to \(lastTickDurationFactor * 100)% to prepare instrument switch")
+            } else {
+                // All other ticks: normal full beat duration after the tick sound
+                let remainingBeat = beatDuration - 0.05
+                Thread.sleep(forTimeInterval: remainingBeat)
+            }
         }
-        
-        // Restore original instrument with delay to ensure loading
-        setInstrument(originalInstrument, waitForLoad: true)
     }
     
     /// Play a chord synchronously (for internal use in chord progressions)
@@ -325,13 +364,24 @@ class AudioEngine {
     /// - Parameter waitForLoad: Whether to wait for the instrument to load (default: true)
     func setInstrument(_ instrument: UInt8, waitForLoad: Bool = true) {
         currentInstrument = instrument // Store the current instrument
-        try? sampler.loadSoundBankInstrument(at: URL(fileURLWithPath: 
-            "/System/Library/Components/CoreAudio.component/Contents/Resources/gs_instruments.dls"),
-            program: instrument, bankMSB: 0x79, bankLSB: 0x00)
-        
+
+        // 🔍 Debug: Prüfen, ob die SoundFont gefunden wird
+        if let soundFontURL = Bundle.main.url(forResource: "FluidR3_GM", withExtension: "sf2") {
+            print("✅ SoundFont gefunden: \(soundFontURL)")
+            
+            try? sampler.loadSoundBankInstrument(
+                at: soundFontURL,
+                program: instrument,
+                bankMSB: 0x79,
+                bankLSB: 0x00
+            )
+        } else {
+            print("❌ SoundFont NICHT gefunden!")
+        }
+
         // Add a small delay to ensure the instrument is loaded
         if waitForLoad {
-            Thread.sleep(forTimeInterval: 0.02) // 20ms delay for the instrument to load
+            Thread.sleep(forTimeInterval: 0.02)
         }
     }
     

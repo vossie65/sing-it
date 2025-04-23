@@ -40,9 +40,6 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         // Start audio engine when view loads
         AudioEngine.shared.start()
         
-        // Set instrument to piano (0) first
-        AudioEngine.shared.setInstrument(currentInstrument)
-        
         // Set tempo from song model
         if let song = song {
             tempo = Double(song.tempo)

@@ -10,9 +10,31 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    // Print platform detection info
+    func printPlatformInfo() {
+        let platformDescription: String
+        
+        #if targetEnvironment(simulator)
+            #if os(iOS)
+                platformDescription = "iOS Simulator"
+            #else
+                platformDescription = "Unknown Simulator"
+            #endif
+        #else
+            #if os(iOS)
+                platformDescription = "iOS Device (iPhone/iPad)"
+            #else
+                platformDescription = "macOS Native"
+            #endif
+        #endif
+        
+        print("🔍 Application running on: \(platformDescription)")
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Print platform detection info
+        printPlatformInfo()
+        
         // Override point for customization after application launch.
         return true
     }
