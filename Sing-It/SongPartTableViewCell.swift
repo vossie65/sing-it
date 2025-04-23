@@ -8,6 +8,8 @@ class SongPartTableViewCell: UITableViewCell {
     private let lyricsLabel = UILabel()
     private let chordsLabel = UILabel()
     private let deleteButton = UIButton(type: .system)
+    private let upButton = UIButton(type: .system)
+    private let downButton = UIButton(type: .system)
     
     private let containerView = UIView()
     private let topRowView = UIView()
@@ -15,9 +17,13 @@ class SongPartTableViewCell: UITableViewCell {
     private let chordsContainerView = UIView()
     private let bottomRowView = UIView()
     private let lyricsContainerView = UIView()
+    private let reorderButtonsContainer = UIView() // Container for reorder buttons
     
     // Add a closure to handle delete button tap
     var deleteHandler: (() -> Void)?
+    // Add closures to handle up and down button taps
+    var moveUpHandler: (() -> Void)?
+    var moveDownHandler: (() -> Void)?
     
     // User defined color dictionary - this makes it configurable from Interface Builder
     private var partTypeColors: [String: UIColor] = [
@@ -69,6 +75,46 @@ class SongPartTableViewCell: UITableViewCell {
             bottomRowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
+        // Add reorder buttons container
+        containerView.addSubview(reorderButtonsContainer)
+        reorderButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Setup reorder buttons container
+        reorderButtonsContainer.addSubview(upButton)
+        reorderButtonsContainer.addSubview(downButton)
+        
+        upButton.translatesAutoresizingMaskIntoConstraints = false
+        downButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Configure up button
+        upButton.setImage(UIImage(systemName: "arrow.up"), for: .normal)
+        upButton.tintColor = .systemBlue
+        upButton.addTarget(self, action: #selector(moveUpButtonTapped), for: .touchUpInside)
+        
+        // Configure down button
+        downButton.setImage(UIImage(systemName: "arrow.down"), for: .normal)
+        downButton.tintColor = .systemBlue
+        downButton.addTarget(self, action: #selector(moveDownButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            // Position reorder buttons container on the right edge
+            reorderButtonsContainer.topAnchor.constraint(equalTo: containerView.topAnchor),
+            reorderButtonsContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            reorderButtonsContainer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            reorderButtonsContainer.widthAnchor.constraint(equalToConstant: 32), // Width for both buttons stacked
+            
+            // Position up and down buttons within the container
+            upButton.topAnchor.constraint(equalTo: reorderButtonsContainer.topAnchor, constant: 4),
+            upButton.centerXAnchor.constraint(equalTo: reorderButtonsContainer.centerXAnchor),
+            upButton.widthAnchor.constraint(equalToConstant: 32),
+            upButton.heightAnchor.constraint(equalToConstant: 32),
+            
+            downButton.topAnchor.constraint(equalTo: upButton.bottomAnchor, constant: 4),
+            downButton.centerXAnchor.constraint(equalTo: reorderButtonsContainer.centerXAnchor),
+            downButton.widthAnchor.constraint(equalToConstant: 32),
+            downButton.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        
         // Add elements to top row
         topRowView.addSubview(typeContainerView)
         topRowView.addSubview(chordsContainerView)
@@ -91,7 +137,7 @@ class SongPartTableViewCell: UITableViewCell {
             view.backgroundColor = UIColor.systemBackground
         }
         
-        // Position elements in top row
+        // Position elements in top row - adjusted to account for reorder buttons
         NSLayoutConstraint.activate([
             typeContainerView.topAnchor.constraint(equalTo: topRowView.topAnchor),
             typeContainerView.leadingAnchor.constraint(equalTo: topRowView.leadingAnchor),
@@ -104,19 +150,19 @@ class SongPartTableViewCell: UITableViewCell {
             chordsContainerView.trailingAnchor.constraint(equalTo: deleteButton.leadingAnchor, constant: -8),
             
             deleteButton.centerYAnchor.constraint(equalTo: topRowView.centerYAnchor),
-            deleteButton.trailingAnchor.constraint(equalTo: topRowView.trailingAnchor),
+            deleteButton.trailingAnchor.constraint(equalTo: reorderButtonsContainer.leadingAnchor, constant: -8),
             deleteButton.widthAnchor.constraint(equalToConstant: 44),
             deleteButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         
-        // Add lyrics container to bottom row (full width)
+        // Add lyrics container to bottom row (full width, accounting for reorder buttons)
         bottomRowView.addSubview(lyricsContainerView)
         lyricsContainerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             lyricsContainerView.topAnchor.constraint(equalTo: bottomRowView.topAnchor),
             lyricsContainerView.leadingAnchor.constraint(equalTo: bottomRowView.leadingAnchor),
-            lyricsContainerView.trailingAnchor.constraint(equalTo: bottomRowView.trailingAnchor),
+            lyricsContainerView.trailingAnchor.constraint(equalTo: reorderButtonsContainer.leadingAnchor, constant: -8),
             lyricsContainerView.bottomAnchor.constraint(equalTo: bottomRowView.bottomAnchor)
         ])
         
@@ -164,10 +210,26 @@ class SongPartTableViewCell: UITableViewCell {
         deleteHandler?()
     }
     
-    func configure(with part: Part, index: Int) {
+    @objc private func moveUpButtonTapped() {
+        moveUpHandler?()
+    }
+    
+    @objc private func moveDownButtonTapped() {
+        moveDownHandler?()
+    }
+    
+    func configure(with part: Part, index: Int, isFirst: Bool = false, isLast: Bool = false) {
         typeLabel.text = part.partType.rawValue
         lyricsLabel.text = part.lyrics.isEmpty ? "(No lyrics)" : part.lyrics
         chordsLabel.text = part.chords.isEmpty ? "(No chords)" : part.chords
+        
+        // Disable the up button if this is the first item
+        upButton.isEnabled = !isFirst
+        upButton.alpha = isFirst ? 0.3 : 1.0
+        
+        // Disable the down button if this is the last item
+        downButton.isEnabled = !isLast
+        downButton.alpha = isLast ? 0.3 : 1.0
         
         // Use the partTypeColors dictionary to set background color based on part type
         if let color = partTypeColors[part.partType.rawValue] {

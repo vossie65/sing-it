@@ -1,4 +1,4 @@
-<song>
+<<song>
   <title>Let it be</title>
   <artist>The Beatles</artist>
   <parts>
@@ -69,6 +69,16 @@
       </chords>
     </part>
     <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>F. C. G F C.</line>
+        <line>F. C. G F C.</line>
+      </chords>
+    </part>
+    <part>
       <type>Solo</type>
       <lyrics>
         <line></line>
@@ -78,9 +88,16 @@
         <line>C. G. F. C.</line>
         <line>C. G. Am. F.</line>
         <line>C. G. F. C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Let it be, let it be, let it be, let it be.</line>
+        <line>Whisper words of wisdom, let it be.</line>
+      </lyrics>
+      <chords>
         <line></line>
-        <line>Am. G. F. C.</line>
-        <line>C. G. F. C.</line>
         <line>Am. G. F. C.</line>
         <line>C. G. F. C.</line>
       </chords>
@@ -106,6 +123,8 @@
         <line>Let it be, let it be, let it be, let it be.</line>
         <line>There will be an answer, let it be.</line>
         <line>Let it be, let it be, let it be, let it be.</line>
+        <line>There will be an answer, let it be.</line>
+        <line>Let it be, let it be, let it be, let it be.</line>
         <line>Whisper words of wisdom, let it be.</line>
       </lyrics>
       <chords>
@@ -113,6 +132,17 @@
         <line>C. G. F. C.</line>
         <line>Am. G. F. C.</line>
         <line>C. G. F. C.</line>
+        <line>Am. G. F. C.</line>
+        <line>C. G. F. C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>F. C. G F C.</line>
       </chords>
     </part>
   </parts>

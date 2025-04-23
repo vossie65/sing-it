@@ -413,7 +413,10 @@ extension SongPartEditorViewController: UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: SongPartTableViewCell.identifier, for: indexPath) as! SongPartTableViewCell
         
         let part = song.parts[indexPath.row]
-        cell.configure(with: part, index: indexPath.row)
+        let isFirstPart = indexPath.row == 0
+        let isLastPart = indexPath.row == song.parts.count - 1
+        
+        cell.configure(with: part, index: indexPath.row, isFirst: isFirstPart, isLast: isLastPart)
         
         // Set the delete handler to remove the part when trash icon is clicked
         cell.deleteHandler = { [weak self] in
@@ -432,6 +435,52 @@ extension SongPartEditorViewController: UITableViewDelegate, UITableViewDataSour
             
             // Reload remaining cells to ensure they have the correct indexes
             tableView.reloadData()
+        }
+        
+        // Set the move up handler for the up arrow button
+        cell.moveUpHandler = { [weak self] in
+            guard let self = self else { return }
+            
+            // Don't move up if it's already at the top
+            guard indexPath.row > 0 else { return }
+            
+            // Get the current part
+            let currentPart = self.song.parts[indexPath.row]
+            
+            // Remove it from its current position
+            self.song.parts.remove(at: indexPath.row)
+            
+            // Insert it at the new position (one higher in the list)
+            self.song.parts.insert(currentPart, at: indexPath.row - 1)
+            
+            // Reload the tableView to reflect changes
+            tableView.reloadData()
+            
+            // Optional: scroll to make sure the moved row is visible
+            tableView.scrollToRow(at: IndexPath(row: indexPath.row - 1, section: 0), at: .middle, animated: true)
+        }
+        
+        // Set the move down handler for the down arrow button
+        cell.moveDownHandler = { [weak self] in
+            guard let self = self else { return }
+            
+            // Don't move down if it's already at the bottom
+            guard indexPath.row < self.song.parts.count - 1 else { return }
+            
+            // Get the current part
+            let currentPart = self.song.parts[indexPath.row]
+            
+            // Remove it from its current position
+            self.song.parts.remove(at: indexPath.row)
+            
+            // Insert it at the new position (one lower in the list)
+            self.song.parts.insert(currentPart, at: indexPath.row + 1)
+            
+            // Reload the tableView to reflect changes
+            tableView.reloadData()
+            
+            // Optional: scroll to make sure the moved row is visible
+            tableView.scrollToRow(at: IndexPath(row: indexPath.row + 1, section: 0), at: .middle, animated: true)
         }
         
         return cell
