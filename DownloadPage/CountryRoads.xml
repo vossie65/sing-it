@@ -5,69 +5,92 @@
     <part>
       <type>Verse</type>
       <lyrics>
-        <line>Almost heaven, West Virginia, Blue Ridge Mountains, Shenandoah River.</line>
-        <line>Live is old there, older than the trees, younger than the mountains, growin‘ like a breeze.</line>
+        <line>Almost heaven, West Virginia,</line>
+        <line>Blue Ridge Mountains, Shenandoah River.</line>
+        <line>Live is old there, older than the trees,</line>
+        <line>Younger than the mountains, growin‘ like a breeze.</line>
       </lyrics>
       <chords>
-        <line>C Am G F C</line>
-        <line>C Am G F C</line>
+        <line>C. .. Am. ..</line>
+        <line>G. .. F. C.</line>
+        <line>C. .. Am. ..</line>
+        <line>G. .. F. C.</line>
       </chords>
     </part>
     <part>
       <type>Chorus</type>
       <lyrics>
-        <line>Country roads, take me home, to the place, I belong,</line>
-        <line>West Virginia, mountain mama, take me home, country roads.</line>
+        <line>Country roads, take me home,</line>
+        <line>To the place, I belong,</line>
+        <line>West Virginia, mountain mama,</line>
+        <line>Take me home, country roads.</line>
       </lyrics>
       <chords>
-        <line>C G Am F</line>
-        <line>C G F C</line>
+        <line>C. .. G. ..</line>
+        <line>Am. .. F. ..</line>
+        <line>C. .. G. ..</line>
+        <line>F. .. C. ..</line>
       </chords>
     </part>
     <part>
       <type>Verse</type>
       <lyrics>
-        <line>All my memories gather 'round her, miner's lady, stranger to blue water.</line>
-        <line></line>
-        <line>Dark and dusty, painted on the sky, misty taste of moonshine, teardrop in my eye.</line>
+        <line>All my memories gather 'round her,</line>
+        <line>Miner's lady, stranger to blue water.</line>
+        <line>Dark and dusty, painted on the sky, </line>
+        <line>Misty taste of moonshine, teardrop in my eye.</line>
       </lyrics>
       <chords>
-        <line>C Am G F C</line>
-        <line>C Am G F C</line>
+        <line>C. .. Am. ..</line>
+        <line>G. .. F. C.</line>
+        <line>C. .. Am. ..</line>
+        <line>G. .. F. C.</line>
       </chords>
     </part>
     <part>
       <type>Chorus</type>
       <lyrics>
-        <line>Country roads, take me home, to the place, I belong,</line>
-        <line>West Virginia, mountain mama, take me home, country roads.</line>
+        <line>Country roads, take me home,</line>
+        <line>To the place, I belong,</line>
+        <line>West Virginia, mountain mama,</line>
+        <line>Take me home, country roads.</line>
       </lyrics>
       <chords>
-        <line>C G Am F</line>
-        <line>C G F C</line>
+        <line>C. .. G. ..</line>
+        <line>Am. .. F. ..</line>
+        <line>C. .. G. ..</line>
+        <line>F. .. C. ..</line>
       </chords>
     </part>
     <part>
       <type>Bridge</type>
       <lyrics>
-        <line>I here her voice in the morning hour she call me, Radio reminds me of my home far away</line>
-        <line>Driving down the road I get a feeling that I should have been home yesterday, yesterday.</line>
+        <line>I here her voice in the morning hour she call me,</line>
+        <line>Radio reminds me of my home far away</line>
+        <line>Driving down the road I get a feeling that I should have been home</line>
+        <line>Yesterday, yesterday.</line>
       </lyrics>
       <chords>
-        <line>Am G C F C G</line>
-        <line>Am A# F C G G7</line>
+        <line>Am. G. C. ..</line>
+        <line>F. C. G. ..</line>
+        <line>Am. A#. F. C.</line>
+        <line>G. .. G7. ..</line>
         <line></line>
       </chords>
     </part>
     <part>
       <type>Chorus</type>
       <lyrics>
-        <line>Country roads, take me home, to the place, I belong,</line>
-        <line>West Virginia, mountain mama, take me home, country roads.</line>
+        <line>Country roads, take me home,</line>
+        <line>To the place, I belong,</line>
+        <line>West Virginia, mountain mama,</line>
+        <line>Take me home, country roads.</line>
       </lyrics>
       <chords>
-        <line>C G Am F</line>
-        <line>C G F C</line>
+        <line>C. .. G. ..</line>
+        <line>Am. .. F. ..</line>
+        <line>C. .. G. ..</line>
+        <line>F. .. C. ..</line>
       </chords>
     </part>
   </parts>

@@ -9,8 +9,9 @@ class SongPartEditorViewController: UIViewController {
     @IBOutlet weak var repeatPartButton: UIButton!
     @IBOutlet weak var showXMLButton: UIButton!
     
-    // Add a new label for artist
-    private let artistLabel = UILabel()
+    // Replace static label with editable fields
+    private let titleTextField = UITextField()
+    private let artistTextField = UITextField()
     
     var song: Song!
     var isNewSong: Bool = false
@@ -29,25 +30,53 @@ class SongPartEditorViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .white
         
-        // Configure the title label to only show the title with larger font
-        songTitleLabel.text = song.title
-        songTitleLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        songTitleLabel.textAlignment = .center
+        // Hide the original title label
+        songTitleLabel.isHidden = true
         
-        // Configure the artist label
-        artistLabel.text = song.artist
-        artistLabel.font = UIFont.systemFont(ofSize: 18)
-        artistLabel.textColor = .secondaryLabel
-        artistLabel.textAlignment = .center
-        artistLabel.translatesAutoresizingMaskIntoConstraints = false
+        // Configure title text field
+        titleTextField.text = song.title
+        titleTextField.font = UIFont.boldSystemFont(ofSize: 24)
+        titleTextField.textAlignment = .center
+        titleTextField.borderStyle = .none
+        titleTextField.placeholder = "Song Title"
+        titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        titleTextField.returnKeyType = .done
+        titleTextField.delegate = self
+        view.addSubview(titleTextField)
         
-        // Add artist label to view and position it below the title label
-        view.addSubview(artistLabel)
+        // Configure artist text field
+        artistTextField.text = song.artist
+        artistTextField.font = UIFont.systemFont(ofSize: 18)
+        artistTextField.textColor = .secondaryLabel
+        artistTextField.textAlignment = .center
+        artistTextField.borderStyle = .none
+        artistTextField.placeholder = "Artist Name"
+        artistTextField.translatesAutoresizingMaskIntoConstraints = false
+        artistTextField.returnKeyType = .done
+        artistTextField.delegate = self
+        view.addSubview(artistTextField)
+        
+        // Position the editable fields where the labels would have been
         NSLayoutConstraint.activate([
-            artistLabel.topAnchor.constraint(equalTo: songTitleLabel.bottomAnchor, constant: 8),
-            artistLabel.leadingAnchor.constraint(equalTo: songTitleLabel.leadingAnchor),
-            artistLabel.trailingAnchor.constraint(equalTo: songTitleLabel.trailingAnchor)
+            titleTextField.topAnchor.constraint(equalTo: songTitleLabel.topAnchor),
+            titleTextField.leadingAnchor.constraint(equalTo: songTitleLabel.leadingAnchor),
+            titleTextField.trailingAnchor.constraint(equalTo: songTitleLabel.trailingAnchor),
+            titleTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            artistTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
+            artistTextField.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor),
+            artistTextField.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
+            artistTextField.heightAnchor.constraint(equalToConstant: 30)
         ])
+        
+        // Add light borders and padding to make it clear they're editable
+        titleTextField.layer.borderColor = UIColor.systemGray5.cgColor
+        titleTextField.layer.borderWidth = 0.5
+        titleTextField.layer.cornerRadius = 6
+        
+        artistTextField.layer.borderColor = UIColor.systemGray5.cgColor
+        artistTextField.layer.borderWidth = 0.5
+        artistTextField.layer.cornerRadius = 6
         
         // Configure the Add Part button
         addPartButton.backgroundColor = .systemBlue
@@ -129,6 +158,10 @@ class SongPartEditorViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        // Update song with the current text field values
+        song.title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
+        song.artist = artistTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
+        
         if isNewSong {
             dataManager.addSong(song)
             isNewSong = false // Not a new song anymore
@@ -464,5 +497,23 @@ class XMLViewController: UIViewController {
             textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             textView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         ])
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SongPartEditorViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Dismiss keyboard when return key is pressed
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Update the song object when editing is finished
+        if textField == titleTextField {
+            song.title = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
+        } else if textField == artistTextField {
+            song.artist = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
+        }
     }
 }
