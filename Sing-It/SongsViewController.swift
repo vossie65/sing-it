@@ -94,7 +94,11 @@ class SongTableViewCell: UITableViewCell {
 class SongsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var createNewSongButton: UIButton!
+    
+    // Replace the single button with three separate buttons
+    @IBOutlet weak var createEmptySongButton: UIButton!
+    @IBOutlet weak var importXMLButton: UIButton!
+    @IBOutlet weak var downloadButton: UIButton!
     
     var songs: [Song] = []
     
@@ -108,8 +112,10 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         tableView.register(SongTableViewCell.self, forCellReuseIdentifier: SongTableViewCell.identifier)
         
-        // Round the corners of the create button
-        createNewSongButton.layer.cornerRadius = 8
+        // Round the corners of the buttons
+        createEmptySongButton.layer.cornerRadius = 8
+        importXMLButton.layer.cornerRadius = 8  
+        downloadButton.layer.cornerRadius = 8
         
         // Load songs from data manager
         loadSongs()
@@ -165,40 +171,18 @@ class SongsViewController: UIViewController, UITableViewDataSource, UITableViewD
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func createNewSongTapped(_ sender: UIButton) {
-        // Show an action sheet with three options
-        let actionSheet = UIAlertController(title: "Create New Song", message: "Choose a method to create a new song", preferredStyle: .actionSheet)
-        
-        // Option 1: Create from scratch
-        let createFromScratchAction = UIAlertAction(title: "Create Empty Song", style: .default) { [weak self] _ in
-            self?.createEmptySong()
-        }
-        
-        // Option 2: Import from XML
-        let importFromXMLAction = UIAlertAction(title: "Import from XML", style: .default) { [weak self] _ in
-            self?.importSongFromXML()
-        }
-        
-        // Option 3: Download (new option)
-        let downloadAction = UIAlertAction(title: "Download", style: .default) { [weak self] _ in
-            self?.openDownloadPage()
-        }
-        
-        // Cancel option
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        actionSheet.addAction(createFromScratchAction)
-        actionSheet.addAction(importFromXMLAction)
-        actionSheet.addAction(downloadAction)
-        actionSheet.addAction(cancelAction)
-        
-        // For iPad, we need to set the source view for the popover
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = sender
-            popoverController.sourceRect = sender.bounds
-        }
-        
-        present(actionSheet, animated: true)
+    // Replace the createNewSongTapped action with three separate action methods
+    
+    @IBAction func createEmptySongTapped(_ sender: UIButton) {
+        createEmptySong()
+    }
+    
+    @IBAction func importXMLTapped(_ sender: UIButton) {
+        importSongFromXML()
+    }
+    
+    @IBAction func downloadTapped(_ sender: UIButton) {
+        openDownloadPage()
     }
     
     // Existing method for creating an empty song
@@ -376,6 +360,7 @@ class XMLSongParser: NSObject, XMLParserDelegate {
     private var lineContent = ""
     private var tempTitle = ""
     private var tempArtist = ""
+    private var tempTempo = "" // Add temporary storage for tempo
     
     func parseSongFromXML(_ xmlString: String) -> Song? {
         guard let data = xmlString.data(using: .utf8) else { return nil }
@@ -395,6 +380,7 @@ class XMLSongParser: NSObject, XMLParserDelegate {
         lineContent = ""
         tempTitle = ""
         tempArtist = ""
+        tempTempo = "" // Reset tempo value
         
         if parser.parse() {
             return song
@@ -442,6 +428,10 @@ class XMLSongParser: NSObject, XMLParserDelegate {
             if song == nil && !tempTitle.isEmpty && !tempArtist.isEmpty {
                 song = Song(title: tempTitle, artist: tempArtist)
             }
+        case "tempo":
+            if let song = song, let tempo = Int(tempTempo) {
+                song.tempo = tempo
+            }
         case "part":
             if let song = song, let partType = currentPartType {
                 let part = Part(partType: partType, lyrics: currentLyrics, chords: currentChords)
@@ -479,6 +469,8 @@ class XMLSongParser: NSObject, XMLParserDelegate {
                 tempTitle += data
             case "artist":
                 tempArtist += data
+            case "tempo":
+                tempTempo += data
             case "type":
                 if let partType = PartType(rawValue: data) {
                     currentPartType = partType

@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 class SongViewerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -10,6 +11,8 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     private let artistLabel = UILabel()
     private let oneRowButton = UIButton(type: .system)
     private let twoRowButton = UIButton(type: .system)
+    private let playAllButton = UIButton(type: .system) // New Play All button
+    private let stopButton = UIButton(type: .system) // New Stop button
     
     // Display mode for song parts
     enum DisplayMode {
@@ -20,11 +23,38 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     // Current display mode, default is one row (changed from two row)
     private var currentDisplayMode: DisplayMode = .oneRow
     
+    // Audio settings - using fixed default values
+    private var currentInstrument: UInt8 = 0  // Always use piano
+    private var chordDuration: TimeInterval? = nil  // Always use full-beat (nil means use tempo-based timing)
+    private var tempo: Double = 60.0  // Default will be overwritten by song.tempo
+    
+    // Indicate if playback is in progress
+    private var isPlaying = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         configureHeaderView()
+        
+        // Start audio engine when view loads
+        AudioEngine.shared.start()
+        
+        // Set instrument to piano (0) first
+        AudioEngine.shared.setInstrument(currentInstrument)
+        
+        // Set tempo from song model
+        if let song = song {
+            tempo = Double(song.tempo)
+            AudioEngine.shared.setTempo(tempo)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Stop audio engine when leaving the view
+        AudioEngine.shared.stop()
     }
     
     private func setupUI() {
@@ -90,10 +120,22 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
             twoRowButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             twoRowButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
             
+            // Play All button beside two row button (slightly to the left)
+            playAllButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            playAllButton.trailingAnchor.constraint(equalTo: twoRowButton.leadingAnchor, constant: -16),
+            playAllButton.widthAnchor.constraint(equalToConstant: 36),
+            playAllButton.heightAnchor.constraint(equalToConstant: 36),
+            
+            // Stop button to the right of play all button (repositioned)
+            stopButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            stopButton.leadingAnchor.constraint(equalTo: playAllButton.trailingAnchor, constant: 8),
+            stopButton.widthAnchor.constraint(equalToConstant: 36),
+            stopButton.heightAnchor.constraint(equalToConstant: 36),
+            
             // Title centered with padding for buttons
             titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: oneRowButton.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: twoRowButton.leadingAnchor, constant: -8),
+            titleLabel.trailingAnchor.constraint(equalTo: playAllButton.leadingAnchor, constant: -8),
             titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
             
             // Artist below title
@@ -136,6 +178,21 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         twoRowButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(twoRowButton)
         
+        // Setup Play All button
+        playAllButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+        playAllButton.setImage(UIImage(systemName: "stop.circle.fill"), for: .selected)
+        playAllButton.tintColor = .systemGreen
+        playAllButton.translatesAutoresizingMaskIntoConstraints = false
+        playAllButton.addTarget(self, action: #selector(playAllButtonTapped), for: .touchUpInside)
+        headerView.addSubview(playAllButton)
+        
+        // Setup Stop button
+        stopButton.setImage(UIImage(systemName: "stop.circle.fill"), for: .normal)
+        stopButton.tintColor = .systemRed
+        stopButton.translatesAutoresizingMaskIntoConstraints = false
+        stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
+        headerView.addSubview(stopButton)
+        
         // Set initial button states
         updateButtonStates()
     }
@@ -172,7 +229,97 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @objc private func backButtonTapped() {
+        // Stop any playing music before navigating back
+        AudioEngine.shared.stopPlayback()
+        isPlaying = false
+        playAllButton.isSelected = false
+        
+        // Navigate back
         navigationController?.popViewController(animated: true)
+    }
+    
+    // Helper method to convert beats to seconds based on current tempo
+    private func beatsToSeconds(_ beats: Double = 1.0) -> TimeInterval {
+        return 60.0 / tempo * beats
+    }
+    
+    // Function to handle playing all chords
+    @objc private func playAllButtonTapped() {
+        if isPlaying {
+            // Stop playback if already playing
+            AudioEngine.shared.stopPlayback()
+            isPlaying = false
+            playAllButton.isSelected = false
+            return
+        }
+        
+        // Animate button
+        UIView.animate(withDuration: 0.1, animations: {
+            self.playAllButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.playAllButton.transform = .identity
+            }
+        }
+        
+        // Make sure instrument is set to piano before playing
+        AudioEngine.shared.setInstrument(currentInstrument)
+        
+        // Set playing state
+        isPlaying = true
+        playAllButton.isSelected = true
+        
+        // Collect all chords from all parts into a single string
+        var allChords = ""
+        
+        for part in song.parts {
+            if !part.chords.isEmpty {
+                // Add space before adding more chords unless it's the first set
+                if !allChords.isEmpty {
+                    allChords += " "
+                }
+                
+                // Add chords for this part - preserve dots by only replacing newlines with spaces
+                allChords += part.chords
+                    .replacingOccurrences(of: "\n", with: " ")
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+        }
+        
+        print("Playing chord progression: \(allChords)")
+        
+        // Play all chords with tempo-based timing
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Play the chord progression with optional duration and count-in beats
+            AudioEngine.shared.playChordProgression(
+                chordString: allChords,
+                duration: self.chordDuration,
+                withCountIn: true // Add four count-in beats
+            )
+            
+            // Reset playing state after playback completes
+            DispatchQueue.main.async {
+                self.isPlaying = false
+                self.playAllButton.isSelected = false
+            }
+        }
+    }
+    
+    // New function to handle stop button
+    @objc private func stopButtonTapped() {
+        // Stop any ongoing playback
+        AudioEngine.shared.stopPlayback()
+        isPlaying = false
+        playAllButton.isSelected = false
+        
+        // Animate button
+        UIView.animate(withDuration: 0.1, animations: {
+            self.stopButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.stopButton.transform = .identity
+            }
+        }
     }
     
     // MARK: - UITableViewDataSource
@@ -210,6 +357,17 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         
         let part = song.parts[indexPath.section]
         cell.configure(with: part, displayMode: currentDisplayMode)
+        
+        // Set up chord playing handler (without count-in for individual parts)
+        cell.playChordHandler = { [weak self] chordString in
+            guard let self = self, !chordString.isEmpty else { return }
+            AudioEngine.shared.playChordProgression(
+                chordString: chordString, 
+                duration: self.chordDuration,
+                withCountIn: false // No count-in for individual part playback
+            )
+        }
+        
         return cell
     }
 }
@@ -222,11 +380,16 @@ class SongPartViewCell: UITableViewCell {
     private let chordsLabel = UILabel()
     private let lyricsLabel = UILabel()
     private let containerView = UIView()
+    private let playButton = UIButton(type: .system)
     
     // Store constraint references to be able to activate/deactivate them
     private var oneRowConstraints: [NSLayoutConstraint] = []
     private var twoRowConstraints: [NSLayoutConstraint] = []
     private var currentMode: SongViewerViewController.DisplayMode = .oneRow
+    
+    // Closure to handle playing chords
+    var playChordHandler: ((String) -> Void)?
+    private var currentChords: String = ""
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -269,13 +432,25 @@ class SongPartViewCell: UITableViewCell {
         lyricsLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(lyricsLabel)
         
-        // Base container constraints that apply to both modes
+        // Play button setup - moved to left side above part type
+        playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+        playButton.tintColor = .systemGreen
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        containerView.addSubview(playButton)
+        
         // Reduced top and bottom margins from 8 to 4 to decrease spacing between parts
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            
+            // Play button constraints - moved to top left corner
+            playButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            playButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+            playButton.widthAnchor.constraint(equalToConstant: 36),
+            playButton.heightAnchor.constraint(equalToConstant: 36)
         ])
         
         // Create both sets of constraints but only activate the default mode
@@ -289,9 +464,9 @@ class SongPartViewCell: UITableViewCell {
     private func createConstraints() {
         // One row constraints (side-by-side)
         oneRowConstraints = [
-            // Part type label (1/12 of width)
+            // Part type label below play button
             partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            partTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            partTypeLabel.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 4),
             partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
             partTypeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/12.0),
             
@@ -301,7 +476,7 @@ class SongPartViewCell: UITableViewCell {
             chordsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
             chordsLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 3.0/12.0),
             
-            // Lyrics label (8/12 of width)
+            // Lyrics label
             lyricsLabel.leadingAnchor.constraint(equalTo: chordsLabel.trailingAnchor, constant: 8),
             lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
@@ -310,9 +485,9 @@ class SongPartViewCell: UITableViewCell {
         
         // Two row constraints (stacked)
         twoRowConstraints = [
-            // Part type label on the left of the chords
-            partTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            // Part type label below play button
             partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            partTypeLabel.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 4),
             partTypeLabel.widthAnchor.constraint(equalToConstant: 70), // Fixed width for part type
             
             // Chords label to the right of part type
@@ -347,6 +522,12 @@ class SongPartViewCell: UITableViewCell {
         chordsLabel.text = part.chords.isEmpty ? "No chords" : part.chords
         lyricsLabel.text = part.lyrics
         
+        // Store chord data for playing
+        currentChords = part.chords
+        
+        // Show play button only if chords exist
+        playButton.isHidden = part.chords.isEmpty
+        
         // Only show lyrics label if they exist
         lyricsLabel.isHidden = part.lyrics.isEmpty
         
@@ -359,6 +540,20 @@ class SongPartViewCell: UITableViewCell {
                 activateTwoRowMode()
             }
         }
+    }
+    
+    @objc private func playButtonTapped() {
+        // Play button animation
+        UIView.animate(withDuration: 0.1, animations: {
+            self.playButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.playButton.transform = .identity
+            }
+        }
+        
+        // Call the handler to play the chords
+        playChordHandler?(currentChords)
     }
     
     override func prepareForReuse() {

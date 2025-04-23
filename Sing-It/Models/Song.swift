@@ -4,11 +4,13 @@ class Song: Codable, Identifiable {
     var id = UUID()
     var title: String
     var artist: String
+    var tempo: Int
     var parts: [Part]
     
-    init(title: String, artist: String, parts: [Part] = []) {
+    init(title: String, artist: String, tempo: Int = 120, parts: [Part] = []) {
         self.title = title
         self.artist = artist
+        self.tempo = tempo
         self.parts = parts
     }
     

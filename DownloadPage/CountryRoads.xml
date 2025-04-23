@@ -1,6 +1,7 @@
 <song>
   <title>Country Roads</title>
   <artist>John Denver</artist>
+  <tempo>85</tempo>
   <parts>
     <part>
       <type>Verse</type>

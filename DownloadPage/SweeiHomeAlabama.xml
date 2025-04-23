@@ -1,0 +1,136 @@
+<song>
+  <title>Sweet Home Alabama (unedited)</title>
+  <artist>Lynyrd Skynyrd</artist>
+  <tempo>98</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line>One, two, three, turn it up</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Big wheels keep on turning</line>
+        <line>Carry me home to see my kin</line>
+        <line>Singing songs about the southland</line>
+        <line>I miss Alabamy once again, and I think it's a sin</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Sweet home Alabama</line>
+        <line>Where the skies are so blue</line>
+        <line>Sweet home Alabama</line>
+        <line>Lord, I'm coming home to you</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Well, I heard Mister Young sing about her</line>
+        <line>Well, I heard ole Neil put her down</line>
+        <line>Well, I hope Neil Young will remember</line>
+        <line>A southern man don't need him around anyhow</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Sweet home Alabama</line>
+        <line>Where the skies are so blue</line>
+        <line>Sweet home Alabama</line>
+        <line>Lord, I'm coming home to you</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>In Birmingham they love the Gov'nor, boo hoo hoo</line>
+        <line>Now we all did what we could do</line>
+        <line>Now Watergate does not bother me</line>
+        <line>Does your conscience bother you? Tell the truth</line>
+      </lyrics>
+      <chords>
+        <line>D C G F C</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Sweet home Alabama</line>
+        <line>Where the skies are so blue</line>
+        <line>Sweet home Alabama</line>
+        <line>Lord, I'm coming home to you</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Now Muscle Shoals has got the Swampers</line>
+        <line>And they've been known to pick a song or two</line>
+        <line>Lord, they get me off so much</line>
+        <line>They pick me up when I'm feeling blue, now how about you?</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Sweet home Alabama</line>
+        <line>Where the skies are so blue</line>
+        <line>Sweet home Alabama</line>
+        <line>Lord, I'm coming home to you</line>
+      </lyrics>
+      <chords>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+        <line>D C G</line>
+      </chords>
+    </part>
+  </parts>
+</song>

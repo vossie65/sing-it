@@ -18,16 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ZGa-6L-fE5">
-                                <rect key="frame" x="406" y="563" width="220" height="250"/>
+                                <rect key="frame" x="406" y="568" width="220" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sing-It" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4e-b3-tJv">
-                                        <rect key="frame" x="59" y="0.0" width="102.5" height="40"/>
+                                        <rect key="frame" x="59" y="0.0" width="102.5" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZu-JJ-WeS">
-                                        <rect key="frame" x="0.0" y="60" width="220" height="50"/>
+                                        <rect key="frame" x="0.0" y="50" width="220" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="220" id="8TI-rM-rId"/>
@@ -36,58 +36,58 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Songs"/>
                                         <connections>
-                                            <action selector="createSongTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="hcE-ry-frw"/>
+                                            <action selector="createSongTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nie-Nn-tOo"/>
                                             <segue destination="PfJ-k4-ptT" kind="presentation" modalPresentationStyle="fullScreen" id="aLQ-e7-tRu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F74-eL-BTC">
-                                        <rect key="frame" x="0.0" y="130" width="220" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EsX-0B-FbN">
+                                        <rect key="frame" x="0.0" y="120" width="220" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="eNE-Oi-RKB"/>
-                                            <constraint firstAttribute="width" constant="220" id="h81-ii-acw"/>
+                                            <constraint firstAttribute="height" constant="50" id="Lht-SI-3qY"/>
+                                            <constraint firstAttribute="width" constant="220" id="wEg-zL-SK8"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Setlists"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create Set"/>
                                         <connections>
-                                            <action selector="createSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="K9T-05-enj"/>
+                                            <action selector="createSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKy-iT-jIm"/>
                                             <segue destination="e7G-JL-uFu" kind="presentation" modalPresentationStyle="fullScreen" id="gpa-Q3-utb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDr-jC-JiG">
-                                        <rect key="frame" x="0.0" y="200" width="220" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgF-v0-bAH">
+                                        <rect key="frame" x="0.0" y="190" width="220" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="eGx-rH-Kpm"/>
-                                            <constraint firstAttribute="width" constant="220" id="thL-y6-Lw4"/>
+                                            <constraint firstAttribute="width" constant="220" id="Ony-ds-nTI"/>
+                                            <constraint firstAttribute="height" constant="50" id="nP8-HT-IaZ"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Play!"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Play Set"/>
                                         <connections>
-                                            <action selector="playSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="aDB-Sg-mWO"/>
+                                            <action selector="playSetTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="ErA-be-xbZ"/>
                                             <segue destination="TxV-sU-xzV" kind="presentation" modalPresentationStyle="fullScreen" id="1Qq-69-juW"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="4zo-GC-rLm"/>
-                                    <constraint firstAttribute="height" constant="250" id="e9X-SS-XlT"/>
+                                    <constraint firstAttribute="height" constant="240" id="e9X-SS-XlT"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Gz5-G7-OkF"/>
-                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cWf-hi-YOE"/>
+                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2UL-bc-cfL"/>
+                            <constraint firstItem="ZGa-6L-fE5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fr9-Jm-0ca"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="createSetButton" destination="F74-eL-BTC" id="KRI-EB-XqG"/>
-                        <outlet property="createSongButton" destination="dZu-JJ-WeS" id="faW-nx-LXj"/>
-                        <outlet property="playSetButton" destination="gDr-jC-JiG" id="1Eh-W1-5TU"/>
-                        <outlet property="stackView" destination="ZGa-6L-fE5" id="6y0-iy-9na"/>
-                        <outlet property="titleLabel" destination="x4e-b3-tJv" id="feJ-DC-r1W"/>
+                        <outlet property="createSetButton" destination="EsX-0B-FbN" id="nHu-Z5-6NA"/>
+                        <outlet property="createSongButton" destination="dZu-JJ-WeS" id="cCB-Fm-ZQ3"/>
+                        <outlet property="playSetButton" destination="WgF-v0-bAH" id="CAQ-Se-RTt"/>
+                        <outlet property="stackView" destination="ZGa-6L-fE5" id="JaA-o9-BDq"/>
+                        <outlet property="titleLabel" destination="x4e-b3-tJv" id="yvP-7g-TRw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -119,34 +119,63 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hBp-bI-CtC">
-                                <rect key="frame" x="20" y="70" width="992" height="1206"/>
+                                <rect key="frame" x="20" y="70" width="992" height="1156"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qvS-2V-JS0">
-                                <rect key="frame" x="416" y="1296" width="200" height="50"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="new-buttons-stack">
+                                <rect key="frame" x="216" y="1296" width="600" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="create-empty-button">
+                                        <rect key="frame" x="0.0" y="0.0" width="192" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="empty-height"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create Empty Song">
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="createEmptySongTapped:" destination="mCh-ih-hry" eventType="touchUpInside" id="empty-action"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="import-xml-button">
+                                        <rect key="frame" x="204" y="0.0" width="192" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Import from XML">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="importXMLTapped:" destination="mCh-ih-hry" eventType="touchUpInside" id="xml-action"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="download-button">
+                                        <rect key="frame" x="408" y="0.0" width="192" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Download">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="downloadTapped:" destination="mCh-ih-hry" eventType="touchUpInside" id="download-action"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="RFB-dJ-vSb"/>
-                                    <constraint firstAttribute="width" constant="200" id="tPr-ZJ-F1Y"/>
+                                    <constraint firstAttribute="width" constant="600" id="stack-width"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Create New Song">
-                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="createNewSongTapped:" destination="mCh-ih-hry" eventType="touchUpInside" id="TR6-FU-Oig"/>
-                                </connections>
-                            </button>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MyM-aK-ffd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="hBp-bI-CtC" firstAttribute="top" secondItem="MyM-aK-ffd" secondAttribute="top" constant="20" id="47l-W2-4QF"/>
-                            <constraint firstItem="qvS-2V-JS0" firstAttribute="top" secondItem="hBp-bI-CtC" secondAttribute="bottom" constant="20" id="7A6-Bn-Bag"/>
                             <constraint firstItem="hBp-bI-CtC" firstAttribute="leading" secondItem="MyM-aK-ffd" secondAttribute="leading" constant="20" id="K0P-sp-Sny"/>
                             <constraint firstItem="MyM-aK-ffd" firstAttribute="trailing" secondItem="hBp-bI-CtC" secondAttribute="trailing" constant="20" id="MgO-U2-Lj1"/>
-                            <constraint firstItem="MyM-aK-ffd" firstAttribute="bottom" secondItem="qvS-2V-JS0" secondAttribute="bottom" constant="30" id="krb-aw-bcq"/>
-                            <constraint firstItem="qvS-2V-JS0" firstAttribute="centerX" secondItem="AgM-qO-Ysk" secondAttribute="centerX" id="q1w-IA-NAO"/>
+                            <constraint firstItem="MyM-aK-ffd" firstAttribute="bottom" secondItem="new-buttons-stack" secondAttribute="bottom" constant="30" id="bottom-constraint"/>
+                            <constraint firstItem="new-buttons-stack" firstAttribute="top" secondItem="hBp-bI-CtC" secondAttribute="bottom" constant="70" id="button-top-constraint"/>
+                            <constraint firstItem="new-buttons-stack" firstAttribute="centerX" secondItem="AgM-qO-Ysk" secondAttribute="centerX" id="center-x-constraint"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Songs" id="X4G-G2-Xgk">
@@ -157,7 +186,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createNewSongButton" destination="qvS-2V-JS0" id="hET-5n-ZDt"/>
+                        <outlet property="createEmptySongButton" destination="create-empty-button" id="empty-outlet"/>
+                        <outlet property="downloadButton" destination="download-button" id="download-outlet"/>
+                        <outlet property="importXMLButton" destination="import-xml-button" id="xml-outlet"/>
                         <outlet property="tableView" destination="hBp-bI-CtC" id="5Pt-0o-YZK"/>
                     </connections>
                 </viewController>
@@ -180,15 +211,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IrN-Md-WJr">
-                                <rect key="frame" x="20" y="113" width="992" height="1173"/>
+                                <rect key="frame" x="20" y="113" width="992" height="1113"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6DP-jF-9oW">
-                                <rect key="frame" x="20" y="1306" width="992" height="50"/>
+                                <rect key="frame" x="20" y="1286" width="992" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ltp-kI-exY">
                                         <rect key="frame" x="0.0" y="0.0" width="240.5" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="q69-6A-ZcY"/>
                                         </constraints>
@@ -202,7 +233,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QgA-ZB-0rh">
                                         <rect key="frame" x="250.5" y="0.0" width="240.5" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Repeat Part">
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -213,10 +244,10 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcy-QH-Yhr">
                                         <rect key="frame" x="501" y="0.0" width="240.5" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Show XML">
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Export XML">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="showXMLButtonTapped:" destination="WcB-uf-EfI" eventType="touchUpInside" id="Y5s-QF-FYK"/>
@@ -224,7 +255,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WzJ-Qs-xgx">
                                         <rect key="frame" x="751.5" y="0.0" width="240.5" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <color key="backgroundColor" systemColor="systemPinkColor"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Done">
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -247,7 +278,7 @@
                             <constraint firstItem="au4-2j-U0u" firstAttribute="trailing" secondItem="IrN-Md-WJr" secondAttribute="trailing" constant="20" id="m0m-vT-S7O"/>
                             <constraint firstItem="au4-2j-U0u" firstAttribute="bottom" secondItem="6DP-jF-9oW" secondAttribute="bottom" constant="20" id="plo-qI-LzF"/>
                             <constraint firstItem="au4-2j-U0u" firstAttribute="trailing" secondItem="6DP-jF-9oW" secondAttribute="trailing" constant="20" id="sRA-K1-GFq"/>
-                            <constraint firstItem="6DP-jF-9oW" firstAttribute="top" secondItem="IrN-Md-WJr" secondAttribute="bottom" constant="20" id="uBF-4e-XWH"/>
+                            <constraint firstItem="6DP-jF-9oW" firstAttribute="top" secondItem="IrN-Md-WJr" secondAttribute="bottom" constant="60" id="uBF-4e-XWH"/>
                             <constraint firstItem="IrN-Md-WJr" firstAttribute="leading" secondItem="au4-2j-U0u" secondAttribute="leading" constant="20" id="wzS-uY-sIp"/>
                         </constraints>
                     </view>
@@ -263,7 +294,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFn-Cq-wUm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2152" y="-27"/>
+            <point key="canvasLocation" x="2151.1627906976746" y="-27.034883720930232"/>
         </scene>
         <!--Create Set View Controller-->
         <scene sceneID="GtJ-G1-XKE">
@@ -274,7 +305,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setlists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sj5-5W-Eta">
-                                <rect key="frame" x="452.5" y="100" width="127" height="34"/>
+                                <rect key="frame" x="472" y="100" width="88.5" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -317,7 +348,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNJ-1i-ZNV">
-                                <rect key="frame" x="467" y="100" width="98" height="34"/>
+                                <rect key="frame" x="486.5" y="100" width="59" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -356,20 +387,17 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

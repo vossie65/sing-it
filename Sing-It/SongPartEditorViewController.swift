@@ -13,6 +13,11 @@ class SongPartEditorViewController: UIViewController {
     private let titleTextField = UITextField()
     private let artistTextField = UITextField()
     
+    // Add tempo control elements
+    private let tempoLabel = UILabel()
+    private let tempoSlider = UISlider()
+    private let tempoValueLabel = UILabel()
+    
     var song: Song!
     var isNewSong: Bool = false
     private let dataManager = DataManager.shared
@@ -56,6 +61,28 @@ class SongPartEditorViewController: UIViewController {
         artistTextField.delegate = self
         view.addSubview(artistTextField)
         
+        // Configure tempo label
+        tempoLabel.text = "Tempo"
+        tempoLabel.font = UIFont.systemFont(ofSize: 18)
+        tempoLabel.textColor = .label
+        tempoLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tempoLabel)
+        
+        // Configure tempo slider
+        tempoSlider.minimumValue = 40
+        tempoSlider.maximumValue = 200
+        tempoSlider.value = Float(song.tempo)
+        tempoSlider.translatesAutoresizingMaskIntoConstraints = false
+        tempoSlider.addTarget(self, action: #selector(tempoSliderChanged(_:)), for: .valueChanged)
+        view.addSubview(tempoSlider)
+        
+        // Configure tempo value label
+        tempoValueLabel.text = "\(song.tempo) BPM"
+        tempoValueLabel.font = UIFont.systemFont(ofSize: 18)
+        tempoValueLabel.textColor = .secondaryLabel
+        tempoValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tempoValueLabel)
+        
         // Position the editable fields where the labels would have been
         NSLayoutConstraint.activate([
             titleTextField.topAnchor.constraint(equalTo: songTitleLabel.topAnchor),
@@ -66,7 +93,19 @@ class SongPartEditorViewController: UIViewController {
             artistTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
             artistTextField.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor),
             artistTextField.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
-            artistTextField.heightAnchor.constraint(equalToConstant: 30)
+            artistTextField.heightAnchor.constraint(equalToConstant: 30),
+            
+            // Updated tempo controls to 30 pts above buttons (changed from 35)
+            tempoLabel.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -30),
+            tempoLabel.leadingAnchor.constraint(equalTo: addPartButton.leadingAnchor),
+            tempoLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor),
+            
+            tempoSlider.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -30),
+            tempoSlider.leadingAnchor.constraint(equalTo: tempoLabel.trailingAnchor, constant: 12),
+            tempoSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            
+            tempoValueLabel.leadingAnchor.constraint(equalTo: tempoSlider.trailingAnchor, constant: 12),
+            tempoValueLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor)
         ])
         
         // Add light borders and padding to make it clear they're editable
@@ -78,24 +117,11 @@ class SongPartEditorViewController: UIViewController {
         artistTextField.layer.borderWidth = 0.5
         artistTextField.layer.cornerRadius = 6
         
-        // Configure the Add Part button
-        addPartButton.backgroundColor = .systemBlue
-        addPartButton.setTitleColor(.white, for: .normal)
+        // Don't set button colors here - use the ones from Interface Builder
+        // We'll just make sure the buttons have rounded corners
         addPartButton.layer.cornerRadius = 8
-        
-        // Configure the Save (Done) button
-        saveButton.backgroundColor = .systemGreen
-        saveButton.setTitleColor(.white, for: .normal)
         saveButton.layer.cornerRadius = 8
-        
-        // Configure Repeat Part button
-        repeatPartButton.backgroundColor = .systemPurple
-        repeatPartButton.setTitleColor(.white, for: .normal)
         repeatPartButton.layer.cornerRadius = 8
-        
-        // Configure Show XML button
-        showXMLButton.backgroundColor = .systemOrange
-        showXMLButton.setTitleColor(.white, for: .normal)
         showXMLButton.layer.cornerRadius = 8
     }
     
@@ -161,6 +187,7 @@ class SongPartEditorViewController: UIViewController {
         // Update song with the current text field values
         song.title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
         song.artist = artistTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
+        song.tempo = Int(tempoSlider.value)
         
         if isNewSong {
             dataManager.addSong(song)
@@ -246,6 +273,7 @@ class SongPartEditorViewController: UIViewController {
         var xmlString = "<song>\n"
         xmlString += "  <title>\(escapeXML(song.title))</title>\n"
         xmlString += "  <artist>\(escapeXML(song.artist))</artist>\n"
+        xmlString += "  <tempo>\(song.tempo)</tempo>\n"
         xmlString += "  <parts>\n"
         
         for part in song.parts {
@@ -312,6 +340,11 @@ class SongPartEditorViewController: UIViewController {
         
         // Present the custom view controller
         present(editVC, animated: true)
+    }
+    
+    @objc private func tempoSliderChanged(_ sender: UISlider) {
+        let tempo = Int(sender.value)
+        tempoValueLabel.text = "\(tempo) BPM"
     }
 }
 

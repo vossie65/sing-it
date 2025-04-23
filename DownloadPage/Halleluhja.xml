@@ -1,0 +1,41 @@
+<song>
+  <title>Hallelujah (incomplete)</title>
+  <artist>Leonard Cohen</artist>
+  <tempo>58</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>G Em G Em</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I′ve heard there was a secret chord</line>
+        <line>That David played and it pleased the Lord</line>
+        <line>But you don't really care for music, do you?</line>
+        <line></line>
+        <line>Well, it goes like this, the fourth, the fifth</line>
+        <line>The minor fall and the major lift</line>
+        <line>The baffled king composing Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>G Em G Em C D G D</line>
+        <line>G C D Em C D B7 Em</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah, Hallelujah, Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>C Em C G D G Em G Em</line>
+      </chords>
+    </part>
+  </parts>
+</song>

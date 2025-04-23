@@ -1,6 +1,7 @@
 <song>
   <title>Don't look back in anger</title>
-  <artist>Oasis</artist>
+  <artist>Oasis</artist>  
+  <tempo>82</tempo>
   <parts>
     <part>
       <type>Verse</type>

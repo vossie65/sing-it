@@ -1,6 +1,7 @@
-<<song>
+<song>
   <title>Let it be</title>
   <artist>The Beatles</artist>
+  <tempo>71</tempo>
   <parts>
     <part>
       <type>Intro</type>
