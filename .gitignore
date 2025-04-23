@@ -71,3 +71,7 @@ Carthage/Build/
 
 # Backup files
 *.bak
+
+# Sound font files - can be large binary files
+Sing-It/Audio/FluidR3_GM.sf2
+*.sf2
