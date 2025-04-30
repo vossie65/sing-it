@@ -1,0 +1,108 @@
+<song>
+  <title>Father and Son</title>
+  <artist>Cat Stevens</artist>
+  <tempo>76</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>G C.. G C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>It's not time to make a change, just relax, take it easy.</line>
+        <line>You're still young, that's your fault, there's so much you have to know.</line>
+        <line>Find a girl, settle down, if you want you can marry.</line>
+        <line>Look at me, I am old but I'm happy.</line>
+        <line></line>
+        <line>I was once like you are now and I know that it's not easy.</line>
+        <line>To be calm when you've found something going on.</line>
+        <line>But take your time, think a lot, think of everything you've got.</line>
+        <line>For you will still be here tomorrow but your dreams may not.</line>
+      </lyrics>
+      <chords>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line></line>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. D</line>
+        <line></line>
+        <line>G C.. G C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Oh, how can I try to explain? 'Cause when I do he turns away again.</line>
+        <line>It's always been the same, same old story.</line>
+        <line>From the moment I could talk, I was ordered to listen.</line>
+        <line>Now there's a way and I know that I have to go away.</line>
+        <line>I know I have to go.</line>
+      </lyrics>
+      <chords>
+        <line>G. Bm. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. Bm. C. Am.</line>
+        <line>G. Em. D G..</line>
+        <line>D. C</line>
+        <line></line>
+        <line>G C.. G C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Solo</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. D</line>
+        <line></line>
+        <line>G C.. G C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>It's not time to make a change, just sit down, take it slowly.</line>
+        <line>You're still young, that's your fault, there's so much you have to go through</line>
+        <line>Find a girl, settle down, if you want you can marry.</line>
+        <line>Look at me, I am old but I am happy</line>
+      </lyrics>
+      <chords>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. D. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>All the times that I've cried, keepin' all the things I knew inside.</line>
+        <line>It's hard but it's harder to ignore it</line>
+        <line>If they were right I'd agree, but it's them they know, not me.</line>
+        <line>Now there's a way and I know that I have to go away</line>
+        <line>I know I have to go</line>
+      </lyrics>
+      <chords>
+        <line>G. Bm. C. Am.</line>
+        <line>G. Em. Am. D.</line>
+        <line>G. Bm. C. Am.</line>
+        <line>G. Em. D G..</line>
+        <line>D. C G</line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -1,0 +1,75 @@
+<song>
+  <title>Desperado</title>
+  <artist>The Eagles</artist>
+  <tempo>68</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Desperado, why don′t you come to your senses?</line>
+        <line>You've been out ridin′ fences for so long now</line>
+        <line>Oh, you're a hard one</line>
+        <line>But I know that you got your reasons</line>
+        <line>These things that are pleasin' you</line>
+        <line>Can hurt you somehow</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Don′t you draw the queen of diamonds, boy</line>
+        <line>She′ll beat you if she's able</line>
+        <line>You know the queen of hearts is always your best bet</line>
+        <line>And it seems to me some fine things</line>
+        <line>Have been laid upon your table</line>
+        <line>But you only want the ones that you can′t get</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Desperado, oh, you ain't gettin′ no younger</line>
+        <line>Your pain and your hunger, they're drivin′ you home</line>
+        <line>And freedom, oh freedom, well, that's just some people talkin'</line>
+        <line>Your prison is walkin′ through this world all alone</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Don′t your feet get cold in the winter time?</line>
+        <line>The sky won't snow and the sun won′t shine</line>
+        <line>It's hard to tell the night-time from the day</line>
+        <line>You′re losin' all your highs and lows</line>
+        <line>Ain′t it funny how the feeling goes away?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Desperado, why don't you come to your senses?</line>
+        <line>Come down from your fences, open the gate</line>
+        <line>It may be rainin', but there′s a rainbow above you</line>
+        <line>You better let somebody love you</line>
+        <line>Let somebody love you</line>
+        <line>You better let somebody love you</line>
+        <line>Before it′s too late</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

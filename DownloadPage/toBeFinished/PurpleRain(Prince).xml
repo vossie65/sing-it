@@ -1,0 +1,80 @@
+<song>
+  <title>Purple Rain</title>
+  <artist>Prince</artist>
+  <tempo>120</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I never meant to cause you any sorrow</line>
+        <line>I never meant to cause you any pain</line>
+        <line>I only wanted one time to see you laughing</line>
+        <line>I only wanted to see you laughing in the purple rain</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Purple rain, purple rain</line>
+        <line>Purple rain, purple rain</line>
+        <line>Purple rain, purple rain</line>
+        <line>I only wanted to see you bathing in the purple rain</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I never wanted to be your weekend lover</line>
+        <line>I only wanted to be some kind of friend, hey</line>
+        <line>Baby, I could never steal you from another</line>
+        <line>It's such a shame our friendship had to end</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Purple rain, purple rain</line>
+        <line>Purple rain, purple rain</line>
+        <line>Purple rain, purple rain</line>
+        <line>I only wanted to see you underneath the purple rain</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Honey, I know, I know, I know times are changin'</line>
+        <line>It's time we all reach out for something new, that means you too</line>
+        <line>You say you want a leader, but you can't seem to make up your mind</line>
+        <line>And I think you better close it and let me guide you to the purple rain</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Purple rain, purple rain</line>
+        <line>Purple rain, purple rain (ooh!)</line>
+        <line>If you know what I'm singin' about up here, come on, raise your hand</line>
+        <line>Purple rain, purple rain</line>
+        <line>I only want to see you, only want to see you in the purple rain</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

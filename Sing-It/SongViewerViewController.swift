@@ -10,17 +10,17 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     private let titleLabel = UILabel()
     private let artistLabel = UILabel()
     private let oneRowButton = UIButton(type: .system)
-    private let twoRowButton = UIButton(type: .system)
+    private let lyricsOnlyButton = UIButton(type: .system) // Renamed from twoRowButton
     private let playAllButton = UIButton(type: .system) // New Play All button
     private let stopButton = UIButton(type: .system) // New Stop button
     
     // Display mode for song parts
     enum DisplayMode {
-        case twoRow // Default - type+chords in first row, lyrics in second row
         case oneRow // All in one row - type + chords + lyrics side by side
+        case lyricsOnly // Show only parts with lyrics, and only the lyrics
     }
     
-    // Current display mode, default is one row (changed from two row)
+    // Current display mode, default is one row
     private var currentDisplayMode: DisplayMode = .oneRow
     
     // Audio settings - using fixed default values
@@ -113,13 +113,13 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
             oneRowButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             oneRowButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             
-            // Two Row button on right of title
-            twoRowButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            twoRowButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            // Lyrics Only button on right of title
+            lyricsOnlyButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            lyricsOnlyButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
             
-            // Play All button beside two row button (slightly to the left)
+            // Play All button beside lyrics only button (slightly to the left)
             playAllButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            playAllButton.trailingAnchor.constraint(equalTo: twoRowButton.leadingAnchor, constant: -16),
+            playAllButton.trailingAnchor.constraint(equalTo: lyricsOnlyButton.leadingAnchor, constant: -16),
             playAllButton.widthAnchor.constraint(equalToConstant: 36),
             playAllButton.heightAnchor.constraint(equalToConstant: 36),
             
@@ -161,19 +161,19 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     private func setupModeButtons() {
-        // Setup One-Row button
-        oneRowButton.setTitle("1-row", for: .normal)
+        // Setup Chords & Lyrics button (renamed from One-Row button)
+        oneRowButton.setTitle("Chords & Lyrics", for: .normal)
         oneRowButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         oneRowButton.addTarget(self, action: #selector(oneRowButtonTapped), for: .touchUpInside)
         oneRowButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(oneRowButton)
         
-        // Setup Two-Row button (default mode)
-        twoRowButton.setTitle("2-row", for: .normal)
-        twoRowButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        twoRowButton.addTarget(self, action: #selector(twoRowButtonTapped), for: .touchUpInside)
-        twoRowButton.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(twoRowButton)
+        // Setup Lyrics-Only button
+        lyricsOnlyButton.setTitle("Lyrics Only", for: .normal)
+        lyricsOnlyButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        lyricsOnlyButton.addTarget(self, action: #selector(lyricsOnlyButtonTapped), for: .touchUpInside)
+        lyricsOnlyButton.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(lyricsOnlyButton)
         
         // Setup Play All button
         playAllButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
@@ -199,13 +199,13 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         case .oneRow:
             oneRowButton.isEnabled = false
             oneRowButton.alpha = 0.5
-            twoRowButton.isEnabled = true
-            twoRowButton.alpha = 1.0
-        case .twoRow:
+            lyricsOnlyButton.isEnabled = true
+            lyricsOnlyButton.alpha = 1.0
+        case .lyricsOnly:
             oneRowButton.isEnabled = true
             oneRowButton.alpha = 1.0
-            twoRowButton.isEnabled = false
-            twoRowButton.alpha = 0.5
+            lyricsOnlyButton.isEnabled = false
+            lyricsOnlyButton.alpha = 0.5
         }
     }
     
@@ -217,9 +217,9 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    @objc private func twoRowButtonTapped() {
-        if currentDisplayMode != .twoRow {
-            currentDisplayMode = .twoRow
+    @objc private func lyricsOnlyButtonTapped() {
+        if currentDisplayMode != .lyricsOnly {
+            currentDisplayMode = .lyricsOnly
             updateButtonStates()
             tableView.reloadData()
         }
@@ -262,14 +262,15 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         // Make sure instrument is set to piano before playing
         AudioEngine.shared.setInstrument(currentInstrument)
         
-        // Set playing state
-        isPlaying = true
-        playAllButton.isSelected = true
-        
         // Collect all chords from all parts into a single string
         var allChords = ""
         
-        for part in song.parts {
+        // Debug info for troubleshooting
+        print("🔍 Starting to collect chords from \(song.parts.count) parts")
+        
+        for (index, part) in song.parts.enumerated() {
+            print("📝 Processing part #\(index+1): \(part.partType.rawValue), has chords: \(!part.chords.isEmpty)")
+            
             if !part.chords.isEmpty {
                 // Add space before adding more chords unless it's the first set
                 if !allChords.isEmpty {
@@ -277,13 +278,27 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
                 }
                 
                 // Add chords for this part - preserve dots by only replacing newlines with spaces
-                allChords += part.chords
+                let partChords = part.chords
                     .replacingOccurrences(of: "\n", with: " ")
                     .trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                allChords += partChords
+                print("➕ Added chords: \"\(partChords)\"")
             }
         }
         
-        print("Playing chord progression: \(allChords)")
+        // Check if we have any chords to play
+        if allChords.isEmpty {
+            print("⚠️ No chords to play - providing default C chord for testing")
+            // Provide at least a C chord for testing
+            allChords = "C"
+        }
+        
+        print("🎵 Final chord progression: \"\(allChords)\"")
+        
+        // Set playing state
+        isPlaying = true
+        playAllButton.isSelected = true
         
         // Play all chords with tempo-based timing
         DispatchQueue.global(qos: .userInitiated).async {
@@ -322,6 +337,10 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if currentDisplayMode == .lyricsOnly {
+            // Count only parts with lyrics
+            return song.parts.filter { !$0.lyrics.isEmpty }.count
+        }
         return song.parts.count
     }
     
@@ -352,7 +371,18 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
             return UITableViewCell()
         }
         
-        let part = song.parts[indexPath.section]
+        // Get the appropriate part based on the current display mode
+        let part: Part
+        
+        if currentDisplayMode == .lyricsOnly {
+            // Get only parts with lyrics
+            let partsWithLyrics = song.parts.filter { !$0.lyrics.isEmpty }
+            part = partsWithLyrics[indexPath.section]
+        } else {
+            // Get all parts
+            part = song.parts[indexPath.section]
+        }
+        
         cell.configure(with: part, displayMode: currentDisplayMode)
         
         // Set up chord playing handler (without count-in for individual parts)
@@ -381,7 +411,7 @@ class SongPartViewCell: UITableViewCell {
     
     // Store constraint references to be able to activate/deactivate them
     private var oneRowConstraints: [NSLayoutConstraint] = []
-    private var twoRowConstraints: [NSLayoutConstraint] = []
+    private var lyricsOnlyConstraints: [NSLayoutConstraint] = [] // Renamed from twoRowConstraints
     private var currentMode: SongViewerViewController.DisplayMode = .oneRow
     
     // Closure to handle playing chords
@@ -480,36 +510,32 @@ class SongPartViewCell: UITableViewCell {
             lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12)
         ]
         
-        // Two row constraints (stacked)
-        twoRowConstraints = [
-            // Part type label below play button
+        // Lyrics only constraints (table layout)
+        lyricsOnlyConstraints = [
+            // Part type label as first column (20% width)
             partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            partTypeLabel.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 4),
-            partTypeLabel.widthAnchor.constraint(equalToConstant: 70), // Fixed width for part type
+            partTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            partTypeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.20),
             
-            // Chords label to the right of part type
-            chordsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            chordsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 8),
-            chordsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            
-            // Lyrics label below chords
-            lyricsLabel.topAnchor.constraint(equalTo: chordsLabel.bottomAnchor, constant: 12),
-            lyricsLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
+            // Lyrics label as second column (80% width)
+            lyricsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 16),
+            lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
             lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
         ]
     }
     
     private func activateOneRowMode() {
-        NSLayoutConstraint.deactivate(twoRowConstraints)
+        NSLayoutConstraint.deactivate(lyricsOnlyConstraints)
         NSLayoutConstraint.activate(oneRowConstraints)
         currentMode = .oneRow
     }
     
-    private func activateTwoRowMode() {
+    private func activateLyricsOnlyMode() {
         NSLayoutConstraint.deactivate(oneRowConstraints)
-        NSLayoutConstraint.activate(twoRowConstraints)
-        currentMode = .twoRow
+        NSLayoutConstraint.activate(lyricsOnlyConstraints)
+        currentMode = .lyricsOnly
     }
     
     // Configure the cell with part data and display mode
@@ -522,8 +548,23 @@ class SongPartViewCell: UITableViewCell {
         // Store chord data for playing
         currentChords = part.chords
         
-        // Show play button only if chords exist
-        playButton.isHidden = part.chords.isEmpty
+        // Handle visibility based on mode
+        if displayMode == .lyricsOnly {
+            // In lyrics-only mode, hide chords and play button completely
+            chordsLabel.isHidden = true
+            playButton.isHidden = true
+            // Adjust part type appearance to be more prominent as section header
+            partTypeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            partTypeLabel.textColor = .label
+        } else {
+            // In one-row mode, show chords if they exist
+            chordsLabel.isHidden = false
+            // Show play button only if chords exist
+            playButton.isHidden = part.chords.isEmpty
+            // Set part type to its normal appearance
+            partTypeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+            partTypeLabel.textColor = .systemGray
+        }
         
         // Only show lyrics label if they exist
         lyricsLabel.isHidden = part.lyrics.isEmpty
@@ -533,8 +574,8 @@ class SongPartViewCell: UITableViewCell {
             switch displayMode {
             case .oneRow:
                 activateOneRowMode()
-            case .twoRow:
-                activateTwoRowMode()
+            case .lyricsOnly:
+                activateLyricsOnlyMode()
             }
         }
     }

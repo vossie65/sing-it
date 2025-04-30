@@ -1,0 +1,93 @@
+<song>
+  <title>Born to run</title>
+  <artist>Bruce Springsteen</artist>
+  <tempo>120</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>In the day we sweat it out on the streets</line>
+        <line>Of a runaway American dream</line>
+        <line>At night we ride through the mansions of glory</line>
+        <line>In suicide machines</line>
+        <line>Sprung from cages on Highway 9</line>
+        <line>Chrome wheeled, fuel injected, and steppin' out over the line</line>
+        <line>Oh, baby this town rips the bones from your back</line>
+        <line>It's a death trap, it's a suicide rap</line>
+        <line>We gotta get out while we're young</line>
+        <line>'Cause tramps like us, baby, we were born to run</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Wendy, let me in, I wanna be your friend</line>
+        <line>I wanna guard your dreams and visions</line>
+        <line>Just wrap your legs 'round these velvet rims</line>
+        <line>And strap your hands 'cross my engines</line>
+        <line>Together we could break this trap</line>
+        <line>We'll run 'til we drop, baby, we'll never go back</line>
+        <line>Oh, will you walk with me out on the wire?</line>
+        <line>'Cause, baby, I'm just a scared and lonely rider</line>
+        <line>But I gotta know how it feels</line>
+        <line>I want to know if love is wild</line>
+        <line>Babe, I want to know if love is real</line>
+        <line>Oh, can you show me</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>Beyond the Palace, hemi-powered drones</line>
+        <line>Scream down the boulevard</line>
+        <line>Girls comb their hair in rearview mirrors</line>
+        <line>And the boys try to look so hard</line>
+        <line>The amusement park rises bold and stark</line>
+        <line>Kids are huddled on the beach in the mist</line>
+        <line>I wanna die with you, Wendy, on the street tonight</line>
+        <line>In an everlasting kiss</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>The highway's jammed with broken heroes</line>
+        <line>On a last chance power drive</line>
+        <line>Everybody's out on the run tonight</line>
+        <line>But there's no place left to hide</line>
+        <line>Together, Wendy, we can live with the sadness</line>
+        <line>I'll love you with all the madness in my soul</line>
+        <line>Oh, someday, girl, I don't know when</line>
+        <line>We're gonna get to that place</line>
+        <line>Where we really wanna go and we'll walk in the sun</line>
+        <line>But 'til then, tramps like us</line>
+        <line>Baby, we were born to run</line>
+        <line>Oh honey, tramps like us</line>
+        <line>Baby, we were born to run</line>
+        <line>Come on with me, tramps like us</line>
+        <line>Baby, we were born to run</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -1,0 +1,106 @@
+<song>
+  <title>City of New Orleans</title>
+  <artist>Arlo Guthrie</artist>
+  <tempo>90</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Ridin' on the City of New Orleans</line>
+        <line>Illinois Central, Monday mornin' rail</line>
+        <line>15 cars and 15 restless riders</line>
+        <line>Three conductors, 25 sacks of mail</line>
+        <line></line>
+        <line>All along the southbound odyssey the train pulls out of Kankakee</line>
+        <line>Rolls along past houses, farms and fields</line>
+        <line>Passin' graves that have no name, freight yards full of old black men</line>
+        <line>And the graveyards of rusted automobiles</line>
+      </lyrics>
+      <chords>
+        <line>C. G. C. ..</line>
+        <line>Am. F. C. G.</line>
+        <line>C. G. C. ..</line>
+        <line>Am. G. C. ..</line>
+        <line></line>
+        <line>Am. .. Em. ..</line>
+        <line>G. .. D. ..</line>
+        <line>Am. .. Em. ..</line>
+        <line>G. G7. C. C7.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Good mornin' America, how are you?</line>
+        <line>Don't you know me? I'm your native son!</line>
+        <line>I'm the train they call the City of New Orleans</line>
+        <line>I'll be gone 500 miles when the day is done</line>
+      </lyrics>
+      <chords>
+        <line>F. G. C. ..</line>
+        <line>Am. F. C. G7.</line>
+        <line>C. G. Am. D7.</line>
+        <line>Bb. G. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Dealin' cards with the old men in the club car</line>
+        <line>Penny a point, ain't no one keepin' score</line>
+        <line>Pass the paper bag that holds the bottle</line>
+        <line>And feel the wheels grumblin' neath the floor</line>
+        <line></line>
+        <line>And the sons of Pullman porters and the sons of engineers</line>
+        <line>Ride their fathers' magic carpet made of steel</line>
+        <line>Mothers with their babes asleep, rockin' to the gentle beat</line>
+        <line>And the rhythm of the rails is all they feel</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Good mornin' America, how are you?</line>
+        <line>Don't you know me? I'm your native son!</line>
+        <line>I'm the train they call the City of New Orleans</line>
+        <line>I'll be gone 500 miles when the day is done</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Nighttime on the city of New Orleans</line>
+        <line>Changin' cars in Memphis, Tennessee</line>
+        <line>Halfway home, we'll be there by mornin'</line>
+        <line>Thru the Mississippi darkness rollin' down to the sea</line>
+        <line></line>
+        <line>But the towns &amp; people seem to fade into a bad dream</line>
+        <line>And the steel rail still ain't heard the news</line>
+        <line>Conductor sings your songs again</line>
+        <line>The passengers will please refrain</line>
+        <line>This train has got the disappearing railroad blues</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Good mornin' America, how are you?</line>
+        <line>Don't you know me? I'm your native son!</line>
+        <line>I'm the train they call the City of New Orleans</line>
+        <line>I'll be gone 500 miles when the day is done</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

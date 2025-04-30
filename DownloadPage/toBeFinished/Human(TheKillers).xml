@@ -1,0 +1,88 @@
+<song>
+  <title>Human</title>
+  <artist>The Killers</artist>
+  <tempo>75</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I did my best to notice, When the call came down the line</line>
+        <line>Up to the platform of surrender, I was brought, but I was kind</line>
+        <line>And sometimes I get nervous, When I see an open door</line>
+        <line>Close your eyes, Clear your heart, Cut the cord</line>
+      </lyrics>
+      <chords>
+        <line>G. Bm. C. G.</line>
+        <line>D. Em. C. D.</line>
+        <line>G. Bm. C. Em.</line>
+        <line>G. D. D.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Are we human, Or are we dancer?</line>
+        <line>My sign is vital, My hands are cold</line>
+        <line>And I'm on my knees, Looking for the answer</line>
+        <line>Are we human, Or are we dancer?</line>
+      </lyrics>
+      <chords>
+        <line>G. Bm. C. G.</line>
+        <line>D. Em. C. D.</line>
+        <line>G. Bm. Em. ..</line>
+        <line>Am. C. G. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Pay my respects to grace and virtue</line>
+        <line>Send my condolences to good</line>
+        <line>Give my regards to soul and romance</line>
+        <line>They always did the best they could</line>
+        <line>And so long to devotion</line>
+        <line>You taught me everything I know</line>
+        <line>Wave goodbye, Wish me well, You've gotta let me go</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Are we human, Or are we dancer?</line>
+        <line>My sign is vital, My hands are cold</line>
+        <line>And I'm on my knees, Looking for the answer</line>
+        <line>Are we human, Or are we dancer?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>Will your system be alright</line>
+        <line>When you dream of home tonight?</line>
+        <line>There is no message we're receiving</line>
+        <line>Let me know, is your heart still beating?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Are we human, Or are we dancer?</line>
+        <line>My sign is vital, My hands are cold</line>
+        <line>And I'm on my knees, Looking for the answer</line>
+        <line>Are we human, Or are we dancer?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

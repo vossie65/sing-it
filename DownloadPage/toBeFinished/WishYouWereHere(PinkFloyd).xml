@@ -1,0 +1,52 @@
+<song>
+  <title>Wish you were here</title>
+  <artist>Pink Floyd</artist>
+  <tempo>120</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>So, so you think you can tell</line>
+        <line>Heaven from hell? Blue skies from pain?</line>
+        <line>Can you tell a green field from a cold steel rail?</line>
+        <line>A smile from a veil? Do you think you can tell?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Did they get you to trade your heroes for ghosts?</line>
+        <line>Hot ashes for trees? Hot air for a cool breeze?</line>
+        <line>Cold comfort for change? Did you exchange</line>
+        <line>A walk-on part in the war for a lead role in a cage?</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>How I wish, how I wish you were here</line>
+        <line>We're just two lost souls swimming in a fishbowl, year after year</line>
+        <line>Runnin' over the same old ground, what have we found?</line>
+        <line>The same old fears, wish you were here</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

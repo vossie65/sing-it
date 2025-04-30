@@ -1,0 +1,203 @@
+<song>
+  <title>Hallelujah</title>
+  <artist>Leonard Cohen</artist>
+  <tempo>67</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am. C. Am.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Now I've heard there was a secret chord</line>
+        <line>That David played, and it pleased the Lord</line>
+        <line>But you don't really care for music, do you?</line>
+        <line>It goes like this, the fourth, the fifth</line>
+        <line>The minor falls, the major lifts</line>
+        <line>The baffled king composing Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>C. Am.</line>
+        <line>C. Am.</line>
+        <line>F. G. C. G.</line>
+        <line>C. F G</line>
+        <line>Am. F.</line>
+        <line>G. E7. Am. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah,</line>
+        <line>Hallelujah, Hallelujah.</line>
+      </lyrics>
+      <chords>
+        <line>F. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am. C. Am.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Your faith was strong but you needed proof</line>
+        <line>You saw her bathing on the roof</line>
+        <line>Her beauty and the moonlight overthrew you</line>
+        <line>She tied you to a kitchen chair</line>
+        <line>She broke your throne, and she cut your hair</line>
+        <line>And from your lips she drew the Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>C. Am.</line>
+        <line>C. Am.</line>
+        <line>F. G. C. G.</line>
+        <line>C. F G</line>
+        <line>Am. F.</line>
+        <line>G. E7. Am. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah,</line>
+        <line>Hallelujah, Hallelujah.</line>
+      </lyrics>
+      <chords>
+        <line>F. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am. C. Am.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Baby, I′ve been here before</line>
+        <line>I've seen this room and I've walked this floor, you know</line>
+        <line>I used to live alone before I knew you</line>
+        <line>I′ve seen your flag on the marble arch</line>
+        <line>And love is not a victory march</line>
+        <line>It′s a cold and it's a broken, Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>C. Am.</line>
+        <line>C. Am.</line>
+        <line>F. G. C. G.</line>
+        <line>C. F G</line>
+        <line>Am. F.</line>
+        <line>G. E7. Am. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah,</line>
+        <line>Hallelujah, Hallelujah.</line>
+      </lyrics>
+      <chords>
+        <line>F. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am. C. Am.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>You say I took the name in vain</line>
+        <line>I don't even know the name</line>
+        <line>But if I did, well, really, what's it to you?</line>
+        <line>There's a blaze of light in every word</line>
+        <line>It doesn't matter which you heard</line>
+        <line>The holy or the broken Hallelujah</line>
+      </lyrics>
+      <chords>
+        <line>C. Am.</line>
+        <line>C. Am.</line>
+        <line>F. G. C. G.</line>
+        <line>C. F G</line>
+        <line>Am. F.</line>
+        <line>G. E7. Am. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah,</line>
+        <line>Hallelujah, Hallelujah.</line>
+      </lyrics>
+      <chords>
+        <line>F. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am. C. Am.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I did my best, it wasn't much</line>
+        <line>I couldn't feel, so I tried to touch</line>
+        <line>I've told the truth, I didn't come to fool you</line>
+        <line>And even though it all went wrong</line>
+        <line>I'll stand before the Lord of Song</line>
+        <line>With nothing on my tongue but Hallelujah</line>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. Am.</line>
+        <line>C. Am.</line>
+        <line>F. G. C. G.</line>
+        <line>C. F G</line>
+        <line>Am. F.</line>
+        <line>G. E7. Am. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Hallelujah, Hallelujah,</line>
+        <line>Hallelujah, Hallelujah.</line>
+      </lyrics>
+      <chords>
+        <line>F. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+      </chords>
+    </part>
+  </parts>
+</song>

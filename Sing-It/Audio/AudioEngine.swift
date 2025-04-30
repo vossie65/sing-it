@@ -138,11 +138,16 @@ class AudioEngine {
         }
         
         // Parse the chord name to get root note and chord type
-        let (rootNote, chordType) = parseChordName(chordName)
+        let (rootNote, chordType, bassNote) = parseChordName(chordName)
         
         if let notes = getChordNotes(rootNote: rootNote, chordType: chordType) {
             // Play all notes in the chord
-            let midiNotes = notes.map { noteToMidi(note: $0, octaveOffset: octave - 4) }
+            var midiNotes = notes.map { noteToMidi(note: $0, octaveOffset: octave - 4) }
+            
+            // Add bass note if specified
+            if let bassNote = bassNote {
+                midiNotes.append(noteToMidi(note: bassNote, octaveOffset: octave - 4))
+            }
             
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 // Play all notes simultaneously
@@ -179,11 +184,11 @@ class AudioEngine {
         // Debugging: Print raw input
         print("Raw chord input: '\(chordString)'")
         
-        // 1) Tokenize the string into chords and dots
+        // 1) Tokenize the string into chords, dots, dashes and parenthesized groups
         let tokens = tokenizeChordString(chordString)
         print("Tokenized: \(tokens)")
         
-        // 2) Process tokens by replacing dots with the chord before them
+        // 2) Process tokens by replacing dots with the previous chord, handling dashes and parenthesized groups
         let processedChords = processChordTokens(tokens)
         print("Final processed chord progression: \(processedChords.joined(separator: " "))")
         
@@ -199,6 +204,12 @@ class AudioEngine {
             print("Using default duration of 1 beat = \(chordDuration) seconds at \(tempo) BPM")
         }
         
+        // Check if we have any chords to play
+        if processedChords.isEmpty {
+            print("⚠️ No chords to play in progression")
+            return
+        }
+        
         // Save the current instrument to restore it after count-in
         let savedInstrument = currentInstrument
         
@@ -207,6 +218,7 @@ class AudioEngine {
         if withCountIn {
             // First, pre-load the piano instrument that we'll need later
             setInstrument(savedInstrument, waitForLoad: true)
+            print("🔄 Pre-loaded instrument \(savedInstrument) for after count-in")
         }
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -216,37 +228,151 @@ class AudioEngine {
             if withCountIn {
                 // Switch to woodblock for count-in
                 self.setInstrument(115, waitForLoad: true)
+                print("🥁 Starting count-in with metronome")
                 self.playCountInBeats(count: 4)
                 
                 // Switch back to the saved instrument with additional delay for loading
                 self.setInstrument(savedInstrument, waitForLoad: true)
+                print("🎹 Switched back to instrument \(savedInstrument) after count-in")
                 
                 // Add a small additional delay after instrument change to ensure it's fully loaded
                 Thread.sleep(forTimeInterval: 0.02)
+                print("⏱ Added small delay after instrument change")
             }
             
+            // Variables to track the currently playing chord and its notes
+            var activeNotes: [Int] = []
+            var activeChord: String? = nil
+            
             // Play the actual chord progression
-            for chord in processedChords {
-                // Check if playback should stop before playing next chord
+            print("▶️ Starting to play \(processedChords.count) chords")
+            
+            for (index, chord) in processedChords.enumerated() {
+                // Check if playback should stop
                 if self.shouldStopPlayback {
+                    // Stop any currently playing notes
+                    if !activeNotes.isEmpty {
+                        for midiNote in activeNotes {
+                            self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
+                        }
+                    }
+                    print("⛔️ Playback stopped by request")
                     break
                 }
                 
-                print("Playing chord: \(chord) for \(chordDuration) seconds")
+                // Handle different chord tokens
+                if chord == "HOLD" {
+                    // This is a held chord - just wait for the duration without stopping or re-striking
+                    print("🎵 Holding chord without re-striking for \(chordDuration) seconds")
+                    Thread.sleep(forTimeInterval: chordDuration)
+                } else if chord == "REST" {
+                    // This is a rest/pause - just wait for the duration without playing any chord
+                    print("🎵 Resting for \(chordDuration) seconds")
+                    Thread.sleep(forTimeInterval: chordDuration)
+                } else if chord.hasPrefix("GROUP:") {
+                    // This is a chord that's part of a parenthesized group sharing one beat
+                    
+                    // Extract the group info: "GROUP:index:count:chord"
+                    let components = chord.split(separator: ":")
+                    if components.count == 4,
+                       let groupIndex = Int(components[1]),
+                       let groupCount = Int(components[2]) {
+                        
+                        let actualChord = String(components[3])
+                        
+                        // Calculate the subdivided duration for each chord in the group
+                        let subdivisionDuration = chordDuration / Double(groupCount)
+                        
+                        // First, stop any previously playing notes
+                        if !activeNotes.isEmpty {
+                            for midiNote in activeNotes {
+                                self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
+                            }
+                            activeNotes = []
+                        }
+                        
+                        print("🎵 Playing group chord \(groupIndex + 1)/\(groupCount): \(actualChord) for \(subdivisionDuration) seconds")
+                        
+                        // Play this chord
+                        self.playChordSynchronously(chordName: actualChord, octave: octave, duration: subdivisionDuration)
+                    } else {
+                        print("❌ Invalid GROUP token format: \(chord)")
+                    }
+                } else {
+                    // This is a regular chord to play
+                    
+                    // First, stop any previously playing notes
+                    if !activeNotes.isEmpty {
+                        for midiNote in activeNotes {
+                            self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
+                        }
+                        activeNotes = []
+                    }
+                    
+                    print("🎵 Playing chord: \(chord)")
+                    
+                    // Parse and prepare the chord
+                    let (rootNote, chordType, bassNote) = self.parseChordName(chord)
+                    
+                    if let notes = self.getChordNotes(rootNote: rootNote, chordType: chordType) {
+                        // Get all notes in the chord
+                        var midiNotes = notes.map { self.noteToMidi(note: $0, octaveOffset: octave - 4) }
+                        
+                        // Add bass note if specified - use one octave lower for proper bass sound
+                        if let bassNote = bassNote {
+                            midiNotes.append(self.noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
+                            print("🎸 Adding bass note: \(bassNote) to chord")
+                        }
+                        
+                        // Play all notes simultaneously
+                        for midiNote in midiNotes {
+                            self.sampler.startNote(UInt8(midiNote), withVelocity: 80, onChannel: 0)
+                        }
+                        
+                        // Save the active notes for later stopping
+                        activeNotes = midiNotes
+                        activeChord = chord
+                    }
+                    
+                    // Check if the next chord is a HOLD token
+                    let isLastChord = (index == processedChords.count - 1)
+                    let nextChordIsHold = !isLastChord && processedChords[index + 1] == "HOLD"
+                    
+                    if !nextChordIsHold {
+                        // If the next chord is not HOLD, we play this chord for the full duration
+                        Thread.sleep(forTimeInterval: chordDuration)
+                        
+                        // Stop the notes after duration has elapsed
+                        if !activeNotes.isEmpty {
+                            for midiNote in activeNotes {
+                                self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
+                            }
+                            activeNotes = []
+                        }
+                    }
+                }
                 
-                // Play each chord synchronously to maintain precise timing
-                self.playChordSynchronously(chordName: chord, octave: octave, duration: chordDuration)
-                
-                // Don't add gap after the last chord
-                if chord != processedChords.last && !self.shouldStopPlayback {
-                    // Small gap between chords (5% of beat duration)
-                    let gapTime = chordDuration * 0.05
+                // Only add a small gap if the next chord is NOT a hold, NOT a group chord, and we're not at the last chord
+                if index < processedChords.count - 1 && 
+                   processedChords[index + 1] != "HOLD" && 
+                   !processedChords[index + 1].hasPrefix("GROUP:") && 
+                   !self.shouldStopPlayback {
+                    // Very small gap between regular chords (1% of beat duration)
+                    let gapTime = chordDuration * 0.01
                     Thread.sleep(forTimeInterval: gapTime)
+                }
+            }
+            
+            // Ensure all notes are stopped at the end of playback
+            if !activeNotes.isEmpty {
+                for midiNote in activeNotes {
+                    self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
                 }
             }
             
             // Reset stop flag after playback completes or is stopped
             self.shouldStopPlayback = false
+            print("✅ Chord progression playback completed")
         }
     }
     
@@ -336,11 +462,17 @@ class AudioEngine {
         }
         
         // Parse the chord name to get root note and chord type
-        let (rootNote, chordType) = parseChordName(chordName)
+        let (rootNote, chordType, bassNote) = parseChordName(chordName)
         
         if let notes = getChordNotes(rootNote: rootNote, chordType: chordType) {
             // Play all notes in the chord
-            let midiNotes = notes.map { noteToMidi(note: $0, octaveOffset: octave - 4) }
+            var midiNotes = notes.map { noteToMidi(note: $0, octaveOffset: octave - 4) }
+            
+            // Add bass note if specified - use one octave lower for proper bass sound
+            if let bassNote = bassNote {
+                midiNotes.append(noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
+                print("🎸 Adding bass note: \(bassNote) to chord")
+            }
             
             // Play all notes simultaneously
             for midiNote in midiNotes {
@@ -356,6 +488,56 @@ class AudioEngine {
             }
         } else {
             print("Unknown chord: \(chordName)")
+        }
+    }
+    
+    /// Play a chord and return the MIDI notes that were played
+    /// - Parameters:
+    ///   - chordName: Name of the chord
+    ///   - octave: Octave to play the chord in
+    ///   - duration: Optional duration (nil if chord should be held until explicitly stopped)
+    /// - Returns: Array of MIDI note numbers that were played
+    private func playChordAndGetNotes(_ chordName: String, octave: Int = 4, duration: TimeInterval? = nil) -> [Int] {
+        guard isInitialized else {
+            start()
+            return []
+        }
+        
+        // Parse the chord name to get root note and chord type
+        let (rootNote, chordType, bassNote) = parseChordName(chordName)
+        
+        if let notes = getChordNotes(rootNote: rootNote, chordType: chordType) {
+            // Get all notes in the chord
+            var midiNotes = notes.map { noteToMidi(note: $0, octaveOffset: octave - 4) }
+            
+            // Add bass note if specified - use one octave lower for proper bass sound
+            if let bassNote = bassNote {
+                midiNotes.append(noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
+                print("🎸 Adding bass note: \(bassNote) to chord")
+            }
+            
+            // Play all notes simultaneously
+            for midiNote in midiNotes {
+                self.sampler.startNote(UInt8(midiNote), withVelocity: 80, onChannel: 0)
+            }
+            
+            // If duration is provided, stop the notes after the duration
+            if let duration = duration {
+                Thread.sleep(forTimeInterval: duration)
+                
+                // Stop all notes
+                for midiNote in midiNotes {
+                    self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
+                }
+                
+                return [] // Return empty array since notes are already stopped
+            }
+            
+            // Return the MIDI notes for later stopping
+            return midiNotes.map { Int($0) }
+        } else {
+            print("Unknown chord: \(chordName)")
+            return []
         }
     }
     
@@ -414,7 +596,27 @@ class AudioEngine {
         return min(127, max(0, Int(baseNote) + (octaveOffset * 12)))
     }
     
-    private func parseChordName(_ chordName: String) -> (String, String) {
+    private func parseChordName(_ chordName: String) -> (String, String, String?) {
+        // Check for slash chords first (e.g., C/B, Dm/F)
+        let components = chordName.split(separator: "/")
+        
+        // If this is a slash chord, parse the chord part and remember the bass note
+        if components.count > 1 {
+            let mainChordName = String(components[0])
+            let bassNote = String(components[1])
+            
+            // Parse the main chord part
+            let parsedChord = parseChordNameWithoutBass(mainChordName)
+            return (parsedChord.0, parsedChord.1, bassNote)
+        }
+        
+        // Not a slash chord, parse normally
+        let parsedChord = parseChordNameWithoutBass(chordName)
+        return (parsedChord.0, parsedChord.1, nil)
+    }
+    
+    // Helper to parse just the chord part (moved from the original parseChordName method)
+    private func parseChordNameWithoutBass(_ chordName: String) -> (String, String) {
         // Check for chords with sharps/flats first to avoid incorrect parsing
         if chordName.count >= 2 && (chordName[chordName.index(chordName.startIndex, offsetBy: 1)] == "#" || 
                                     chordName[chordName.index(chordName.startIndex, offsetBy: 1)] == "b") {
@@ -510,22 +712,49 @@ class AudioEngine {
         return (chord, dotCount)
     }
     
-    /// Tokenizes a chord string into an array of chord tokens and dot tokens
+    /// Tokenizes a chord string into an array of chord tokens and special symbols
     /// - Parameter chordString: The raw chord string input
-    /// - Returns: Array of tokens, where each token is either a chord or a dot
+    /// - Returns: Array of tokens, where each token is either a chord, a dot, dash, or parenthesized chord group
     private func tokenizeChordString(_ chordString: String) -> [String] {
-        // 1. Remove whitespaces, line changes, and other non-chord symbols
-        let validChordChars = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "#b"))
-        let dotCharSet = CharacterSet(charactersIn: ".")
+        // 1. Character sets for validation
+        let validChordChars = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "#b/"))
         
         var tokens: [String] = []
         var currentChord = ""
+        var inParentheses = false
+        var currentParenthesesGroup = ""
         
         // Scan through each character
         for char in chordString {
             let charString = String(char)
             
-            // Check if it's a dot
+            // Handle parentheses for chord groups that share a beat
+            if charString == "(" {
+                // If we were building a chord, finish it
+                if !currentChord.isEmpty {
+                    tokens.append(currentChord)
+                    currentChord = ""
+                }
+                // Start tracking a parenthesized group
+                inParentheses = true
+                currentParenthesesGroup = "("
+                continue
+            } else if charString == ")" && inParentheses {
+                // End of parenthesized group
+                currentParenthesesGroup += ")"
+                tokens.append(currentParenthesesGroup) // Add the entire group as one token
+                inParentheses = false
+                currentParenthesesGroup = ""
+                continue
+            } else if inParentheses {
+                // Add character to the current parentheses group
+                currentParenthesesGroup += charString
+                continue
+            }
+            
+            // Not in parentheses - process normally
+            
+            // Check if it's a dot (repeat previous chord)
             if charString == "." {
                 // If we were building a chord, finish it
                 if !currentChord.isEmpty {
@@ -534,6 +763,20 @@ class AudioEngine {
                 }
                 // Add the dot as a separate token
                 tokens.append(".")
+            }
+            // Check if it's a dash (hold previous chord)
+            else if charString == "-" {
+                // Two cases:
+                // 1. If we were building a chord (like in "F-"), finish the chord and append a dash token
+                if !currentChord.isEmpty {
+                    tokens.append(currentChord)
+                    tokens.append("-") // Add as a separate token
+                    currentChord = ""
+                } 
+                // 2. If not building a chord (like in "F -"), just add the dash as a token
+                else {
+                    tokens.append("-")
+                }
             }
             // Check if it's a valid chord character
             else if CharacterSet(charactersIn: charString).isSubset(of: validChordChars) {
@@ -555,26 +798,63 @@ class AudioEngine {
             tokens.append(currentChord)
         }
         
+        // Debug print the tokenized result
+        print("🔍 Tokenized chord string: \(tokens)")
+        
         return tokens
     }
     
-    /// Processes tokenized chord input by replacing dots with the previous chord
-    /// - Parameter tokens: Array of chord and dot tokens
-    /// - Returns: Array of processed chord tokens with dots replaced
+    /// Processes tokenized chord input by replacing dots with the previous chord,
+    /// handling dashes as rests/pauses, and processing chord groups in parentheses
+    /// - Parameter tokens: Array of chord, dot, dash tokens, and parenthesized groups
+    /// - Returns: Array of processed chord tokens with special tokens handled
     private func processChordTokens(_ tokens: [String]) -> [String] {
         var processedChords: [String] = []
         var previousChord = ""
         
-        for token in tokens {
-            if token == "." {
-                // Replace dot token with the previous chord
-                if !previousChord.isEmpty {
-                    processedChords.append(previousChord)
+        for (index, token) in tokens.enumerated() {
+            // Check if this is a parenthesized chord group
+            if token.hasPrefix("(") && token.hasSuffix(")") {
+                // Extract chord group content from inside parentheses
+                let content = String(token.dropFirst().dropLast())
+                
+                // Split the content into individual chords (space-separated)
+                let chords = content.split(separator: " ").map { String($0) }
+                
+                // If there are no valid chords inside, treat as a rest
+                if chords.isEmpty {
+                    processedChords.append("REST")
+                    continue
+                }
+                
+                // Process each chord in the group, attach "GROUP:" prefix and add info
+                // about how many chords are in the group to divide timing later
+                for (i, chord) in chords.enumerated() {
+                    // Create a special token: "GROUP:index:count:chord"
+                    let groupToken = "GROUP:\(i):\(chords.count):\(chord)"
+                    processedChords.append(groupToken)
+                    
+                    // Update previous chord for potential dots or dashes after the group
+                    if i == chords.count - 1 {
+                        previousChord = chord
+                    }
                 }
             } else {
-                // It's a chord token
-                processedChords.append(token)
-                previousChord = token
+                // Handle regular tokens
+                switch token {
+                case ".":
+                    // Replace dot token with the previous chord (re-struck)
+                    if !previousChord.isEmpty {
+                        processedChords.append(previousChord)
+                    }
+                case "-":
+                    // Dash token means "pause/rest" for one beat
+                    processedChords.append("REST")
+                default:
+                    // It's a chord token
+                    processedChords.append(token)
+                    previousChord = token
+                }
             }
         }
         

@@ -1,4 +1,5 @@
 import UIKit
+import MessageUI
 
 class SongPartEditorViewController: UIViewController {
     
@@ -264,6 +265,7 @@ class SongPartEditorViewController: UIViewController {
         let xmlVC = XMLViewController()
         xmlVC.xmlContent = xmlString
         xmlVC.songTitle = song.title
+        xmlVC.songArtist = song.artist // Pass the artist name to the XML view controller
         xmlVC.modalPresentationStyle = .formSheet
         xmlVC.preferredContentSize = CGSize(width: 600, height: 800)
         present(xmlVC, animated: true)
@@ -536,13 +538,17 @@ extension SongPartEditorViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 // MARK: - XMLViewController
-class XMLViewController: UIViewController {
+class XMLViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     var xmlContent: String?
     var songTitle: String?
+    var songArtist: String? // Added to store the artist name
     
     private let textView = UITextView()
     private let titleLabel = UILabel()
+    private let copyButton = UIButton(type: .system)
+    private let uploadButton = UIButton(type: .system)
+    private let buttonStackView = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -564,9 +570,33 @@ class XMLViewController: UIViewController {
         textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Configure Copy to Clipboard button
+        copyButton.setTitle("Copy to Clipboard", for: .normal)
+        copyButton.backgroundColor = .systemBlue
+        copyButton.setTitleColor(.white, for: .normal)
+        copyButton.layer.cornerRadius = 8
+        copyButton.addTarget(self, action: #selector(copyToClipboardTapped), for: .touchUpInside)
+        
+        // Configure Upload button
+        uploadButton.setTitle("Upload", for: .normal)
+        uploadButton.backgroundColor = .systemGreen
+        uploadButton.setTitleColor(.white, for: .normal)
+        uploadButton.layer.cornerRadius = 8
+        uploadButton.addTarget(self, action: #selector(uploadTapped), for: .touchUpInside)
+        
+        // Button stack view
+        buttonStackView.axis = .horizontal
+        buttonStackView.distribution = .fillEqually
+        buttonStackView.spacing = 16
+        buttonStackView.alignment = .fill
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.addArrangedSubview(copyButton)
+        buttonStackView.addArrangedSubview(uploadButton)
+        
         // Add subviews
         view.addSubview(titleLabel)
         view.addSubview(textView)
+        view.addSubview(buttonStackView)
         
         // Layout constraints
         NSLayoutConstraint.activate([
@@ -574,11 +604,192 @@ class XMLViewController: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
+            buttonStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 44),
+            
             textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            textView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -20)
         ])
+    }
+    
+    @objc private func copyToClipboardTapped() {
+        guard let xmlContent = textView.text, !xmlContent.isEmpty else { return }
+        
+        // Copy to clipboard
+        UIPasteboard.general.string = xmlContent
+        
+        // Show feedback to the user
+        let alert = UIAlertController(title: "Copied", message: "XML has been copied to clipboard", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    @objc private func uploadTapped() {
+        guard let xmlContent = textView.text, !xmlContent.isEmpty else { return }
+        guard let songTitle = songTitle else { return }
+        
+        // Get artist or use empty string if nil
+        let artist = songArtist ?? ""
+        
+        // Show activity indicator
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .gray
+        activityIndicator.center = view.center
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+        
+        // Format song title and artist for the filename (camel case, no spaces, no special chars)
+        let formattedTitle = formatForFileName(songTitle)
+        let formattedArtist = formatForFileName(artist)
+        
+        // Create file name with both song title and artist
+        let fileName = formattedArtist.isEmpty ? 
+            "\(formattedTitle).xml" : 
+            "\(formattedTitle)(\(formattedArtist)).xml"
+        
+        // Create email subject with the song title and artist
+        let emailSubject = "Song XML Upload: \(songTitle) (\(artist))"
+        
+        // Check if mail composer is available
+        if MFMailComposeViewController.canSendMail() {
+            // Create mail composer
+            let composer = MFMailComposeViewController()
+            composer.mailComposeDelegate = self
+            composer.setToRecipients(["sing-it@xenon95.de"])
+            composer.setSubject(emailSubject)
+            
+            // Convert XML string to Data and attach it
+            if let xmlData = xmlContent.data(using: .utf8) {
+                // Attach the XML file with the formatted filename
+                composer.addAttachmentData(xmlData, mimeType: "application/xml", fileName: fileName)
+                
+                // Format the XML for the email body to ensure proper structure preservation
+                // We need to use HTML formatting with a pre tag to preserve whitespace and line breaks
+                let xmlForHtml = xmlContent
+                    .replacingOccurrences(of: "&", with: "&amp;")
+                    .replacingOccurrences(of: "<", with: "&lt;")
+                    .replacingOccurrences(of: ">", with: "&gt;")
+                
+                let htmlBody = """
+                <html>
+                <body>
+                <pre style="font-family: monospace;">
+                \(xmlForHtml)
+                </pre>
+                </body>
+                </html>
+                """
+                
+                // Use HTML body to preserve formatting
+                composer.setMessageBody(htmlBody, isHTML: true)
+                
+                // Present the mail composer
+                activityIndicator.removeFromSuperview()
+                present(composer, animated: true)
+            } else {
+                activityIndicator.removeFromSuperview()
+                showErrorAlert(message: "Could not create XML data from the song")
+            }
+        } else {
+            // Fallback to mailto if Mail is not configured
+            if let emailURL = createMailtoURL(recipient: "sing-it@xenon95.de", 
+                                             subject: emailSubject,
+                                             body: xmlContent) {
+                
+                activityIndicator.removeFromSuperview()
+                
+                if UIApplication.shared.canOpenURL(emailURL) {
+                    UIApplication.shared.open(emailURL, options: [:]) { success in
+                        if !success {
+                            self.showErrorAlert(message: "Could not open email client")
+                        }
+                    }
+                } else {
+                    showErrorAlert(message: "No email client is configured on this device")
+                }
+            } else {
+                activityIndicator.removeFromSuperview()
+                showErrorAlert(message: "Could not create email with the song XML")
+            }
+        }
+    }
+    
+    // Format a string for use in filenames: remove special characters and convert to camel case
+    private func formatForFileName(_ input: String) -> String {
+        guard !input.isEmpty else { return "" }
+        
+        // First remove apostrophes, question marks, exclamation marks and other special characters
+        let allowedCharSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " "))
+        let cleanedString = input.components(separatedBy: allowedCharSet.inverted).joined()
+        
+        // Split by spaces and capitalize each word
+        let words = cleanedString.components(separatedBy: .whitespaces)
+        let capitalizedWords = words.map { word in
+            if !word.isEmpty {
+                let firstChar = word.prefix(1).uppercased()
+                let restOfWord = word.dropFirst()
+                return firstChar + restOfWord
+            }
+            return ""
+        }
+        
+        // Join words without spaces
+        return capitalizedWords.joined()
+    }
+    
+    private func sanitizeFileName(_ fileName: String) -> String {
+        let illegalCharacters = CharacterSet(charactersIn: ":/\\?%*|\"<>")
+        return fileName.components(separatedBy: illegalCharacters).joined(separator: "_")
+    }
+    
+    private func showFeedbackAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    private func createMailtoURL(recipient: String, subject: String, body: String) -> URL? {
+        // Fallback to mailto URL
+        let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let bodyEncoded = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        let mailtoString = "mailto:\(recipient)?subject=\(subjectEncoded)&body=\(bodyEncoded)"
+        return URL(string: mailtoString)
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    // Handle mail composer result
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        // Dismiss mail composer
+        controller.dismiss(animated: true) {
+            // Show appropriate feedback based on result
+            switch result {
+            case .sent:
+                self.showFeedbackAlert(title: "Success", message: "Email was sent successfully")
+            case .saved:
+                self.showFeedbackAlert(title: "Saved", message: "Email was saved as draft")
+            case .cancelled:
+                // No feedback needed for cancellation
+                break
+            case .failed:
+                if let error = error {
+                    self.showErrorAlert(message: "Failed to send email: \(error.localizedDescription)")
+                } else {
+                    self.showErrorAlert(message: "Failed to send email")
+                }
+            @unknown default:
+                break
+            }
+        }
     }
 }
 

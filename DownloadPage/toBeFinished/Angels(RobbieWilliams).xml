@@ -1,0 +1,105 @@
+<song>
+  <title>Angels</title>
+  <artist>Robbie Williams</artist>
+  <tempo>80</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. .. .. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I sit and wait</line>
+        <line>Does an angel contemplate my fate?</line>
+        <line>And do they know the places where we go</line>
+        <line>When we're grey and old?</line>
+        <line>'Cause I have been told</line>
+        <line>That salvation lets their wings unfold</line>
+        <line></line>
+        <line>So when I'm lying in my bed</line>
+        <line>Thoughts running through my head</line>
+        <line>And I feel that love is dead</line>
+        <line>I'm loving angels instead</line>
+      </lyrics>
+      <chords>
+        <line>C. .. C. .. F. .. G. ..</line>
+        <line>C. .. C. .. F. .. G. ..</line>
+        <line>F. .. Am . .. </line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And through it all she offers me protection</line>
+        <line>A lot of love and affection, whether I'm right or wrong</line>
+        <line>And down the waterfall, wherever it may take me</line>
+        <line>I know that life won't break me</line>
+        <line>When I come to call, she won't forsake me</line>
+        <line>I'm loving angels instead</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>When I'm feeling weak</line>
+        <line>And my pain walks down a one way street</line>
+        <line>I look above</line>
+        <line>And I know I'll always be blessed with love</line>
+        <line></line>
+        <line>And as the feeling grows</line>
+        <line>She brings flesh to my bones</line>
+        <line>And when love is dead</line>
+        <line>I'm loving angels instead</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And through it all she offers me protection</line>
+        <line>A lot of love and affection, whether I'm right or wrong</line>
+        <line>And down the waterfall, wherever it may take me</line>
+        <line>I know that life won't break me</line>
+        <line>When I come to call, she won't forsake me</line>
+        <line>I'm loving angels instead</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Solo</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And through it all she offers me protection</line>
+        <line>A lot of love and affection, whether I'm right or wrong</line>
+        <line>And down the waterfall, wherever it may take me</line>
+        <line>I know that life won't break me</line>
+        <line>When I come to call, she won't forsake me</line>
+        <line>I'm loving angels instead</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>
