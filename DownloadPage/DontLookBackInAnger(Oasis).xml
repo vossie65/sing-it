@@ -9,7 +9,8 @@
         <line></line>
       </lyrics>
       <chords>
-        <line>C. .. F. .. C. .. F. ..</line>
+        <line>G. .. C. ..</line>
+        <line>G. .. C. ..</line>
       </chords>
     </part>
     <part>
@@ -21,10 +22,10 @@
         <line>Will slowly fade away.</line>
       </lyrics>
       <chords>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
       </chords>
     </part>
     <part>
@@ -35,13 +36,15 @@
         <line>Step outside, summertime's in bloom</line>
         <line>Stand up beside the fireplace, Take that look from off your face,</line>
         <line>You ain't ever gonna burn my heart out</line>
+        <line>-</line>
       </lyrics>
       <chords>
-        <line>F. Fm. C...</line>
-        <line>F. Fm. C...</line>
-        <line>F. Fm. C...</line>
-        <line>G... E7...</line>
-        <line>Am. G. F... G... ....</line>
+        <line>C. Cm. G. ..</line>
+        <line>C. Cm. G. ..</line>
+        <line>C. Cm. G. ..</line>
+        <line>D. .. B7. ..</line>
+        <line>Em. D. C. ..</line>
+        <line>D. .. .. ..</line>
       </chords>
     </part>
     <part>
@@ -53,10 +56,10 @@
         <line>But don't look back in anger, I heard you say.</line>
       </lyrics>
       <chords>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
       </chords>
     </part>
     <part>
@@ -68,10 +71,10 @@
         <line>Who'll throw it all away.</line>
       </lyrics>
       <chords>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
       </chords>
     </part>
     <part>
@@ -82,13 +85,15 @@
         <line>Step outside, summertime's in bloom</line>
         <line>Stand up beside the fireplace, Take that look from off your face,</line>
         <line>You ain't ever gonna burn my heart out</line>
+        <line>-</line>
       </lyrics>
       <chords>
-        <line>F. Fm. C...</line>
-        <line>F. Fm. C...</line>
-        <line>F. Fm. C...</line>
-        <line>G... E7...</line>
-        <line>Am. G. F... G... ....</line>
+        <line>C. Cm. G. ..</line>
+        <line>C. Cm. G. ..</line>
+        <line>C. Cm. G. ..</line>
+        <line>D. .. B7. ..</line>
+        <line>Em. D. C. ..</line>
+        <line>D. .. .. ..</line>
       </chords>
     </part>
     <part>
@@ -98,12 +103,32 @@
         <line>As we're walking on by</line>
         <line>Her soul slides away,</line>
         <line>But don't look back in anger, I heard you say.</line>
+        <line></line>
+        <line>And so Sally can wait, She knows it's too late,</line>
+        <line>As we're walking on by</line>
+        <line>Her soul slides away,</line>
+        <line>But don't look back in anger, don’t look back in anger, I heard you say.</line>
       </lyrics>
       <chords>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
-        <line>C. G. Am. E7.</line>
-        <line>F. G. C. Am G</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line></line>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. Em D</line>
+        <line>G. D. Em. B7.</line>
+        <line>C. .. Cm. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>G. D. Em. B7.</line>
+        <line>C. D. G. ..</line>
       </chords>
     </part>
   </parts>

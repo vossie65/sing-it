@@ -446,15 +446,15 @@ class SongPartViewCell: UITableViewCell {
         partTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(partTypeLabel)
         
-        // Chords label setup
-        chordsLabel.font = UIFont.monospacedSystemFont(ofSize: 14, weight: .medium)
+        // Chords label setup - changed to 18
+        chordsLabel.font = UIFont.monospacedSystemFont(ofSize: 18, weight: .medium)
         chordsLabel.textColor = .systemBlue
         chordsLabel.numberOfLines = 0
         chordsLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(chordsLabel)
         
-        // Lyrics label setup
-        lyricsLabel.font = UIFont.systemFont(ofSize: 20)
+        // Lyrics label setup - keeping at 19
+        lyricsLabel.font = UIFont.systemFont(ofSize: 19)
         lyricsLabel.numberOfLines = 0
         lyricsLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(lyricsLabel)
