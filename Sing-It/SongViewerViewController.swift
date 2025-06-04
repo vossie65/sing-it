@@ -9,10 +9,13 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     private let headerView = UIView()
     private let titleLabel = UILabel()
     private let artistLabel = UILabel()
+    private let capoLabel = UILabel() // New label for capo information
     private let oneRowButton = UIButton(type: .system)
     private let lyricsOnlyButton = UIButton(type: .system) // Renamed from twoRowButton
     private let playAllButton = UIButton(type: .system) // New Play All button
     private let stopButton = UIButton(type: .system) // New Stop button
+    private let transposeDownButton = UIButton(type: .system) // Transpose down button
+    private let transposeUpButton = UIButton(type: .system) // Transpose up button
     
     // Display mode for song parts
     enum DisplayMode {
@@ -30,6 +33,9 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     
     // Indicate if playback is in progress
     private var isPlaying = false
+    
+    // Transposition level (semitones): 0 means no transposition
+    var transpositionLevel = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +102,7 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(titleLabel)
         
-        // Artist label setup
+        // Artist label setup - contains only the artist name, no capo or transposition info
         artistLabel.text = song.artist
         artistLabel.font = UIFont.systemFont(ofSize: 18)
         artistLabel.textColor = .secondaryLabel
@@ -104,42 +110,73 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         artistLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(artistLabel)
         
+        // Capo label setup - it will also show transposition info when needed
+        if song.capo > 0 {
+            capoLabel.text = "Capo: \(song.capo)"
+        } else {
+            capoLabel.text = ""
+        }
+        capoLabel.font = UIFont.systemFont(ofSize: 16)
+        capoLabel.textColor = .systemBlue
+        capoLabel.textAlignment = .left
+        capoLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(capoLabel)
+        
         // Configure the mode toggle buttons
         setupModeButtons()
         
         // Set constraints for labels and buttons
         NSLayoutConstraint.activate([
-            // One Row button on left of title
+            // First row - title level elements
+            
+            // Capo label on the far left
+            capoLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            capoLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            
+            // Transpose Down button right after capo label
+            transposeDownButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            transposeDownButton.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 16),
+            transposeDownButton.widthAnchor.constraint(equalToConstant: 36),
+            transposeDownButton.heightAnchor.constraint(equalToConstant: 36),
+            
+            // Transpose Up button to the right of Transpose Down
+            transposeUpButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            transposeUpButton.leadingAnchor.constraint(equalTo: transposeDownButton.trailingAnchor, constant: 8),
+            transposeUpButton.widthAnchor.constraint(equalToConstant: 36),
+            transposeUpButton.heightAnchor.constraint(equalToConstant: 36),
+            
+            // One Row (Chords & Lyrics) button right of the title
             oneRowButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            oneRowButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            oneRowButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
             
-            // Lyrics Only button on right of title
+            // Lyrics Only button to the left of One Row button
             lyricsOnlyButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            lyricsOnlyButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            lyricsOnlyButton.trailingAnchor.constraint(equalTo: oneRowButton.leadingAnchor, constant: -16),
             
-            // Play All button beside lyrics only button (slightly to the left)
+            // Play All button to the left of lyrics only button
             playAllButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             playAllButton.trailingAnchor.constraint(equalTo: lyricsOnlyButton.leadingAnchor, constant: -16),
             playAllButton.widthAnchor.constraint(equalToConstant: 36),
             playAllButton.heightAnchor.constraint(equalToConstant: 36),
             
-            // Stop button to the right of play all button (repositioned)
+            // Stop button to the left of play all button
             stopButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            stopButton.leadingAnchor.constraint(equalTo: playAllButton.trailingAnchor, constant: 8),
+            stopButton.trailingAnchor.constraint(equalTo: playAllButton.leadingAnchor, constant: -8),
             stopButton.widthAnchor.constraint(equalToConstant: 36),
             stopButton.heightAnchor.constraint(equalToConstant: 36),
             
-            // Title centered with padding for buttons
+            // Title centered between transpose and play buttons
             titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: oneRowButton.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: playAllButton.leadingAnchor, constant: -8),
+            titleLabel.leadingAnchor.constraint(equalTo: transposeUpButton.trailingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: stopButton.leadingAnchor, constant: -16),
             titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
             
             // Artist below title
             artistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             artistLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             artistLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            artistLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -24)
+            artistLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            artistLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -16)
         ])
         
         // Set header view to table view with increased height
@@ -189,6 +226,20 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         stopButton.translatesAutoresizingMaskIntoConstraints = false
         stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
         headerView.addSubview(stopButton)
+        
+        // Setup Transpose Down button
+        transposeDownButton.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        transposeDownButton.tintColor = .systemBlue
+        transposeDownButton.translatesAutoresizingMaskIntoConstraints = false
+        transposeDownButton.addTarget(self, action: #selector(transposeDownButtonTapped), for: .touchUpInside)
+        headerView.addSubview(transposeDownButton)
+        
+        // Setup Transpose Up button
+        transposeUpButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        transposeUpButton.tintColor = .systemBlue
+        transposeUpButton.translatesAutoresizingMaskIntoConstraints = false
+        transposeUpButton.addTarget(self, action: #selector(transposeUpButtonTapped), for: .touchUpInside)
+        headerView.addSubview(transposeUpButton)
         
         // Set initial button states
         updateButtonStates()
@@ -294,6 +345,11 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
             allChords = "C"
         }
         
+        // Apply transposition if needed
+        if transpositionLevel != 0 {
+            allChords = SongViewerViewController.transposeChordProgression(allChords, by: transpositionLevel)
+        }
+        
         print("🎵 Final chord progression: \"\(allChords)\"")
         
         // Set playing state
@@ -332,6 +388,199 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
                 self.stopButton.transform = .identity
             }
         }
+    }
+    
+    // MARK: - Transpose Button Actions
+    
+    @objc private func transposeDownButtonTapped() {
+        // Animate button press
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transposeDownButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.transposeDownButton.transform = .identity
+            }
+        }
+        
+        // Transpose down one semitone
+        transpositionLevel -= 1
+        
+        // Update UI to show new transposition level
+        updateTranspositionUI()
+        
+        print("Transposed chords down by 1 semitone. Current level: \(transpositionLevel)")
+    }
+    
+    @objc private func transposeUpButtonTapped() {
+        // Animate button press
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transposeUpButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.transposeUpButton.transform = .identity
+            }
+        }
+        
+        // Transpose up one semitone
+        transpositionLevel += 1
+        
+        // Update UI to show new transposition level
+        updateTranspositionUI()
+        
+        print("Transposed chords up by 1 semitone. Current level: \(transpositionLevel)")
+    }
+    
+    // MARK: - Chord Transposition
+    
+    // Helper function to transpose a single chord by the given number of semitones
+    static func transposeChord(_ chord: String, by semitones: Int) -> String {
+        // Skip transposition if semitones is 0
+        if semitones == 0 { return chord }
+        
+        // Root notes in order (using sharps)
+        let sharpNotes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        
+        // Root notes in order (using flats)
+        let flatNotes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+        
+        // Prefer using flats for these positions when transposing
+        let preferFlatsPositions = [1, 3, 5, 8, 10] // Db, Eb, F, Ab, Bb
+        
+        // Extract root note and suffix (everything after the root)
+        var rootNote = ""
+        var suffix = ""
+        var isSlashChord = false
+        var bassNote = ""
+        
+        // Handle slash chords (e.g. C/G)
+        let components = chord.split(separator: "/")
+        if components.count > 1 {
+            isSlashChord = true
+            bassNote = String(components[1])
+        }
+        
+        // Regular expression to match chord pattern
+        let chordPattern = "^([A-G][#b]?)(.*)"
+        let regex = try? NSRegularExpression(pattern: chordPattern, options: [])
+        
+        if let match = regex?.firstMatch(in: chord.components(separatedBy: "/")[0], 
+                                        options: [], 
+                                        range: NSRange(location: 0, length: chord.components(separatedBy: "/")[0].count)) {
+            if let rootRange = Range(match.range(at: 1), in: chord.components(separatedBy: "/")[0]) {
+                rootNote = String(chord.components(separatedBy: "/")[0][rootRange])
+            }
+            
+            if let suffixRange = Range(match.range(at: 2), in: chord.components(separatedBy: "/")[0]) {
+                suffix = String(chord.components(separatedBy: "/")[0][suffixRange])
+            }
+        } else {
+            // If no match found, return the original chord
+            return chord
+        }
+        
+        // Find the index of the root note
+        var noteIndex: Int?
+        
+        if rootNote.contains("#") {
+            if let index = sharpNotes.firstIndex(of: rootNote) {
+                noteIndex = index
+            }
+        } else if rootNote.contains("b") {
+            if let index = flatNotes.firstIndex(of: rootNote) {
+                noteIndex = index
+            }
+        } else {
+            // Plain note (no accidental)
+            if let index = sharpNotes.firstIndex(of: rootNote) {
+                noteIndex = index
+            }
+        }
+        
+        guard let currentIndex = noteIndex else { return chord }
+        
+        // Calculate new index after transposition
+        var newIndex = (currentIndex + semitones) % 12
+        if newIndex < 0 {
+            newIndex += 12
+        }
+        
+        // Choose whether to use sharp or flat notation
+        let newRoot: String
+        if preferFlatsPositions.contains(newIndex) {
+            newRoot = flatNotes[newIndex]
+        } else {
+            newRoot = sharpNotes[newIndex]
+        }
+        
+        // Handle the bass note if it's a slash chord
+        var newBass = ""
+        if isSlashChord {
+            // Apply the same transposition to the bass note
+            newBass = "/" + transposeChord(bassNote, by: semitones)
+        }
+        
+        return newRoot + suffix + newBass
+    }
+    
+    // Transpose all chords in a chord progression string
+    static func transposeChordProgression(_ chordString: String, by semitones: Int) -> String {
+        guard semitones != 0 else { return chordString }
+        
+        // Define a chord pattern to match (includes handling for dots, dashes, and spaces)
+        let regex = try! NSRegularExpression(pattern: "([A-G][#b]?[^\\s/]*(?:/[A-G][#b]?[^\\s]*)?)([\\s.-]*)", options: [])
+        
+        let nsString = chordString as NSString
+        let range = NSRange(location: 0, length: nsString.length)
+        let result = NSMutableString(string: chordString)
+        
+        // Process matches from end to beginning to avoid index issues when replacing
+        let matches = regex.matches(in: chordString, options: [], range: range)
+        for match in matches.reversed() {
+            let fullChordRange = match.range(at: 1)
+            let separatorRange = match.range(at: 2)
+            
+            if fullChordRange.location != NSNotFound {
+                let chord = nsString.substring(with: fullChordRange)
+                let separator = separatorRange.location != NSNotFound ? nsString.substring(with: separatorRange) : ""
+                
+                // Transpose the chord
+                let transposedChord = transposeChord(chord, by: semitones)
+                
+                // Replace the original chord with the transposed one (keep separator)
+                result.replaceCharacters(in: NSRange(location: fullChordRange.location, 
+                                                    length: fullChordRange.length + separatorRange.length), 
+                                        with: transposedChord + separator)
+            }
+        }
+        
+        return result as String
+    }
+    
+    // Function to update the UI to show the current transposition level
+    private func updateTranspositionUI() {
+        // Update capo label with transposition info if needed
+        if transpositionLevel != 0 {
+            let transLabel = transpositionLevel > 0 ? "+\(transpositionLevel)" : "\(transpositionLevel)"
+            
+            if song.capo > 0 {
+                capoLabel.text = "Capo: \(song.capo) | Trans: \(transLabel)"
+            } else {
+                capoLabel.text = "Trans: \(transLabel)"
+            }
+        } else {
+            // Just show capo info if no transposition
+            if song.capo > 0 {
+                capoLabel.text = "Capo: \(song.capo)"
+            } else {
+                capoLabel.text = ""
+            }
+        }
+        
+        // Only show the pure artist name without any additional text
+        artistLabel.text = song.artist
+        
+        // Reload table to refresh all chord displays
+        tableView.reloadData()
     }
     
     // MARK: - UITableViewDataSource
@@ -383,11 +632,14 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
             part = song.parts[indexPath.section]
         }
         
-        cell.configure(with: part, displayMode: currentDisplayMode)
+        // Pass the transposition level directly to the cell
+        cell.configure(with: part, displayMode: currentDisplayMode, transpositionLevel: transpositionLevel)
         
         // Set up chord playing handler (without count-in for individual parts)
         cell.playChordHandler = { [weak self] chordString in
             guard let self = self, !chordString.isEmpty else { return }
+            // Explicitly set the instrument to piano (0) before playing individual parts
+            AudioEngine.shared.setInstrument(0, waitForLoad: true)
             AudioEngine.shared.playChordProgression(
                 chordString: chordString, 
                 duration: self.chordDuration,
@@ -539,14 +791,22 @@ class SongPartViewCell: UITableViewCell {
     }
     
     // Configure the cell with part data and display mode
-    func configure(with part: Part, displayMode: SongViewerViewController.DisplayMode) {
+    func configure(with part: Part, displayMode: SongViewerViewController.DisplayMode, transpositionLevel: Int = 0) {
         // Set content first
         partTypeLabel.text = part.partType.rawValue
-        chordsLabel.text = part.chords.isEmpty ? "No chords" : part.chords
-        lyricsLabel.text = part.lyrics
         
-        // Store chord data for playing
-        currentChords = part.chords
+        // Apply transposition to chords if needed
+        if !part.chords.isEmpty && transpositionLevel != 0 {
+            // Use the static method from SongViewerViewController directly
+            let transposedChords = SongViewerViewController.transposeChordProgression(part.chords, by: transpositionLevel)
+            chordsLabel.text = transposedChords
+            currentChords = transposedChords // Store transposed version for playback
+        } else {
+            chordsLabel.text = part.chords.isEmpty ? "No chords" : part.chords
+            currentChords = part.chords
+        }
+        
+        lyricsLabel.text = part.lyrics
         
         // Handle visibility based on mode
         if displayMode == .lyricsOnly {

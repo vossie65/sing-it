@@ -1,0 +1,120 @@
+<song>
+  <title>Sweet Child of Mine (unedited)</title>
+  <artist>Guns 'n Roses</artist>
+  <tempo>60</tempo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>D. .. Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>She's got a smile that it seems to me,</line>
+        <line>Reminds me of childhood memories</line>
+        <line>Where everything was as fresh as the bright blue sky</line>
+        <line>Now and then when I see her face,</line>
+        <line>She takes me away to that special place</line>
+        <line>And if I stared too long, I'd probably break down and cry</line>
+      </lyrics>
+      <chords>
+        <line>D. ..</line>
+        <line>Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+        <line>D. ..</line>
+        <line>Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Woah, oh, oh, Sweet child o' mine</line>
+        <line>Woah, oh, oh, oh, Sweet love of mine</line>
+      </lyrics>
+      <chords>
+        <line>A. C. D. ..</line>
+        <line>A. C. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>D. .. Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>She's got eyes of the bluest skies</line>
+        <line>As if they thought of rain</line>
+        <line>I'd hate to look into those eyes and see an ounce of pain</line>
+        <line>Her hair reminds me of a warm, safe place</line>
+        <line>Where, as a child, I'd hide</line>
+        <line>And pray for the thunder and the rain to quietly pass me by</line>
+      </lyrics>
+      <chords>
+        <line>D. ..</line>
+        <line>Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+        <line>D. ..</line>
+        <line>Cadd9. ..</line>
+        <line>G. .. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Woah, oh, oh, Sweet child o' mine</line>
+        <line>Woah, oh, oh, oh, Sweet love of mine</line>
+      </lyrics>
+      <chords>
+        <line>A. C. D. ..</line>
+        <line>A. C. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line>Where do we go? Where do we go now?</line>
+        <line>Where do we go? Mm-mm, oh,</line>
+        <line>Where do we go? Where do we go now?</line>
+        <line>Oh, where do we go?</line>
+        <line>Where do we go? (Sweet child)</line>
+        <line>Mm-mm, where do we go now?</line>
+        <line>Aye, aye, aye, aye, aye, aye, aye, aye</line>
+        <line>Oh, where do we go now? Oh-oh-oh-oh-oh, oh-oh, woah</line>
+        <line></line>
+        <line>Where do we go?</line>
+        <line>Oh-oh, where do we go now?</line>
+        <line>(Oh) Where do we go, oh-oh-oh-oh? (Oh, wow)</line>
+        <line>Where do we go now?</line>
+        <line>Where do we go?</line>
+        <line>Woah-oh, where do we go now?</line>
+        <line>No, no, no, no, no, no, no</line>
+        <line>Sweet child</line>
+        <line>Sweet child of mine</line>
+      </lyrics>
+      <chords>
+        <line>Em . G .</line>
+        <line>Am. C D</line>
+        <line>Em . G .</line>
+        <line>Am. C D</line>
+        <line>Em . G .</line>
+        <line>Am. C D</line>
+        <line>Em . G .</line>
+        <line>Am. C D</line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -1,0 +1,71 @@
+<song>
+  <title>Van Diemen’s Land (unedited)</title>
+  <artist>U2</artist>
+  <tempo>120</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Hold me now,</line>
+        <line>Oh hold me now</line>
+        <line>'Til this hour</line>
+        <line>Has gone around</line>
+        <line>And I'm gone</line>
+        <line>On the rising tide</line>
+        <line>For to face</line>
+        <line>Van Diemen's land</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>It's a bitter pill</line>
+        <line>I swallow here</line>
+        <line>To be rent</line>
+        <line>From one so dear</line>
+        <line>We fought for justice</line>
+        <line>And not for gain</line>
+        <line>But the magistrate</line>
+        <line>Sent me away</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Now kings will rule</line>
+        <line>And the poor will toil</line>
+        <line>And tear their hands</line>
+        <line>As they tear the soil</line>
+        <line>But a day will come</line>
+        <line>In this dawning age</line>
+        <line>When an honest man</line>
+        <line>Sees an honest wage</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>So hold me now</line>
+        <line>Oh hold me now</line>
+        <line>'Til this hour</line>
+        <line>Has gone around</line>
+        <line>And I'm gone</line>
+        <line>On the rising tide</line>
+        <line>For to face</line>
+        <line>Van Diemen's land</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

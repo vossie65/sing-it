@@ -5,12 +5,14 @@ class Song: Codable, Identifiable {
     var title: String
     var artist: String
     var tempo: Int
+    var capo: Int // 0 means "None", 1-11 represent fret positions
     var parts: [Part]
     
-    init(title: String, artist: String, tempo: Int = 120, parts: [Part] = []) {
+    init(title: String, artist: String, tempo: Int = 120, capo: Int = 0, parts: [Part] = []) {
         self.title = title
         self.artist = artist
         self.tempo = tempo
+        self.capo = capo
         self.parts = parts
     }
     

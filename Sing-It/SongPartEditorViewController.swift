@@ -19,6 +19,10 @@ class SongPartEditorViewController: UIViewController {
     private let tempoSlider = UISlider()
     private let tempoValueLabel = UILabel()
     
+    // Add capo control elements
+    private let capoLabel = UILabel()
+    private let capoSegmentedControl = UISegmentedControl()
+    
     var song: Song!
     var isNewSong: Bool = false
     private let dataManager = DataManager.shared
@@ -84,6 +88,48 @@ class SongPartEditorViewController: UIViewController {
         tempoValueLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tempoValueLabel)
         
+        // Configure capo label
+        capoLabel.text = "Capo"
+        capoLabel.font = UIFont.systemFont(ofSize: 18)
+        capoLabel.textColor = .label
+        capoLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(capoLabel)
+        
+        // Configure capo segmented control
+        let capoOptions = ["None", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+        capoSegmentedControl.removeAllSegments()
+        for (index, option) in capoOptions.enumerated() {
+            capoSegmentedControl.insertSegment(withTitle: option, at: index, animated: false)
+        }
+        // Select the current capo value (0 = "None", 1-11 = fret position)
+        capoSegmentedControl.selectedSegmentIndex = song.capo
+        capoSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(capoSegmentedControl)
+        
+        // Adjust the table view's bottom constraint programmatically
+        // This overrides the storyboard constraint to make room for tempo and capo controls
+        if let tableBottomConstraint = view.constraints.first(where: { 
+            ($0.firstItem as? UITableView) == partsTableView && 
+            $0.firstAttribute == .bottom 
+        }) {
+            // Remove the existing constraint
+            view.removeConstraint(tableBottomConstraint)
+        }
+        
+        // Create a new bottom constraint with more space
+        // We'll add 120 points of space at the bottom of the table view
+        let newBottomConstraint = NSLayoutConstraint(
+            item: partsTableView!, 
+            attribute: .bottom, 
+            relatedBy: .equal, 
+            toItem: addPartButton, 
+            attribute: .top, 
+            multiplier: 1.0, 
+            constant: -130)  // Increased space for tempo and capo controls
+        
+        // Add the new constraint
+        view.addConstraint(newBottomConstraint)
+        
         // Position the editable fields where the labels would have been
         NSLayoutConstraint.activate([
             titleTextField.topAnchor.constraint(equalTo: songTitleLabel.topAnchor),
@@ -96,17 +142,25 @@ class SongPartEditorViewController: UIViewController {
             artistTextField.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
             artistTextField.heightAnchor.constraint(equalToConstant: 30),
             
-            // Updated tempo controls to 30 pts above buttons (changed from 35)
-            tempoLabel.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -30),
+            // Updated tempo controls positioning - moved up from buttons
+            tempoLabel.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -90),
             tempoLabel.leadingAnchor.constraint(equalTo: addPartButton.leadingAnchor),
             tempoLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor),
             
-            tempoSlider.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -30),
+            tempoSlider.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -90),
             tempoSlider.leadingAnchor.constraint(equalTo: tempoLabel.trailingAnchor, constant: 12),
             tempoSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             
             tempoValueLabel.leadingAnchor.constraint(equalTo: tempoSlider.trailingAnchor, constant: 12),
-            tempoValueLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor)
+            tempoValueLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor),
+            
+            // Position capo controls below tempo controls
+            capoLabel.topAnchor.constraint(equalTo: tempoLabel.bottomAnchor, constant: 30),
+            capoLabel.leadingAnchor.constraint(equalTo: addPartButton.leadingAnchor),
+            
+            capoSegmentedControl.centerYAnchor.constraint(equalTo: capoLabel.centerYAnchor),
+            capoSegmentedControl.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 12),
+            capoSegmentedControl.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
         ])
         
         // Add light borders and padding to make it clear they're editable
@@ -189,6 +243,7 @@ class SongPartEditorViewController: UIViewController {
         song.title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
         song.artist = artistTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
         song.tempo = Int(tempoSlider.value)
+        song.capo = capoSegmentedControl.selectedSegmentIndex // 0 = "None", 1-11 = fret position
         
         if isNewSong {
             dataManager.addSong(song)
@@ -276,6 +331,11 @@ class SongPartEditorViewController: UIViewController {
         xmlString += "  <title>\(escapeXML(song.title))</title>\n"
         xmlString += "  <artist>\(escapeXML(song.artist))</artist>\n"
         xmlString += "  <tempo>\(song.tempo)</tempo>\n"
+        
+        // Add capo information to XML
+        let capoValue = song.capo == 0 ? "None" : String(song.capo)
+        xmlString += "  <capo>\(capoValue)</capo>\n"
+        
         xmlString += "  <parts>\n"
         
         for part in song.parts {

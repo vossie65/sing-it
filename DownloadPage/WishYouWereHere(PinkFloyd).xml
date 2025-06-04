@@ -1,7 +1,7 @@
 <song>
-  <title>Wish you were here</title>
+  <title>Wish you were here (unedited)</title>
   <artist>Pink Floyd</artist>
-  <tempo>120</tempo>
+  <tempo>60</tempo>
   <parts>
     <part>
       <type>Intro</type>
@@ -9,7 +9,11 @@
         <line></line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Em. .. G. .. </line>
+        <line>Em. .. G. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>G. .. G. ..</line>
       </chords>
     </part>
     <part>

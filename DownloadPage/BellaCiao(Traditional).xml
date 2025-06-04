@@ -1,0 +1,79 @@
+<song>
+  <title>Bella Ciao (unedited)</title>
+  <artist>Traditional</artist>
+  <tempo>120</tempo>
+  <parts>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Una mattina mi sono alzato</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>Una mattina mi sono alzato</line>
+        <line>e ho trovato l’invasor.</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>O partigiano, portami via,</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>O partigiano, portami via,</line>
+        <line>ché mi sento di morir.</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>E se io muoio da partigiano,</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>E se io muoio da partigiano,</line>
+        <line>tu mi devi seppellir.</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>E seppellire lassù in montagna,</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>E seppellire lassù in montagna,</line>
+        <line>sotto l’ombra di un bel fior.</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Tutte le genti che passeranno,</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>Tutte le genti che passeranno,</line>
+        <line>Mi diranno «Che bel fior!»</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>«È questo il fiore del partigiano»,</line>
+        <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
+        <line>«È questo il fiore del partigiano,</line>
+        <line>morto per la libertà!»</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

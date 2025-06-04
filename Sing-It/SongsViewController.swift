@@ -361,6 +361,7 @@ class XMLSongParser: NSObject, XMLParserDelegate {
     private var tempTitle = ""
     private var tempArtist = ""
     private var tempTempo = "" // Add temporary storage for tempo
+    private var tempCapo = "" // Add temporary storage for capo
     
     func parseSongFromXML(_ xmlString: String) -> Song? {
         guard let data = xmlString.data(using: .utf8) else { return nil }
@@ -381,6 +382,7 @@ class XMLSongParser: NSObject, XMLParserDelegate {
         tempTitle = ""
         tempArtist = ""
         tempTempo = "" // Reset tempo value
+        tempCapo = "" // Reset capo value
         
         if parser.parse() {
             return song
@@ -432,6 +434,14 @@ class XMLSongParser: NSObject, XMLParserDelegate {
             if let song = song, let tempo = Int(tempTempo) {
                 song.tempo = tempo
             }
+        case "capo":
+            if let song = song {
+                if tempCapo.lowercased() == "none" {
+                    song.capo = 0
+                } else if let capo = Int(tempCapo), capo >= 1 && capo <= 11 {
+                    song.capo = capo
+                }
+            }
         case "part":
             if let song = song, let partType = currentPartType {
                 let part = Part(partType: partType, lyrics: currentLyrics, chords: currentChords)
@@ -471,6 +481,8 @@ class XMLSongParser: NSObject, XMLParserDelegate {
                 tempArtist += data
             case "tempo":
                 tempTempo += data
+            case "capo":
+                tempCapo += data
             case "type":
                 if let partType = PartType(rawValue: data) {
                     currentPartType = partType

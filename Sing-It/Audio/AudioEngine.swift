@@ -146,7 +146,10 @@ class AudioEngine {
             
             // Add bass note if specified
             if let bassNote = bassNote {
-                midiNotes.append(noteToMidi(note: bassNote, octaveOffset: octave - 4))
+                midiNotes.append(noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
+            } else {
+                // Add root note as bass note if no specific bass note is provided
+                midiNotes.append(noteToMidi(note: rootNote, octaveOffset: (octave - 1) - 4))
             }
             
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -176,6 +179,17 @@ class AudioEngine {
     ///              If a value is provided:
     ///                 - Values < 1.0: Interpreted as a fraction of a beat (0.5 = half beat)
     ///                 - Values >= 1.0: Interpreted as multiple beats (2.0 = two beats)
+    ///   - withCountIn: If true, plays four metronome ticks before starting the chord progression
+    /// Plays a progression of chords with the specified parameters
+    /// - Parameters:
+    ///   - chordString: String representation of chords to play (e.g., "C G Am F")
+    ///     - Use "." to repeat the previous chord
+    ///     - Use "-" to hold the previous chord (sustain through this beat without re-striking)
+    ///     - Use parentheses to group chords into a single beat: "(C G)" plays both in one beat
+    ///   - octave: Base octave for the chords (default is 4)
+    ///   - duration: Optional duration value for each chord:
+    ///     - Values < 1.0: Interpreted as fraction of a beat (0.5 = half beat)
+    ///     - Values >= 1.0: Interpreted as multiple beats (2.0 = two beats)
     ///   - withCountIn: If true, plays four metronome ticks before starting the chord progression
     func playChordProgression(chordString: String, octave: Int = 4, duration: TimeInterval? = nil, withCountIn: Bool = false) {
         // Reset stop flag at the start of playback
@@ -262,9 +276,13 @@ class AudioEngine {
                 
                 // Handle different chord tokens
                 if chord == "HOLD" {
-                    // This is a held chord - just wait for the duration without stopping or re-striking
-                    print("🎵 Holding chord without re-striking for \(chordDuration) seconds")
+                    // This is a held chord - continue the previous chord sound for the duration
+                    // Note: The previous chord should still be playing because we didn't stop it
+                    print("🎵 Holding chord: \(activeChord) for \(chordDuration) seconds")
                     Thread.sleep(forTimeInterval: chordDuration)
+                    
+                    // Don't stop the chord after a HOLD - it might be followed by another HOLD
+                    // The chord will be stopped when we encounter a non-HOLD chord
                 } else if chord == "REST" {
                     // This is a rest/pause - just wait for the duration without playing any chord
                     print("🎵 Resting for \(chordDuration) seconds")
@@ -299,9 +317,9 @@ class AudioEngine {
                         print("❌ Invalid GROUP token format: \(chord)")
                     }
                 } else {
-                    // This is a regular chord to play
+                    // This is a regular chord or a group chord to play
                     
-                    // First, stop any previously playing notes
+                    // First, stop any previously playing notes (from the previous chord)
                     if !activeNotes.isEmpty {
                         for midiNote in activeNotes {
                             self.sampler.stopNote(UInt8(midiNote), onChannel: 0)
@@ -322,6 +340,10 @@ class AudioEngine {
                         if let bassNote = bassNote {
                             midiNotes.append(self.noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
                             print("🎸 Adding bass note: \(bassNote) to chord")
+                        } else {
+                            // Add root note as bass note if no specific bass note is provided
+                            midiNotes.append(self.noteToMidi(note: rootNote, octaveOffset: (octave - 1) - 4))
+                            print("🎸 Adding root as bass note: \(rootNote) to chord")
                         }
                         
                         // Play all notes simultaneously
@@ -340,6 +362,7 @@ class AudioEngine {
                     
                     if !nextChordIsHold {
                         // If the next chord is not HOLD, we play this chord for the full duration
+                        // and then stop it
                         Thread.sleep(forTimeInterval: chordDuration)
                         
                         // Stop the notes after duration has elapsed
@@ -349,13 +372,21 @@ class AudioEngine {
                             }
                             activeNotes = []
                         }
+                    } else {
+                        // If the next chord IS a HOLD, we don't stop the notes here
+                        // Just wait for the beat duration before moving to the HOLD token
+                        Thread.sleep(forTimeInterval: chordDuration)
+                        
+                        // Notes will continue playing into the HOLD beat(s)
                     }
                 }
                 
-                // Only add a small gap if the next chord is NOT a hold, NOT a group chord, and we're not at the last chord
+                // Only add a small gap if the next chord is NOT a hold, NOT a group chord, 
+                // we're not at the last chord, and the current chord is not a HOLD token
                 if index < processedChords.count - 1 && 
                    processedChords[index + 1] != "HOLD" && 
                    !processedChords[index + 1].hasPrefix("GROUP:") && 
+                   chord != "HOLD" && 
                    !self.shouldStopPlayback {
                     // Very small gap between regular chords (1% of beat duration)
                     let gapTime = chordDuration * 0.01
@@ -472,6 +503,10 @@ class AudioEngine {
             if let bassNote = bassNote {
                 midiNotes.append(noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
                 print("🎸 Adding bass note: \(bassNote) to chord")
+            } else {
+                // Add root note as bass note if no specific bass note is provided
+                midiNotes.append(noteToMidi(note: rootNote, octaveOffset: (octave - 1) - 4))
+                print("🎸 Adding root as bass note: \(rootNote) to chord")
             }
             
             // Play all notes simultaneously
@@ -514,6 +549,10 @@ class AudioEngine {
             if let bassNote = bassNote {
                 midiNotes.append(noteToMidi(note: bassNote, octaveOffset: (octave - 1) - 4))
                 print("🎸 Adding bass note: \(bassNote) to chord")
+            } else {
+                // Add root note as bass note if no specific bass note is provided
+                midiNotes.append(noteToMidi(note: rootNote, octaveOffset: (octave - 1) - 4))
+                print("🎸 Adding root as bass note: \(rootNote) to chord")
             }
             
             // Play all notes simultaneously
@@ -848,8 +887,8 @@ class AudioEngine {
                         processedChords.append(previousChord)
                     }
                 case "-":
-                    // Dash token means "pause/rest" for one beat
-                    processedChords.append("REST")
+                    // Dash token now means "hold the previous chord" (let it continue sounding)
+                    processedChords.append("HOLD")
                 default:
                     // It's a chord token
                     processedChords.append(token)
