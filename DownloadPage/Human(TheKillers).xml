@@ -1,5 +1,5 @@
 <song>
-  <title>Human (unedited)</title>
+  <title>Human</title>
   <artist>The Killers</artist>
   <tempo>75</tempo>
   <capo>None</capo>
@@ -76,14 +76,16 @@
     <part>
       <type>Bridge</type>
       <lyrics>
-        <line>Will your system be alright</line>
+        <line>Will your system be alright,</line>
         <line>When you dream of home tonight?</line>
-        <line>There is no message we're receiving</line>
+        <line>There is no message we're receiving,</line>
         <line>Let me know, is your heart still beating?</line>
       </lyrics>
       <chords>
-        <line>C. D. D#dim. Em.</line>
-        <line>C. .. D. ..</line>
+        <line>C. D.</line>
+        <line>D#dim. Em.</line>
+        <line>C. ..</line>
+        <line>D. ..</line>
       </chords>
     </part>
     <part>

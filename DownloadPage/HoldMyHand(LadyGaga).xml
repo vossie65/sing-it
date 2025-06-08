@@ -1,0 +1,164 @@
+<song>
+  <title>Hold My Hand</title>
+  <artist>Lady Gaga</artist>
+  <tempo>50</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>G. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Hold my hand, everything will be okay</line>
+        <line>I heard from the heavens that clouds have been grey</line>
+        <line>Pull me close, wrap me in your aching arms</line>
+        <line>I see that you're hurtin', why'd you take so long</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>C. G D</line>
+        <line>G. D.</line>
+        <line>C. G D</line>
+      </chords>
+    </part>
+    <part>
+      <type>Pre-Chorus</type>
+      <lyrics>
+        <line>To tell me you need me? I see that you're bleeding</line>
+        <line>You don't need to show me again</line>
+        <line>But if you decide to, I'll ride in this life with you</line>
+        <line>I won't let go 'til the end</line>
+      </lyrics>
+      <chords>
+        <line>Em. C.</line>
+        <line>G. D.</line>
+        <line>Em. C.</line>
+        <line>G. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>So cry tonight</line>
+        <line>But don't you let go of my hand</line>
+        <line>You can cry every last tear</line>
+        <line>I won't leave 'til I understand</line>
+        <line>Promise me, just hold my hand</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Raise your head, look into my wishful eyes</line>
+        <line>That fear that's inside you will lift, give it time</line>
+        <line>I can see everything you're blind to now</line>
+        <line>Your prayers will be answered, let God whisper how</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>C. G D</line>
+        <line>G. D.</line>
+        <line>C. G D</line>
+      </chords>
+    </part>
+    <part>
+      <type>Pre-Chorus</type>
+      <lyrics>
+        <line>To tell me you need me, I see that you're bleeding</line>
+        <line>You don't need to show me again</line>
+        <line>But if you decide to, I'll ride in this life with you</line>
+        <line>I won't let go 'til the end</line>
+      </lyrics>
+      <chords>
+        <line>Em. C.</line>
+        <line>G. D.</line>
+        <line>Em. C.</line>
+        <line>G. D. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>So cry tonight</line>
+        <line>But don't you let go of my hand</line>
+        <line>You can cry every last tear</line>
+        <line>I won't leave 'til I understand</line>
+        <line>Promise you'll just hold my hand</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Post-Chorus</type>
+      <lyrics>
+        <line>Hold my hand, hold my, Hold my hand, my hand</line>
+        <line>I'll be right here, hold my hand</line>
+        <line>Hold my hand, hold my, Hold my hand, my hand</line>
+        <line>I'll be right here, hold my hand</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>I know you're scared and your pain is imperfect</line>
+        <line>But don't you give up on yourself</line>
+        <line>I've heard a story, a girl, she once told me</line>
+        <line>That I would be happy again</line>
+      </lyrics>
+      <chords>
+        <line>D. Em.</line>
+        <line>F. C.</line>
+        <line>D. Em.</line>
+        <line>F. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line>Hold my hand</line>
+        <line>-</line>
+        <line>Hold my hand</line>
+        <line>-</line>
+        <line>Hold my hand, hold my hand</line>
+        <line>Hold my hand, hold my hand</line>
+        <line>Hold my hand</line>
+        <line>I heard from the heavens</line>
+      </lyrics>
+      <chords>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>G. D.</line>
+        <line>Em Em7 C.</line>
+        <line>C C</line>
+        <line>Cmaj7 Cmaj</line>
+        <line>Cadd9- - -</line>
+        <line>- - G-</line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -77,9 +77,40 @@ class SongTableViewCell: UITableViewCell {
         ])
     }
     
+    private func localMP3FileURL(for fileName: String) -> URL {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docs.appendingPathComponent(fileName)
+    }
+
     func configure(with song: Song) {
         titleLabel.text = song.title
         artistLabel.text = song.artist
+        // MP3 indicator
+        let formattedTitle = SongViewerViewController.formatForFileNameStatic(song.title)
+        let formattedArtist = SongViewerViewController.formatForFileNameStatic(song.artist)
+        let fileName = formattedArtist.isEmpty ? "\(formattedTitle).mp3" : "\(formattedTitle)(\(formattedArtist)).mp3"
+        let localURL = localMP3FileURL(for: fileName)
+        if FileManager.default.fileExists(atPath: localURL.path) {
+            // Show a small MP3 icon or label
+            if contentView.viewWithTag(9999) == nil {
+                let mp3Icon = UIImageView(image: UIImage(systemName: "music.note"))
+                mp3Icon.tintColor = .systemPurple
+                mp3Icon.translatesAutoresizingMaskIntoConstraints = false
+                mp3Icon.tag = 9999
+                contentView.addSubview(mp3Icon)
+                NSLayoutConstraint.activate([
+                    mp3Icon.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+                    mp3Icon.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
+                    mp3Icon.widthAnchor.constraint(equalToConstant: 20),
+                    mp3Icon.heightAnchor.constraint(equalToConstant: 20)
+                ])
+            }
+        } else {
+            // Remove icon if present
+            if let icon = contentView.viewWithTag(9999) {
+                icon.removeFromSuperview()
+            }
+        }
     }
     
     @objc private func editButtonTapped() {

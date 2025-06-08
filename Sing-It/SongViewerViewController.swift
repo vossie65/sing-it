@@ -16,6 +16,7 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     private let stopButton = UIButton(type: .system) // New Stop button
     private let transposeDownButton = UIButton(type: .system) // Transpose down button
     private let transposeUpButton = UIButton(type: .system) // Transpose up button
+    private let mp3Button = UIButton(type: .system) // New MP3 button
     
     // Display mode for song parts
     enum DisplayMode {
@@ -37,6 +38,30 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     // Transposition level (semitones): 0 means no transposition
     var transpositionLevel = 0
     
+    // MP3 file properties
+    private var mp3URL: URL? = nil
+    private var mp3Exists: Bool = false {
+        didSet {
+            if mp3Exists {
+                let playImage = UIImage(systemName: "play.circle.fill")
+                mp3Button.setImage(playImage, for: .normal)
+                mp3Button.setTitle(" MP3", for: .normal)
+                mp3Button.setTitleColor(.systemBlue, for: .normal)
+                mp3Button.tintColor = .systemBlue
+                mp3Button.isEnabled = true
+                mp3Button.alpha = 1.0
+            } else {
+                mp3Button.setImage(nil, for: .normal)
+                mp3Button.setTitle("no MP3", for: .normal)
+                mp3Button.setTitleColor(.systemGray, for: .normal)
+                mp3Button.tintColor = .systemGray
+                mp3Button.isEnabled = false
+                mp3Button.alpha = 0.4
+            }
+        }
+    }
+    private var mp3Player: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +75,7 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         if let song = song {
             tempo = Double(song.tempo)
             AudioEngine.shared.setTempo(tempo)
+            checkForMP3File()
         }
     }
     
@@ -122,20 +148,35 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         capoLabel.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(capoLabel)
         
+        // MP3 button setup (move to far left, text label)
+        mp3Button.setTitle("no MP3", for: .normal)
+        mp3Button.setTitleColor(.systemGray, for: .normal)
+        mp3Button.setImage(nil, for: .normal)
+        mp3Button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        mp3Button.translatesAutoresizingMaskIntoConstraints = false
+        mp3Button.isEnabled = false
+        mp3Button.alpha = 0.4
+        mp3Button.addTarget(self, action: #selector(mp3ButtonTapped), for: .touchUpInside)
+        headerView.addSubview(mp3Button)
+        
         // Configure the mode toggle buttons
         setupModeButtons()
         
         // Set constraints for labels and buttons
         NSLayoutConstraint.activate([
-            // First row - title level elements
+            // MP3 button on the far left
+            mp3Button.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            mp3Button.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 8),
+            mp3Button.widthAnchor.constraint(equalToConstant: 110), // Increased from 56 to 110
+            mp3Button.heightAnchor.constraint(equalToConstant: 36),
             
-            // Capo label on the far left
+            // Capo label to the right of MP3 button
             capoLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            capoLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            capoLabel.leadingAnchor.constraint(equalTo: mp3Button.trailingAnchor, constant: 8),
             
-            // Transpose Down button right after capo label
+            // Transpose Down button right after mp3 button
             transposeDownButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            transposeDownButton.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 16),
+            transposeDownButton.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 8),
             transposeDownButton.widthAnchor.constraint(equalToConstant: 36),
             transposeDownButton.heightAnchor.constraint(equalToConstant: 36),
             
@@ -648,6 +689,200 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         return cell
+    }
+    
+    // MARK: - MP3 Handling (with local caching and Last-Modified check)
+    
+    private func localMP3FileURL(for fileName: String) -> URL {
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docs.appendingPathComponent(fileName)
+    }
+
+    private func checkForMP3File() {
+        guard let song = song else { mp3Exists = false; return }
+        let formattedTitle = SongViewerViewController.formatForFileNameStatic(song.title)
+        let formattedArtist = SongViewerViewController.formatForFileNameStatic(song.artist)
+        let fileName = formattedArtist.isEmpty ? "\(formattedTitle).mp3" : "\(formattedTitle)(\(formattedArtist)).mp3"
+        let xmlFileName = formattedArtist.isEmpty ? "\(formattedTitle).xml" : "\(formattedTitle)(\(formattedArtist)).xml"
+        let baseUrl = "http://xenon95.de/"
+        let xmlUrlString = baseUrl + xmlFileName
+        let mp3UrlString = baseUrl + fileName
+        let localURL = localMP3FileURL(for: fileName)
+        print("[MP3 DIAG] Checking XML URL: \(xmlUrlString)")
+        guard let xmlUrl = URL(string: xmlUrlString) else { print("[MP3 DIAG] Invalid XML URL"); mp3Exists = false; return }
+        var xmlRequest = URLRequest(url: xmlUrl)
+        xmlRequest.httpMethod = "HEAD"
+        URLSession.shared.dataTask(with: xmlRequest) { [weak self] (_, xmlResponse, _) in
+            DispatchQueue.main.async {
+                if let xmlHttpResp = xmlResponse as? HTTPURLResponse {
+                    print("[MP3 DIAG] XML status code: \(xmlHttpResp.statusCode)")
+                } else {
+                    print("[MP3 DIAG] No response for XML file.")
+                }
+                // Now check MP3
+                print("[MP3 DIAG] Checking MP3 URL: \(mp3UrlString)")
+                guard let mp3Url = URL(string: mp3UrlString) else { print("[MP3 DIAG] Invalid MP3 URL"); self?.mp3Exists = false; return }
+                self?.mp3URL = mp3Url
+                var mp3Request = URLRequest(url: mp3Url)
+                mp3Request.httpMethod = "HEAD"
+                URLSession.shared.dataTask(with: mp3Request) { [weak self] (_, mp3Response, _) in
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        if let mp3HttpResp = mp3Response as? HTTPURLResponse {
+                            print("[MP3 DIAG] MP3 status code: \(mp3HttpResp.statusCode)")
+                            if mp3HttpResp.statusCode == 200 {
+                                self.mp3Exists = true
+                                // Check Last-Modified header
+                                let lastModifiedStr = mp3HttpResp.allHeaderFields["Last-Modified"] as? String
+                                var serverDate: Date? = nil
+                                if let lastModifiedStr = lastModifiedStr {
+                                    let formatter = DateFormatter()
+                                    formatter.locale = Locale(identifier: "en_US_POSIX")
+                                    formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+                                    serverDate = formatter.date(from: lastModifiedStr)
+                                }
+                                // Check local file
+                                if FileManager.default.fileExists(atPath: localURL.path),
+                                   let attrs = try? FileManager.default.attributesOfItem(atPath: localURL.path),
+                                   let localDate = attrs[.modificationDate] as? Date, let serverDate = serverDate {
+                                    print("[MP3] Checking if local MP3 is up to date with the server version...")
+                                    print("[MP3 DIAG] Local MP3 date: \(localDate), Server MP3 date: \(serverDate)")
+                                    if serverDate > localDate {
+                                        print("[MP3 DIAG] Server MP3 is newer, will re-download on play.")
+                                    } else {
+                                        print("[MP3 DIAG] Local MP3 is up to date.")
+                                    }
+                                } else if FileManager.default.fileExists(atPath: localURL.path) {
+                                    print("[MP3] Local MP3 exists, but no server date to compare.")
+                                    print("[MP3 DIAG] Local MP3 exists, but no server date to compare.")
+                                } else {
+                                    print("[MP3 DIAG] No local MP3 file, will download on play.")
+                                }
+                            } else {
+                                self.mp3Exists = false
+                            }
+                        } else {
+                            print("[MP3 DIAG] No response for MP3 file.")
+                            self.mp3Exists = false
+                        }
+                    }
+                }.resume()
+            }
+        }.resume()
+    }
+
+    @objc private func mp3ButtonTapped() {
+        guard mp3Exists, let mp3Url = mp3URL, let song = song else { return }
+        let formattedTitle = SongViewerViewController.formatForFileNameStatic(song.title)
+        let formattedArtist = SongViewerViewController.formatForFileNameStatic(song.artist)
+        let fileName = formattedArtist.isEmpty ? "\(formattedTitle).mp3" : "\(formattedTitle)(\(formattedArtist)).mp3"
+        let localURL = localMP3FileURL(for: fileName)
+        // Before downloading the mp3, check if the XML file for the same song is accessible
+        let xmlFileName = formattedArtist.isEmpty ? "\(formattedTitle).xml" : "\(formattedTitle)(\(formattedArtist)).xml"
+        let baseUrl = "http://xenon95.de/"
+        let xmlUrlString = baseUrl + xmlFileName
+        guard let xmlUrl = URL(string: xmlUrlString) else {
+            print("[MP3 DIAG] Could not construct XML URL: \(xmlUrlString)")
+            return
+        }
+        var xmlRequest = URLRequest(url: xmlUrl)
+        xmlRequest.httpMethod = "HEAD"
+        URLSession.shared.dataTask(with: xmlRequest) { [weak self] (_, xmlResponse, _) in
+            guard let self = self else { return }
+            if let httpResp = xmlResponse as? HTTPURLResponse {
+                print("[MP3 DIAG] XML HEAD status code: \(httpResp.statusCode) for \(xmlUrlString)")
+                if httpResp.statusCode == 200 {
+                    // XML file is accessible, proceed to check local MP3 and download if needed
+                    self.downloadAndPlayMP3WithCache(mp3Url, localURL: localURL)
+                } else {
+                    print("[MP3 DIAG] XML file not found or inaccessible. Aborting MP3 download.")
+                }
+            } else {
+                print("[MP3 DIAG] No HTTP response for XML HEAD request. Possible network/server issue.")
+            }
+        }.resume()
+    }
+
+    private func downloadAndPlayMP3WithCache(_ url: URL, localURL: URL) {
+        // Check if local file exists and if server has a newer version
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        URLSession.shared.dataTask(with: request) { [weak self] (_, response, _) in
+            guard let self = self else { return }
+            var shouldDownload = true
+            var serverDate: Date? = nil
+            if let httpResp = response as? HTTPURLResponse,
+               let lastModifiedStr = httpResp.allHeaderFields["Last-Modified"] as? String {
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+                serverDate = formatter.date(from: lastModifiedStr)
+            }
+            if FileManager.default.fileExists(atPath: localURL.path),
+               let attrs = try? FileManager.default.attributesOfItem(atPath: localURL.path),
+               let localDate = attrs[.modificationDate] as? Date, let serverDate = serverDate {
+                if serverDate <= localDate {
+                    shouldDownload = false
+                }
+            } else if FileManager.default.fileExists(atPath: localURL.path) && serverDate == nil {
+                shouldDownload = false
+            }
+            if shouldDownload {
+                print("[MP3 DIAG] Downloading MP3 from server...")
+                let task = URLSession.shared.downloadTask(with: url) { [weak self] tempURL, response, error in
+                    guard let self = self, let tempURL = tempURL, error == nil else {
+                        print("[MP3 DIAG] MP3 download failed: \(error?.localizedDescription ?? "Unknown error")")
+                        return
+                    }
+                    do {
+                        // Remove old file if exists
+                        if FileManager.default.fileExists(atPath: localURL.path) {
+                            try FileManager.default.removeItem(at: localURL)
+                        }
+                        try FileManager.default.moveItem(at: tempURL, to: localURL)
+                        print("[MP3 DIAG] MP3 saved to local cache: \(localURL.path)")
+                        DispatchQueue.main.async {
+                            self.playMP3File(localURL)
+                        }
+                    } catch {
+                        print("[MP3 DIAG] Failed to save MP3: \(error.localizedDescription)")
+                    }
+                }
+                task.resume()
+            } else {
+                print("[MP3 DIAG] Using cached MP3 file: \(localURL.path)")
+                DispatchQueue.main.async {
+                    self.playMP3File(localURL)
+                }
+            }
+        }.resume()
+    }
+
+    private func playMP3File(_ url: URL) {
+        do {
+            mp3Player = try AVAudioPlayer(contentsOf: url)
+            mp3Player?.prepareToPlay()
+            mp3Player?.play()
+        } catch {
+            print("[MP3 DIAG] Failed to play MP3: \(error.localizedDescription)")
+        }
+    }
+    
+    // Helper for MP3 filename formatting (static, matches SongViewerViewController)
+    static func formatForFileNameStatic(_ input: String) -> String {
+        guard !input.isEmpty else { return "" }
+        let allowedCharSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " "))
+        let cleanedString = input.components(separatedBy: allowedCharSet.inverted).joined()
+        let words = cleanedString.components(separatedBy: .whitespaces)
+        let capitalizedWords = words.map { word in
+            if !word.isEmpty {
+                let firstChar = word.prefix(1).uppercased()
+                let restOfWord = word.dropFirst()
+                return firstChar + restOfWord
+            }
+            return ""
+        }
+        return capitalizedWords.joined()
     }
 }
 

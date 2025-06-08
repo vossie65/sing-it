@@ -23,10 +23,18 @@ class SongPartEditorViewController: UIViewController {
     private let capoLabel = UILabel()
     private let capoSegmentedControl = UISegmentedControl()
     
+    // Transpose controls
+    private let transposeDownButton = UIButton(type: .system)
+    private let transposeUpButton = UIButton(type: .system)
+    private let transposeLabel = UILabel()
+    
     var song: Song!
     var isNewSong: Bool = false
     private let dataManager = DataManager.shared
     private var selectedPartIndex: Int?
+    
+    // Transposition level (semitones): 0 means no transposition
+    var transpositionLevel: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,15 +104,36 @@ class SongPartEditorViewController: UIViewController {
         view.addSubview(capoLabel)
         
         // Configure capo segmented control
-        let capoOptions = ["None", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+        let capoOptions = ["None", "1", "2", "3", "4", "5", "6"]
         capoSegmentedControl.removeAllSegments()
         for (index, option) in capoOptions.enumerated() {
             capoSegmentedControl.insertSegment(withTitle: option, at: index, animated: false)
         }
-        // Select the current capo value (0 = "None", 1-11 = fret position)
-        capoSegmentedControl.selectedSegmentIndex = song.capo
+        // Select the current capo value (0 = "None", 1-6 = fret position)
+        capoSegmentedControl.selectedSegmentIndex = min(song.capo, 6)
         capoSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(capoSegmentedControl)
+        
+        // Add transpose label
+        transposeLabel.text = "Trans: 0"
+        transposeLabel.font = UIFont.systemFont(ofSize: 16)
+        transposeLabel.textColor = .systemBlue
+        transposeLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(transposeLabel)
+
+        // Configure transpose down button
+        transposeDownButton.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+        transposeDownButton.tintColor = .systemBlue
+        transposeDownButton.translatesAutoresizingMaskIntoConstraints = false
+        transposeDownButton.addTarget(self, action: #selector(transposeDownButtonTapped), for: .touchUpInside)
+        view.addSubview(transposeDownButton)
+
+        // Configure transpose up button
+        transposeUpButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        transposeUpButton.tintColor = .systemBlue
+        transposeUpButton.translatesAutoresizingMaskIntoConstraints = false
+        transposeUpButton.addTarget(self, action: #selector(transposeUpButtonTapped), for: .touchUpInside)
+        view.addSubview(transposeUpButton)
         
         // Adjust the table view's bottom constraint programmatically
         // This overrides the storyboard constraint to make room for tempo and capo controls
@@ -160,7 +189,18 @@ class SongPartEditorViewController: UIViewController {
             
             capoSegmentedControl.centerYAnchor.constraint(equalTo: capoLabel.centerYAnchor),
             capoSegmentedControl.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 12),
-            capoSegmentedControl.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+            // Move transpose controls to the right of the capo selector
+            transposeLabel.centerYAnchor.constraint(equalTo: capoSegmentedControl.centerYAnchor),
+            transposeLabel.leadingAnchor.constraint(equalTo: capoSegmentedControl.trailingAnchor, constant: 24),
+            transposeDownButton.centerYAnchor.constraint(equalTo: transposeLabel.centerYAnchor),
+            transposeDownButton.leadingAnchor.constraint(equalTo: transposeLabel.trailingAnchor, constant: 12),
+            transposeDownButton.widthAnchor.constraint(equalToConstant: 36),
+            transposeDownButton.heightAnchor.constraint(equalToConstant: 36),
+            transposeUpButton.centerYAnchor.constraint(equalTo: transposeLabel.centerYAnchor),
+            transposeUpButton.leadingAnchor.constraint(equalTo: transposeDownButton.trailingAnchor, constant: 8),
+            transposeUpButton.widthAnchor.constraint(equalToConstant: 36),
+            transposeUpButton.heightAnchor.constraint(equalToConstant: 36),
+            transposeUpButton.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
         ])
         
         // Add light borders and padding to make it clear they're editable
@@ -221,7 +261,7 @@ class SongPartEditorViewController: UIViewController {
         // Create a new view controller loaded from XIB file
         let addVC = EditPartViewController(nibName: "EditPartViewController", bundle: nil)
         addVC.modalPresentationStyle = .formSheet
-        addVC.preferredContentSize = CGSize(width: 780, height: 820) // Updated to match XIB dimensions
+        addVC.preferredContentSize = CGSize(width: 950, height: 1000) // Increased width
         
         // Configure with default part type
         let newPart = Part(partType: .verse, lyrics: "", chords: "")
@@ -244,7 +284,20 @@ class SongPartEditorViewController: UIViewController {
         song.artist = artistTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
         song.tempo = Int(tempoSlider.value)
         song.capo = capoSegmentedControl.selectedSegmentIndex // 0 = "None", 1-11 = fret position
-        
+
+        // --- Apply persistent transposition to all chords if needed ---
+        if transpositionLevel != 0 {
+            for part in song.parts {
+                if !part.chords.isEmpty {
+                    part.chords = SongViewerViewController.transposeChordProgression(part.chords, by: transpositionLevel)
+                }
+            }
+            transpositionLevel = 0
+            updateTransposeLabel()
+            updateAllChordsDisplay()
+        }
+        // --- End persistent transposition logic ---
+
         if isNewSong {
             dataManager.addSong(song)
             isNewSong = false // Not a new song anymore
@@ -382,7 +435,7 @@ class SongPartEditorViewController: UIViewController {
         // Create and configure the custom edit view controller loaded from XIB
         let editVC = EditPartViewController(nibName: "EditPartViewController", bundle: nil)
         editVC.modalPresentationStyle = .formSheet
-        editVC.preferredContentSize = CGSize(width: 780, height: 820) // Updated to match XIB dimensions
+        editVC.preferredContentSize = CGSize(width: 950, height: 1000) // Increased width
         
         // Configure with part data
         editVC.configure(with: part)
@@ -407,6 +460,35 @@ class SongPartEditorViewController: UIViewController {
     @objc private func tempoSliderChanged(_ sender: UISlider) {
         let tempo = Int(sender.value)
         tempoValueLabel.text = "\(tempo) BPM"
+    }
+    
+    // MARK: - Transpose Actions
+    
+    @objc private func transposeDownButtonTapped() {
+        transpositionLevel -= 1
+        updateTransposeLabel()
+        updateAllChordsDisplay()
+    }
+
+    @objc private func transposeUpButtonTapped() {
+        transpositionLevel += 1
+        updateTransposeLabel()
+        updateAllChordsDisplay()
+    }
+
+    private func updateAllChordsDisplay() {
+        // Reload the table view so all SongPartTableViewCells update their chord display
+        partsTableView.reloadData()
+    }
+
+    private func updateTransposeLabel() {
+        if transpositionLevel == 0 {
+            transposeLabel.text = "Trans: 0"
+        } else if transpositionLevel > 0 {
+            transposeLabel.text = "Trans: +\(transpositionLevel)"
+        } else {
+            transposeLabel.text = "Trans: \(transpositionLevel)"
+        }
     }
 }
 
@@ -506,12 +588,11 @@ extension SongPartEditorViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SongPartTableViewCell.identifier, for: indexPath) as! SongPartTableViewCell
-        
         let part = song.parts[indexPath.row]
         let isFirstPart = indexPath.row == 0
         let isLastPart = indexPath.row == song.parts.count - 1
-        
-        cell.configure(with: part, index: indexPath.row, isFirst: isFirstPart, isLast: isLastPart)
+        // Pass the transposition level to the cell for display
+        cell.configure(with: part, index: indexPath.row, isFirst: isFirstPart, isLast: isLastPart, transpositionLevel: transpositionLevel)
         
         // Set the delete handler to remove the part when trash icon is clicked
         cell.deleteHandler = { [weak self] in

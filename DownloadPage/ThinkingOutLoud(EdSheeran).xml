@@ -1,7 +1,8 @@
 <song>
-  <title>Thinking Out Loud (unedited)</title>
+  <title>Thinking Out Loud</title>
   <artist>Ed Sheeran</artist>
   <tempo>74</tempo>
+  <capo>None</capo>
   <parts>
     <part>
       <type>Verse</type>
@@ -29,7 +30,7 @@
       </chords>
     </part>
     <part>
-      <type>Bridge</type>
+      <type>Pre-Chorus</type>
       <lyrics>
         <line>People fall in love in mysterious ways</line>
         <line>Maybe just the touch of a hand</line>
@@ -86,7 +87,7 @@
       </chords>
     </part>
     <part>
-      <type>Bridge</type>
+      <type>Pre-Chorus</type>
       <lyrics>
         <line>People fall in love in mysterious ways</line>
         <line>Maybe it's all part of a plan</line>
@@ -123,7 +124,10 @@
         <line></line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>G. G/B. C. D.</line>
+        <line>G. G/B. C. D.</line>
+        <line>G. G/B. C. D.</line>
+        <line>G. G/B. C. D.</line>
       </chords>
     </part>
     <part>
@@ -144,7 +148,7 @@
         <line>G. G/B. C. D.</line>
         <line>Em D C G/B Am D G.</line>
         <line>Em D C G/B Am D G.</line>
-        <line>Em D C G/B Am D G.</line>
+        <line>Em D C G/B Am D G-</line>
       </chords>
     </part>
   </parts>

@@ -22,8 +22,11 @@ class PartTableViewCell: UITableViewCell {
     private var partTypeColors: [PartType: UIColor] = [
         .verse: UIColor.systemBlue.withAlphaComponent(0.2),
         .chorus: UIColor.systemGreen.withAlphaComponent(0.2),
+        .preChorus: UIColor.systemGreen.withAlphaComponent(0.2),
+        .postChorus: UIColor.systemGreen.withAlphaComponent(0.2),
         .bridge: UIColor.systemRed.withAlphaComponent(0.2),
         .intro: UIColor.systemYellow.withAlphaComponent(0.2),
+        .interlude: UIColor.systemYellow.withAlphaComponent(0.2),
         .outro: UIColor.systemYellow.withAlphaComponent(0.2),
         .solo: UIColor.systemYellow.withAlphaComponent(0.2)
     ]
@@ -36,7 +39,6 @@ class PartTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         // Configure part types in segmented control
         partTypeSegmentedControl.removeAllSegments()
         for (index, type) in PartType.allCases.enumerated() {

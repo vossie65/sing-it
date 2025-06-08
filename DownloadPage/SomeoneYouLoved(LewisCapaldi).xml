@@ -1,0 +1,81 @@
+<song>
+  <title>Someone you loved</title>
+  <artist>Lewis Capaldi</artist>
+  <tempo>120</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. F.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I'm going under, and I fear this time there's no one to save me</line>
+        <line>This all or nothing really got a way of driving me crazy</line>
+        <line>I need somebody to heal, somebody to know</line>
+        <line>Somebody to have, somebody to hold</line>
+        <line>It's easy to say, but it's never the same</line>
+        <line>I guess I kinda liked the way you numbed all the pain</line>
+      </lyrics>
+      <chords>
+        <line>C. G. Am. F.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And now the day bleeds into nightfall</line>
+        <line>And you're not here to get me through it all</line>
+        <line>I let my guard down and then you pulled the rug</line>
+        <line>I was getting kinda used to being someone you loved</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>I'm going under, and I fear this time there's no one to turn to</line>
+        <line>This all or nothing way of loving got me sleeping without you</line>
+        <line>I need somebody to know, somebody to heal</line>
+        <line>Somebody to have, just to know hoe it feels</line>
+        <line>It's easy to say, but it's never the same</line>
+        <line>I guess I kinda liked the way you helped me escape</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And now the day bleeds into nightfall</line>
+        <line>And you're not here to get me through it all</line>
+        <line>I let my guard down and then you pulled the rug</line>
+        <line>I was getting kinda used to being someone you loved</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>And now the day bleeds into nightfall</line>
+        <line>And you're not here to get me through it all</line>
+        <line>I let my guard down and then you pulled the rug</line>
+        <line>I was getting kinda used to being someone you loved</line>
+      </lyrics>
+      <chords>
+        <line></line>
+      </chords>
+    </part>
+  </parts>
+</song>

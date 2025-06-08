@@ -2,7 +2,7 @@
   <title>Perfect</title>
   <artist>Ed Sheeran</artist>
   <tempo>65</tempo>
-  <capo>None</capo>
+  <capo>3</capo>
   <parts>
     <part>
       <type>Intro</type>
@@ -10,7 +10,7 @@
         <line></line>
       </lyrics>
       <chords>
-        <line>G. ..</line>
+        <line>C. ..</line>
       </chords>
     </part>
     <part>
@@ -22,14 +22,14 @@
         <line>Oh, I never knew you were the someone waitin' for me</line>
       </lyrics>
       <chords>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
       </chords>
     </part>
     <part>
-      <type>Bridge</type>
+      <type>Pre-Chorus</type>
       <lyrics>
         <line>'Cause we were just kids when we fell in love, not knowin' what it was</line>
         <line>I will not give you up this time</line>
@@ -37,10 +37,10 @@
         <line>And in your eyes, you're holding mine</line>
       </lyrics>
       <chords>
-        <line>G. .. Em. ..</line>
-        <line>C. .. G. D.</line>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
       </chords>
     </part>
     <part>
@@ -52,10 +52,10 @@
         <line>But you heard it, &quot;Darling, you look perfect tonight&quot;</line>
       </lyrics>
       <chords>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
       </chords>
     </part>
     <part>
@@ -64,7 +64,7 @@
         <line></line>
       </lyrics>
       <chords>
-        <line>G D/F# Em D C. D.</line>
+        <line>C G/B Am G F. G.</line>
       </chords>
     </part>
     <part>
@@ -76,14 +76,14 @@
         <line>To carry love, to carry children of our own</line>
       </lyrics>
       <chords>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
       </chords>
     </part>
     <part>
-      <type>Bridge</type>
+      <type>Pre-Chorus</type>
       <lyrics>
         <line>We are still kids, but we're so in love, fightin' against all odds</line>
         <line>I know we'll be alright this time</line>
@@ -91,10 +91,10 @@
         <line>I see my future in your eyes</line>
       </lyrics>
       <chords>
-        <line>G. .. Em. ..</line>
-        <line>C. .. G. D.</line>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. C. G.</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
       </chords>
     </part>
     <part>
@@ -106,10 +106,10 @@
         <line>I don't deserve this, darling, you look perfect tonight</line>
       </lyrics>
       <chords>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
       </chords>
     </part>
     <part>
@@ -118,8 +118,8 @@
         <line></line>
       </lyrics>
       <chords>
-        <line>G. .. Em. ..</line>
-        <line>C. .. D. ..</line>
+        <line>C. .. Am. ..</line>
+        <line>F. .. G. ..</line>
       </chords>
     </part>
     <part>
@@ -131,10 +131,10 @@
         <line>An angel in person, and she looks perfect</line>
       </lyrics>
       <chords>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
-        <line>Em. C. G. D.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
+        <line>Am. F. C. G.</line>
       </chords>
     </part>
     <part>
@@ -145,9 +145,9 @@
         <line>-</line>
       </lyrics>
       <chords>
-        <line>G/B. C. Dsus4. D.</line>
-        <line>G D/F# Em D C. D.</line>
-        <line>G- - -</line>
+        <line>C/E. F. Gsus4. G.</line>
+        <line>C G/B Am G F. G.</line>
+        <line>C- - -</line>
       </chords>
     </part>
   </parts>

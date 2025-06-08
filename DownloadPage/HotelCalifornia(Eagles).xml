@@ -1,0 +1,139 @@
+<song>
+  <title>Hotel California</title>
+  <artist>Eagles</artist>
+  <tempo>72</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>On a dark desert highway, cool wind in my hair</line>
+        <line>Warm smell of colitas rising up through the air</line>
+        <line>Up ahead in the distance, I saw a shimmering light</line>
+        <line>My head grew heavy and my sight grew dim, I had to stop for the night</line>
+        <line>There she stood in the doorway, I heard the mission bell</line>
+        <line>And I was thinkin' to myself, &quot;This could be heaven or this could be hell&quot;</line>
+        <line>Then she lit up a candle and she showed me the way</line>
+        <line>There were voices down the corridor, I thought I heard them say</line>
+      </lyrics>
+      <chords>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>&quot;Welcome to the Hotel California</line>
+        <line>Such a lovely place (such a lovely place), Such a lovely face</line>
+        <line>Plenty of room at the Hotel California</line>
+        <line>Any time of year (any time of year), You can find it here&quot;</line>
+      </lyrics>
+      <chords>
+        <line>F. .. C. ..</line>
+        <line>E7. .. Am. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Her mind is Tiffany-twisted, she got the Mercedes-Benz, uh</line>
+        <line>She got a lot of pretty, pretty boys that she calls friends</line>
+        <line>How they dance in the courtyard, sweet summer sweat</line>
+        <line>Some dance to remember, some dance to forget</line>
+        <line>So I called up the Captain, &quot;Please bring me my wine&quot;</line>
+        <line>He said, &quot;We haven't had that spirit here since 1969&quot;</line>
+        <line>And still, those voices are calling from far away</line>
+        <line>Wake you up in the middle of the night just to hear them say</line>
+      </lyrics>
+      <chords>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>&quot;Welcome to the Hotel California</line>
+        <line>Such a lovely place (such a lovely place), Such a lovely face</line>
+        <line>They're livin' it up at the Hotel California</line>
+        <line>What a nice surprise (what a nice surprise), Bring your alibis&quot;</line>
+      </lyrics>
+      <chords>
+        <line>F. .. C. ..</line>
+        <line>E7. .. Am. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Mirrors on the ceiling, the pink champagne on ice</line>
+        <line>And she said, &quot;We are all just prisoners here of our own device&quot;</line>
+        <line>And in the master's chambers, they gathered for the feast</line>
+        <line>They stab it with their steely knives, but they just can't kill the beast</line>
+        <line>Last thing I remember, I was running for the door</line>
+        <line>I had to find the passage back to the place I was before</line>
+        <line>&quot;Relax, &quot; said the night man, &quot;We are programmed to receive</line>
+        <line>You can check out any time you like, but you can never leave&quot;</line>
+      </lyrics>
+      <chords>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Solo</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+        <line>Am. .. E. ..</line>
+        <line>G. .. D. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Dm. .. E7. ..</line>
+      </chords>
+    </part>
+  </parts>
+</song>

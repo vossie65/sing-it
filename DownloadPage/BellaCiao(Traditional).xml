@@ -1,8 +1,18 @@
 <song>
-  <title>Bella Ciao (unedited)</title>
+  <title>Bella Ciao</title>
   <artist>Traditional</artist>
-  <tempo>120</tempo>
+  <tempo>106</tempo>
+  <capo>None</capo>
   <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Am. .. .. ..</line>
+      </chords>
+    </part>
     <part>
       <type>Verse</type>
       <lyrics>
@@ -12,7 +22,10 @@
         <line>e ho trovato l’invasor.</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
     <part>
@@ -24,7 +37,10 @@
         <line>ché mi sento di morir.</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
     <part>
@@ -36,7 +52,10 @@
         <line>tu mi devi seppellir.</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
     <part>
@@ -48,7 +67,10 @@
         <line>sotto l’ombra di un bel fior.</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
     <part>
@@ -57,10 +79,13 @@
         <line>Tutte le genti che passeranno,</line>
         <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
         <line>Tutte le genti che passeranno,</line>
-        <line>Mi diranno «Che bel fior!»</line>
+        <line>Mi diranno«Che bel fior!»</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
     <part>
@@ -70,9 +95,16 @@
         <line>o bella, ciao! bella, ciao! bella, ciao, ciao, ciao!</line>
         <line>«È questo il fiore del partigiano,</line>
         <line>morto per la libertà!»</line>
+        <line>«È questo il fiore del partigiano,</line>
+        <line>morto per la libertà!»</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>Am. .. .. ..</line>
+        <line>.. .. .. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
+        <line>Dm. .. Am. ..</line>
+        <line>E7. .. Am. ..</line>
       </chords>
     </part>
   </parts>

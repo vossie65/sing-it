@@ -1,7 +1,8 @@
 <song>
-  <title>Wish you were here (unedited)</title>
+  <title>Wish you were here</title>
   <artist>Pink Floyd</artist>
   <tempo>60</tempo>
+  <capo>None</capo>
   <parts>
     <part>
       <type>Intro</type>
@@ -9,7 +10,7 @@
         <line></line>
       </lyrics>
       <chords>
-        <line>Em. .. G. .. </line>
+        <line>Em. .. G. ..</line>
         <line>Em. .. G. ..</line>
         <line>Em. .. A7sus4. ..</line>
         <line>Em. .. A7sus4. ..</line>
@@ -25,7 +26,10 @@
         <line>A smile from a veil? Do you think you can tell?</line>
       </lyrics>
       <chords>
-        <line></line>
+        <line>C. .. D/F#. ..</line>
+        <line>Am/E. .. G. ..</line>
+        <line>D/F#. .. C. ..</line>
+        <line>Am. .. G. ..</line>
       </chords>
     </part>
     <part>
@@ -37,7 +41,23 @@
         <line>A walk-on part in the war for a lead role in a cage?</line>
       </lyrics>
       <chords>
+        <line>C. .. D/F#. ..</line>
+        <line>Am/E. .. G. ..</line>
+        <line>D/F#. .. C. ..</line>
+        <line>Am. .. G. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Intro</type>
+      <lyrics>
         <line></line>
+      </lyrics>
+      <chords>
+        <line>Em. .. G. ..</line>
+        <line>Em. .. G. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>G. .. G. ..</line>
       </chords>
     </part>
     <part>
@@ -49,7 +69,23 @@
         <line>The same old fears, wish you were here</line>
       </lyrics>
       <chords>
+        <line>C. .. D/F#. ..</line>
+        <line>Am/E. .. G. ..</line>
+        <line>D/F#. .. C. ..</line>
+        <line>Am. .. G. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
         <line></line>
+      </lyrics>
+      <chords>
+        <line>Em. .. G. ..</line>
+        <line>Em. .. G. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>Em. .. A7sus4. ..</line>
+        <line>G. .. G. ..</line>
       </chords>
     </part>
   </parts>
