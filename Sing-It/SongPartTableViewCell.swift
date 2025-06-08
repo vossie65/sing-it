@@ -107,17 +107,16 @@ class SongPartTableViewCell: UITableViewCell {
         flexibleSpacer.widthAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
         contentView.addSubview(hStack)
         NSLayoutConstraint.activate([
-            hStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            hStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            hStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 14),
-            hStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -14),
+            hStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8), // reduced from 12
+            hStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8), // reduced from -12
+            hStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6), // reduced from 14
+            hStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6), // reduced from -14
             partTypeContainer.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1),
             partTypeContainer.topAnchor.constraint(equalTo: hStack.topAnchor),
             partTypeContainer.bottomAnchor.constraint(equalTo: hStack.bottomAnchor),
             chordsLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
             lyricsLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6),
             actionStack.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.1)
-            // No fixed width for flexibleSpacer, it will expand as needed
         ])
         // Store for later use in configure
         self.partTypeContainer = partTypeContainer

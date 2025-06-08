@@ -3,7 +3,13 @@
 enum PartType {
   Verse
   Chorus
+  PreChorus
+  PostChorus
   Bridge
+  Intro
+  Interlude
+  Solo
+  Outro
 }
 
 class Part {
@@ -15,6 +21,8 @@ class Part {
 class Song {
     string Title
     string Artist
+    int Tempo
+    in Capo
     List<SongPart> Parts
 }
 

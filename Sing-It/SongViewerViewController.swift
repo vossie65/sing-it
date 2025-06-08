@@ -640,9 +640,8 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
     
     // Reduce the section header height to bring parts closer together
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0 // Changed from 1 to 0 for minimum spacing
+        return 0 // Minimum spacing between parts
     }
-    
     // Remove any space in the footer as well
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
@@ -663,14 +662,17 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         
         // Get the appropriate part based on the current display mode
         let part: Part
-        
+        let partIndex: Int
         if currentDisplayMode == .lyricsOnly {
             // Get only parts with lyrics
             let partsWithLyrics = song.parts.filter { !$0.lyrics.isEmpty }
             part = partsWithLyrics[indexPath.section]
+            // Find the index of this part in the full song.parts array
+            partIndex = song.parts.firstIndex(where: { $0 === part }) ?? indexPath.section
         } else {
             // Get all parts
             part = song.parts[indexPath.section]
+            partIndex = indexPath.section
         }
         
         // Pass the transposition level directly to the cell
@@ -679,10 +681,35 @@ class SongViewerViewController: UIViewController, UITableViewDataSource, UITable
         // Set up chord playing handler (without count-in for individual parts)
         cell.playChordHandler = { [weak self] chordString in
             guard let self = self, !chordString.isEmpty else { return }
-            // Explicitly set the instrument to piano (0) before playing individual parts
+            // Find the correct index of the part in the song.parts array
+            let partIndex: Int
+            if self.currentDisplayMode == .lyricsOnly {
+                let partsWithLyrics = self.song.parts.enumerated().filter { !$0.element.lyrics.isEmpty }
+                partIndex = partsWithLyrics[indexPath.section].offset
+            } else {
+                partIndex = indexPath.section
+            }
+            // Collect chords from this part to the end
+            var remainingChords = ""
+            for i in partIndex..<self.song.parts.count {
+                let part = self.song.parts[i]
+                if !part.chords.isEmpty {
+                    if !remainingChords.isEmpty { remainingChords += " " }
+                    let partChords = part.chords.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+                    remainingChords += partChords
+                }
+            }
+            if remainingChords.isEmpty {
+                remainingChords = "C" // fallback
+            }
+            // Apply transposition if needed
+            if self.transpositionLevel != 0 {
+                remainingChords = SongViewerViewController.transposeChordProgression(remainingChords, by: self.transpositionLevel)
+            }
+            // Explicitly set the instrument to piano (0) before playing
             AudioEngine.shared.setInstrument(0, waitForLoad: true)
             AudioEngine.shared.playChordProgression(
-                chordString: chordString, 
+                chordString: remainingChords,
                 duration: self.chordDuration,
                 withCountIn: false // No count-in for individual part playback
             )
@@ -953,16 +980,16 @@ class SongPartViewCell: UITableViewCell {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         containerView.addSubview(playButton)
         
-        // Reduced top and bottom margins from 8 to 4 to decrease spacing between parts
+        // Reduced top and bottom margins even further for a tighter layout
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0), // was 2
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4), // was 8
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4), // was -8
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0), // was -2
             
             // Play button constraints - moved to top left corner
-            playButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            playButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+            playButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8), // was 12
+            playButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 4), // was 8
             playButton.widthAnchor.constraint(equalToConstant: 36),
             playButton.heightAnchor.constraint(equalToConstant: 36)
         ])
@@ -978,38 +1005,37 @@ class SongPartViewCell: UITableViewCell {
     private func createConstraints() {
         // One row constraints (side-by-side)
         oneRowConstraints = [
-            // Part type label below play button
-            partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            partTypeLabel.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 4),
-            partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            // Play button stays top left
+            // Part type label now bottom left
+            partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 6),
+            partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6),
             partTypeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/12.0),
-            
+
             // Chords label (3/12 of width)
-            chordsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 8),
-            chordsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            chordsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            chordsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 4),
+            chordsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 6),
+            chordsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6),
             chordsLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 3.0/12.0),
-            
+
             // Lyrics label
-            lyricsLabel.leadingAnchor.constraint(equalTo: chordsLabel.trailingAnchor, constant: 8),
-            lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
-            lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12)
+            lyricsLabel.leadingAnchor.constraint(equalTo: chordsLabel.trailingAnchor, constant: 4),
+            lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 6),
+            lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6),
+            lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -6)
         ]
-        
+
         // Lyrics only constraints (table layout)
         lyricsOnlyConstraints = [
-            // Part type label as first column (20% width)
-            partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            partTypeLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            // Part type label as first column (bottom left)
+            partTypeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 6),
+            partTypeLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6),
             partTypeLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.20),
-            
+
             // Lyrics label as second column (80% width)
-            lyricsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 16),
-            lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
+            lyricsLabel.leadingAnchor.constraint(equalTo: partTypeLabel.trailingAnchor, constant: 8),
+            lyricsLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 6),
+            lyricsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -6),
+            lyricsLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -6)
         ]
     }
     
@@ -1027,7 +1053,6 @@ class SongPartViewCell: UITableViewCell {
     
     // Configure the cell with part data and display mode
     func configure(with part: Part, displayMode: SongViewerViewController.DisplayMode, transpositionLevel: Int = 0) {
-        // Set content first
         partTypeLabel.text = part.partType.rawValue
         
         // Apply transposition to chords if needed
@@ -1041,7 +1066,17 @@ class SongPartViewCell: UITableViewCell {
             currentChords = part.chords
         }
         
-        lyricsLabel.text = part.lyrics
+        // In lyrics only mode, filter out empty lines from lyrics
+        if displayMode == .lyricsOnly {
+            let nonEmptyLines = part.lyrics
+                .components(separatedBy: .newlines)
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { !$0.isEmpty }
+            lyricsLabel.text = nonEmptyLines.joined(separator: "\n")
+            partTypeLabel.textColor = .label
+        } else {
+            lyricsLabel.text = part.lyrics
+        }
         
         // Handle visibility based on mode
         if displayMode == .lyricsOnly {
