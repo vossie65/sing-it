@@ -1,0 +1,110 @@
+<song>
+  <title>Can't Help Falling in Love</title>
+  <artist>Elvis Presley</artist>
+  <tempo>75</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. G. C. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Wise men say</line>
+        <line>Only fools rush in</line>
+        <line>But I can't help</line>
+        <line>Falling in love with you</line>
+      </lyrics>
+      <chords>
+        <line>C. Em. Am. Am/G.</line>
+        <line>F. C. G. .. </line>
+        <line>F. G. Am. Dm.</line>
+        <line>C. G. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Shall I stay</line>
+        <line>Would it be a sin</line>
+        <line>If I can't help</line>
+        <line>Falling in love with you</line>
+      </lyrics>
+      <chords>
+        <line>C. Em. Am. Am/G.</line>
+        <line>F. C. G. .. </line>
+        <line>F. G. Am. Dm.</line>
+        <line>C. G. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Like a river flows surely to the sea</line>
+        <line>Darling so it goes, Some things are meant to be</line>
+      </lyrics>
+      <chords>
+        <line>Em. B7. Em. B7.</line>
+        <line>Em. B7. Em A Dm G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Take my hand,</line>
+        <line>Take my whole life too</line>
+        <line>For I can't help</line>
+        <line>Falling in love with you</line>
+      </lyrics>
+      <chords>
+        <line>C. Em. Am. Am/G.</line>
+        <line>F. C. G. .. </line>
+        <line>F. G. Am. Dm.</line>
+        <line>C. G. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>Like a river flows surely to the sea</line>
+        <line>Darling so it goes, Some things are meant to be</line>
+      </lyrics>
+      <chords>
+        <line>Em. B7. Em. B7.</line>
+        <line>Em. B7. Em A Dm G</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Take my hand,</line>
+        <line>Take my whole life too</line>
+        <line>For I can't help</line>
+        <line>Falling in love with you</line>
+      </lyrics>
+      <chords>
+        <line>C. Em. Am. Am/G.</line>
+        <line>F. C. G. .. </line>
+        <line>F. G. Am. Dm.</line>
+        <line>C. G. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line>For I can't help</line>
+        <line>Falling in love with you</line>
+      </lyrics>
+      <chords>
+        <line>F. G. Am. Dm.</line>
+        <line>C. G. C. ..</line>
+      </chords>
+    </part>
+  </parts>
+</song>

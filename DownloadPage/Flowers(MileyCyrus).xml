@@ -1,0 +1,186 @@
+<song>
+  <title>Flowers</title>
+  <artist>Miley Cyrus</artist>
+  <tempo>65</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Cmaj7 . . .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>We were good, we were gold</line>
+        <line>Kind of dream that can't be sold</line>
+        <line>We were right 'til we weren't</line>
+        <line>Built a home and watched it burn</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G. C.</line>
+        <line>Am. Dm.</line>
+        <line>G. C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Pre-Chorus</type>
+      <lyrics>
+        <line>Mmm, I didn't wanna leave you, I didn't wanna lie</line>
+        <line>Started to cry but then remembered, I</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>E7. .. - -</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>I can buy myself flowers</line>
+        <line>Write my name in the sand</line>
+        <line>Talk to myself for hours</line>
+        <line>Say things you don't understand</line>
+        <line>I can take myself dancing</line>
+        <line>And I can hold my own hand</line>
+        <line>Yeah, I can love me better than you can</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G. C C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>F. E7.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Post-Chorus</type>
+      <lyrics>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I can love me better, baby</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G.  C  C/B</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Paint my nails, cherry red</line>
+        <line>Match the roses that you left</line>
+        <line>No remorse, no regret</line>
+        <line>I forgive every word you said</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G. C.</line>
+        <line>Am. Dm.</line>
+        <line>G. C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Pre-Chorus</type>
+      <lyrics>
+        <line>Ooh, I didn't wanna leave you, baby, I didn't wanna fight</line>
+        <line>Started to cry but then remembered I</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>E7. .. - -</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>I can buy myself flowers</line>
+        <line>Write my name in the sand</line>
+        <line>Talk to myself for hours</line>
+        <line>Say things you don't understand</line>
+        <line>I can take myself dancing, yeah</line>
+        <line>And I can hold my own hand</line>
+        <line>Yeah, I can love me better than you can</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G. C C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>F. E7.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Post-Chorus</type>
+      <lyrics>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G.  C  C/B</line>
+        <line>Am. Dm.</line>
+        <line>G.  C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Pre-Chorus</type>
+      <lyrics>
+        <line>I didn't wanna leave you, baby, I didn't wanna fight</line>
+        <line>Started to cry but then remembered I</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G.  C  C/B</line>
+      </chords>
+    </part>
+    <part>
+      <type>Chorus</type>
+      <lyrics>
+        <line>I can buy myself flowers (Uh-uh)</line>
+        <line>Write my name in the sand</line>
+        <line>Talk to myself for hours (Yeah-eah)</line>
+        <line>Say things you don't understand</line>
+        <line>I can take myself dancing (Yeah-eah)</line>
+        <line>And I can hold my own hand</line>
+        <line>Yeah, I can love me better than</line>
+        <line>Yeah, I can love me better than you can</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G. C C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>Am. Dm.</line>
+        <line>G. C  C/B</line>
+        <line>F. E7.</line>
+        <line>F. E7.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I can love me better, baby (Baby yeah)</line>
+        <line>Can love me better, I can love me better, baby</line>
+        <line>Can love me better, I</line>
+      </lyrics>
+      <chords>
+        <line>Am. Dm.</line>
+        <line>G.  C  C/B</line>
+        <line>Am. Dm.</line>
+        <line>G.  C.</line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -1,0 +1,208 @@
+<song>
+  <title>Sultans Of Swing</title>
+  <artist>Dire Straits</artist>
+  <tempo>75</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm.. C Dm.. C</line>
+        <line>Dm.. C Dm.. C</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>You get a shiver in the dark, it's raining in the park but meantime</line>
+        <line>South of the river you stop and you hold everything</line>
+        <line>A band is blowing Dixie double four time</line>
+        <line>You feel alright when you hear that music ring</line>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Well now, you step inside but you don't see too many faces</line>
+        <line>Coming in out of the rain to hear the jazz go down</line>
+        <line>Competition in other places</line>
+        <line>Uh, but the horns they blowin' that sound</line>
+        <line>way on down south</line>
+        <line>way on down south London Town</line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. ..  C. ..</line>
+        <line>Bb. .. Dm. . Bb</line>
+        <line>(Bb C) C. Bb</line>
+        <line>(Bb C) C. .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>You check out Guitar George, he knows all the chords</line>
+        <line>Mind he's strictly rhythm he doesn't want to make it cry or sing</line>
+        <line>They say an old guitar is all he can afford</line>
+        <line>When he gets up under the lights to play his thing</line>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>And Harry doesn't mind if he doesn't make the scene</line>
+        <line>He's got a daytime job, he's doin' alright</line>
+        <line>He can play the honky tonk like anything</line>
+        <line>Saving it up for Friday night</line>
+        <line>with the Sultans</line>
+        <line>with the Sultans of Swing</line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C. Bb</line>
+        <line>(Bb C) C. .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Then a crowd of young boys, they're foolin' around in the corner</line>
+        <line>Drunk and dressed in their best brown baggies and their platform soles</line>
+        <line>They don't give a damn about about any trumpet playin' band</line>
+        <line>It ain't what they call rock and roll</line>
+        <line>and the Sultans</line>
+        <line>Yeah, the Sultans, they play Creole</line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C. Bb</line>
+        <line>(Bb C) C. .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line>Creole</line>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Solo</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C. Bb</line>
+        <line>(Bb C) C. .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>And then the man he steps right up to the microphone</line>
+        <line>And says at last just as the time bell ring</line>
+        <line>Goodnight, now it's time to go home</line>
+        <line>Then he makes it fast with one more thing</line>
+        <line>We are the Sultans</line>
+        <line>We are the Sultans of Swing</line>
+      </lyrics>
+      <chords>
+        <line>Dm. C Bb A. ..</line>
+        <line>Dm. C Bb A. ..</line>
+        <line>F. .. C. ..</line>
+        <line>Bb. .. Dm.. Bb</line>
+        <line>(Bb C) C. Bb</line>
+        <line>(Bb C) C. .</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Solo</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm. Bb. C. ..</line>
+        <line>Dm - - -</line>
+      </chords>
+    </part>
+  </parts>
+</song>

@@ -533,7 +533,6 @@ class XMLSongParser: NSObject, XMLParserDelegate {
 class XMLInputViewController: UIViewController {
     
     private let containerView = UIView()
-    private let titleLabel = UILabel()
     private let textView = UITextView()
     private let importButton = UIButton(type: .system)
     private let cancelButton = UIButton(type: .system)
@@ -558,13 +557,6 @@ class XMLInputViewController: UIViewController {
         containerView.layer.shadowRadius = 10
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
-        
-        // Title label
-        titleLabel.text = "Import Song from XML"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        titleLabel.textAlignment = .center
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(titleLabel)
         
         // Instruction label
         instructionLabel.text = "Paste the XML data for your song below:"
@@ -607,13 +599,8 @@ class XMLInputViewController: UIViewController {
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             
-            // Title label
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            
             // Instruction label
-            instructionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            instructionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             instructionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             instructionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             

@@ -9,24 +9,16 @@ class SongPartEditorViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var repeatPartButton: UIButton!
     @IBOutlet weak var showXMLButton: UIButton!
-    
-    // Replace static label with editable fields
-    private let titleTextField = UITextField()
-    private let artistTextField = UITextField()
-    
-    // Add tempo control elements
-    private let tempoLabel = UILabel()
-    private let tempoSlider = UISlider()
-    private let tempoValueLabel = UILabel()
-    
-    // Add capo control elements
-    private let capoLabel = UILabel()
-    private let capoSegmentedControl = UISegmentedControl()
-    
-    // Transpose controls
-    private let transposeDownButton = UIButton(type: .system)
-    private let transposeUpButton = UIButton(type: .system)
-    private let transposeLabel = UILabel()
+    @IBOutlet weak var artistLabel: UILabel!
+    // Controls View Outlets
+    @IBOutlet weak var tempoLabel: UILabel!
+    @IBOutlet weak var tempoSlider: UISlider!
+    @IBOutlet weak var tempoValueLabel: UILabel!
+    @IBOutlet weak var capoLabel: UILabel!
+    @IBOutlet weak var capoSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var transposeLabel: UILabel!
+    @IBOutlet weak var transposeDownButton: UIButton!
+    @IBOutlet weak var transposeUpButton: UIButton!
     
     var song: Song!
     var isNewSong: Bool = false
@@ -38,186 +30,32 @@ class SongPartEditorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         setupTableView()
         
-        // Change save button to done
-        saveButton.setTitle("Done", for: .normal)
-    }
-    
-    private func setupUI() {
-        view.backgroundColor = .white
+        // Set the artist label text from the song model
+        artistLabel.text = song.artist
+        // Set the song title label text from the song model
+        songTitleLabel.text = song.title
         
-        // Hide the original title label
-        songTitleLabel.isHidden = true
-        
-        // Configure title text field
-        titleTextField.text = song.title
-        titleTextField.font = UIFont.boldSystemFont(ofSize: 24)
-        titleTextField.textAlignment = .center
-        titleTextField.borderStyle = .none
-        titleTextField.placeholder = "Song Title"
-        titleTextField.translatesAutoresizingMaskIntoConstraints = false
-        titleTextField.returnKeyType = .done
-        titleTextField.delegate = self
-        view.addSubview(titleTextField)
-        
-        // Configure artist text field
-        artistTextField.text = song.artist
-        artistTextField.font = UIFont.systemFont(ofSize: 18)
-        artistTextField.textColor = .secondaryLabel
-        artistTextField.textAlignment = .center
-        artistTextField.borderStyle = .none
-        artistTextField.placeholder = "Artist Name"
-        artistTextField.translatesAutoresizingMaskIntoConstraints = false
-        artistTextField.returnKeyType = .done
-        artistTextField.delegate = self
-        view.addSubview(artistTextField)
-        
-        // Configure tempo label
-        tempoLabel.text = "Tempo"
-        tempoLabel.font = UIFont.systemFont(ofSize: 18)
-        tempoLabel.textColor = .label
-        tempoLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tempoLabel)
-        
-        // Configure tempo slider
+        // Setup controls from model
         tempoSlider.minimumValue = 40
         tempoSlider.maximumValue = 200
         tempoSlider.value = Float(song.tempo)
-        tempoSlider.translatesAutoresizingMaskIntoConstraints = false
-        tempoSlider.addTarget(self, action: #selector(tempoSliderChanged(_:)), for: .valueChanged)
-        view.addSubview(tempoSlider)
-        
-        // Configure tempo value label
         tempoValueLabel.text = "\(song.tempo) BPM"
-        tempoValueLabel.font = UIFont.systemFont(ofSize: 18)
-        tempoValueLabel.textColor = .secondaryLabel
-        tempoValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tempoValueLabel)
         
-        // Configure capo label
-        capoLabel.text = "Capo"
-        capoLabel.font = UIFont.systemFont(ofSize: 18)
-        capoLabel.textColor = .label
-        capoLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(capoLabel)
-        
-        // Configure capo segmented control
         let capoOptions = ["None", "1", "2", "3", "4", "5", "6"]
         capoSegmentedControl.removeAllSegments()
         for (index, option) in capoOptions.enumerated() {
             capoSegmentedControl.insertSegment(withTitle: option, at: index, animated: false)
         }
-        // Select the current capo value (0 = "None", 1-6 = fret position)
         capoSegmentedControl.selectedSegmentIndex = min(song.capo, 6)
-        capoSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(capoSegmentedControl)
         
-        // Add transpose label
         transposeLabel.text = "Trans: 0"
-        transposeLabel.font = UIFont.systemFont(ofSize: 16)
-        transposeLabel.textColor = .systemBlue
-        transposeLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(transposeLabel)
-
-        // Configure transpose down button
-        transposeDownButton.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
-        transposeDownButton.tintColor = .systemBlue
-        transposeDownButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add targets for controls
+        tempoSlider.addTarget(self, action: #selector(tempoSliderChanged(_:)), for: .valueChanged)
         transposeDownButton.addTarget(self, action: #selector(transposeDownButtonTapped), for: .touchUpInside)
-        view.addSubview(transposeDownButton)
-
-        // Configure transpose up button
-        transposeUpButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        transposeUpButton.tintColor = .systemBlue
-        transposeUpButton.translatesAutoresizingMaskIntoConstraints = false
         transposeUpButton.addTarget(self, action: #selector(transposeUpButtonTapped), for: .touchUpInside)
-        view.addSubview(transposeUpButton)
-        
-        // Adjust the table view's bottom constraint programmatically
-        // This overrides the storyboard constraint to make room for tempo and capo controls
-        if let tableBottomConstraint = view.constraints.first(where: { 
-            ($0.firstItem as? UITableView) == partsTableView && 
-            $0.firstAttribute == .bottom 
-        }) {
-            // Remove the existing constraint
-            view.removeConstraint(tableBottomConstraint)
-        }
-        
-        // Create a new bottom constraint with more space
-        // We'll add 120 points of space at the bottom of the table view
-        let newBottomConstraint = NSLayoutConstraint(
-            item: partsTableView!, 
-            attribute: .bottom, 
-            relatedBy: .equal, 
-            toItem: addPartButton, 
-            attribute: .top, 
-            multiplier: 1.0, 
-            constant: -130)  // Increased space for tempo and capo controls
-        
-        // Add the new constraint
-        view.addConstraint(newBottomConstraint)
-        
-        // Position the editable fields where the labels would have been
-        NSLayoutConstraint.activate([
-            titleTextField.topAnchor.constraint(equalTo: songTitleLabel.topAnchor),
-            titleTextField.leadingAnchor.constraint(equalTo: songTitleLabel.leadingAnchor),
-            titleTextField.trailingAnchor.constraint(equalTo: songTitleLabel.trailingAnchor),
-            titleTextField.heightAnchor.constraint(equalToConstant: 40),
-            
-            artistTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 8),
-            artistTextField.leadingAnchor.constraint(equalTo: titleTextField.leadingAnchor),
-            artistTextField.trailingAnchor.constraint(equalTo: titleTextField.trailingAnchor),
-            artistTextField.heightAnchor.constraint(equalToConstant: 30),
-            
-            // Updated tempo controls positioning - moved up from buttons
-            tempoLabel.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -90),
-            tempoLabel.leadingAnchor.constraint(equalTo: addPartButton.leadingAnchor),
-            tempoLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor),
-            
-            tempoSlider.bottomAnchor.constraint(equalTo: addPartButton.topAnchor, constant: -90),
-            tempoSlider.leadingAnchor.constraint(equalTo: tempoLabel.trailingAnchor, constant: 12),
-            tempoSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            
-            tempoValueLabel.leadingAnchor.constraint(equalTo: tempoSlider.trailingAnchor, constant: 12),
-            tempoValueLabel.centerYAnchor.constraint(equalTo: tempoSlider.centerYAnchor),
-            
-            // Position capo controls below tempo controls
-            capoLabel.topAnchor.constraint(equalTo: tempoLabel.bottomAnchor, constant: 30),
-            capoLabel.leadingAnchor.constraint(equalTo: addPartButton.leadingAnchor),
-            
-            capoSegmentedControl.centerYAnchor.constraint(equalTo: capoLabel.centerYAnchor),
-            capoSegmentedControl.leadingAnchor.constraint(equalTo: capoLabel.trailingAnchor, constant: 12),
-            // Move transpose controls to the right of the capo selector
-            transposeLabel.centerYAnchor.constraint(equalTo: capoSegmentedControl.centerYAnchor),
-            transposeLabel.leadingAnchor.constraint(equalTo: capoSegmentedControl.trailingAnchor, constant: 24),
-            transposeDownButton.centerYAnchor.constraint(equalTo: transposeLabel.centerYAnchor),
-            transposeDownButton.leadingAnchor.constraint(equalTo: transposeLabel.trailingAnchor, constant: 12),
-            transposeDownButton.widthAnchor.constraint(equalToConstant: 36),
-            transposeDownButton.heightAnchor.constraint(equalToConstant: 36),
-            transposeUpButton.centerYAnchor.constraint(equalTo: transposeLabel.centerYAnchor),
-            transposeUpButton.leadingAnchor.constraint(equalTo: transposeDownButton.trailingAnchor, constant: 8),
-            transposeUpButton.widthAnchor.constraint(equalToConstant: 36),
-            transposeUpButton.heightAnchor.constraint(equalToConstant: 36),
-            transposeUpButton.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20),
-        ])
-        
-        // Add light borders and padding to make it clear they're editable
-        titleTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        titleTextField.layer.borderWidth = 0.5
-        titleTextField.layer.cornerRadius = 6
-        
-        artistTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        artistTextField.layer.borderWidth = 0.5
-        artistTextField.layer.cornerRadius = 6
-        
-        // Don't set button colors here - use the ones from Interface Builder
-        // We'll just make sure the buttons have rounded corners
-        addPartButton.layer.cornerRadius = 8
-        saveButton.layer.cornerRadius = 8
-        repeatPartButton.layer.cornerRadius = 8
-        showXMLButton.layer.cornerRadius = 8
     }
     
     private func setupTableView() {
@@ -280,8 +118,7 @@ class SongPartEditorViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         // Update song with the current text field values
-        song.title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
-        song.artist = artistTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
+        song.title = songTitleLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
         song.tempo = Int(tempoSlider.value)
         song.capo = capoSegmentedControl.selectedSegmentIndex // 0 = "None", 1-11 = fret position
 
@@ -930,24 +767,6 @@ class XMLViewController: UIViewController, MFMailComposeViewControllerDelegate {
             @unknown default:
                 break
             }
-        }
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension SongPartEditorViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Dismiss keyboard when return key is pressed
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        // Update the song object when editing is finished
-        if textField == titleTextField {
-            song.title = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.title
-        } else if textField == artistTextField {
-            song.artist = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? song.artist
         }
     }
 }

@@ -1,0 +1,157 @@
+<song>
+  <title>Piper to the End</title>
+  <artist>Mark Knopfler</artist>
+  <tempo>90</tempo>
+  <capo>None</capo>
+  <parts>
+    <part>
+      <type>Intro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. .. F. C.</line>
+        <line>F. C. F. ..</line>
+        <line></line>
+        <line>C. .. Am. ..</line>
+        <line>C. F. G. ..</line>
+        <line></line>
+        <line>G. C. C. Am.</line>
+        <line>F. C. F. C.</line>
+        <line></line>
+        <line>C. .. Am. C.</line>
+        <line>F. .. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>When I leave this world behind me</line>
+        <line>To another I will go</line>
+        <line>If there are no pipes in heaven</line>
+        <line>I'll be going down below</line>
+      </lyrics>
+      <chords>
+        <line>C. .. Am. F.</line>
+        <line>C. F. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. .. F. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>If friends in time be severed</line>
+        <line>Someday we will meet again</line>
+        <line>I'll return to leave you never</line>
+        <line>Be a piper to the end</line>
+      </lyrics>
+      <chords>
+        <line>G7. ..  C. Am.</line>
+        <line>F. .. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. F. .. C.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Interlude</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>Am. F. F. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>This has been a day to die for</line>
+        <line>Now the day has almost gone</line>
+        <line>Up above a quiet seabird</line>
+        <line>Turns to face the setting sun</line>
+      </lyrics>
+      <chords>
+        <line>C. .. Am. F.</line>
+        <line>C. F. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. .. F. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>Now the evening dove is calling</line>
+        <line>And all the hills are burning red</line>
+        <line>And before the night comes falling</line>
+        <line>Clouds are lined with golden thread</line>
+      </lyrics>
+      <chords>
+        <line>G7. ..  C. Am.</line>
+        <line>F. .. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. F. .. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Bridge</type>
+      <lyrics>
+        <line>We watched the fires together</line>
+        <line>Shared our quarters for a while</line>
+        <line>Walked this dusty roads together</line>
+        <line>Came so many miles</line>
+      </lyrics>
+      <chords>
+        <line>G. .. C. ..</line>
+        <line>F. C. Am. F.</line>
+        <line>G. G7. C. ..</line>
+        <line>Am. .. F. G. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>This has been a day to die for</line>
+        <line>Now the day has almost gone</line>
+        <line>Here the pipes will lay beside me</line>
+        <line>Silent will the battle drum</line>
+      </lyrics>
+      <chords>
+        <line>C. .. Am. F.</line>
+        <line>C. F. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. .. F. G.</line>
+      </chords>
+    </part>
+    <part>
+      <type>Verse</type>
+      <lyrics>
+        <line>If friends in time be severed</line>
+        <line>Someday we will meet again</line>
+        <line>I'll return to leave you never</line>
+        <line>Be a piper to the end</line>
+      </lyrics>
+      <chords>
+        <line>G7. ..  C. Am.</line>
+        <line>F. .. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>C. F. .. C. ..</line>
+      </chords>
+    </part>
+    <part>
+      <type>Outro</type>
+      <lyrics>
+        <line></line>
+      </lyrics>
+      <chords>
+        <line>C. .. Am. F.</line>
+        <line>C. F. C. F.</line>
+        <line>C. .. Em. Am.</line>
+        <line>Am C. F. G.</line>
+        <line>G7. .. C. ..</line>
+        <line>Am F. C. F.</line>
+        <line>C. .. Em. A. C.</line>
+        <line>F. .. C. ..</line>
+      </chords>
+    </part>
+  </parts>
+</song>
